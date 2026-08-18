@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://dte1rm5eorg3r"]
+
+[ext_resource type="Script" uid="uid://xmhkn036cg3o" path="res://scenes/current/current.gd" id="1_rbjix"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sk68b"]
+size = Vector3(2, 3, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk68b"]
+size = Vector3(2, 2, 2)
+
+[node name="Current" type="Area3D" unique_id=1736336799 node_paths=PackedStringArray("_peak_position_node")]
+script = ExtResource("1_rbjix")
+_peak_position_node = NodePath("Peak")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1969001937]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_sk68b")
+debug_color = Color(0.9758424, 0, 0.41991842, 0.41960785)
+
+[node name="Peak" type="Marker3D" parent="." unique_id=27419543]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+gizmo_extents = 0.75
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=444493318]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("BoxMesh_sk68b")

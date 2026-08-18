@@ -1,0 +1,214 @@
+[gd_scene format=3 uid="uid://b77tyela8iqeq"]
+
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="1_g1dw6"]
+[ext_resource type="Script" uid="uid://dawhkjt1eta6s" path="res://player/player.gd" id="1_yw30f"]
+[ext_resource type="Resource" uid="uid://d8050an2wx1q" path="res://player/input/input_context.tres" id="2_hg6s5"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="2_yw30f"]
+[ext_resource type="Resource" uid="uid://bid2eb0hxkyo5" path="res://player/input/walk_action.tres" id="3_8t03j"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="3_qjkh3"]
+[ext_resource type="Resource" uid="uid://c42f1n7nwkjiq" path="res://player/input/dive_action.tres" id="4_2ieo8"]
+[ext_resource type="Resource" uid="uid://c4lq68ofho35u" path="res://player/input/jump_action.tres" id="5_ebec5"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="5_qjkh3"]
+[ext_resource type="Script" uid="uid://c6wq4m14fir13" path="res://player/camera_rig.gd" id="6_rig"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk68b"]
+size = Vector3(0.33496094, 0.25976563, 0.46972656)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmn6o"]
+albedo_color = Color(0.71, 0.39475998, 0.18459998, 1)
+proximity_fade_enabled = true
+proximity_fade_distance = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_sk68b"]
+material = SubResource("StandardMaterial3D_hmn6o")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sk68b"]
+
+[node name="Player" type="CharacterBody3D" unique_id=741711365]
+script = ExtResource("1_yw30f")
+guide_context = ExtResource("2_hg6s5")
+walk_action = ExtResource("3_8t03j")
+dive_action = ExtResource("4_2ieo8")
+jump_action = ExtResource("5_ebec5")
+
+[node name="Eye" type="MeshInstance3D" parent="." unique_id=572168387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.50048006, -0.5213313)
+mesh = SubResource("BoxMesh_sk68b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2053844283]
+mesh = SubResource("SphereMesh_sk68b")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1344793968]
+shape = SubResource("SphereShape3D_sk68b")
+
+[node name="RootStateChart" type="Node" parent="." unique_id=685716276]
+unique_name_in_owner = true
+script = ExtResource("1_g1dw6")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="InSea" type="Node" parent="RootStateChart" unique_id=1112386793]
+unique_name_in_owner = true
+script = ExtResource("2_yw30f")
+initial_state = NodePath("WaterMovement")
+
+[node name="WaterMovement" type="Node" parent="RootStateChart/InSea" unique_id=1591825835]
+unique_name_in_owner = true
+script = ExtResource("2_yw30f")
+initial_state = NodePath("IdleState")
+
+[node name="IdleState" type="Node" parent="RootStateChart/InSea/WaterMovement" unique_id=1237903360]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToMoving" type="Node" parent="RootStateChart/InSea/WaterMovement/IdleState" unique_id=609719938]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../MovingState")
+event = &"moving"
+delay_in_seconds = "0.0"
+
+[node name="MovingState" type="Node" parent="RootStateChart/InSea/WaterMovement" unique_id=903284761]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToIdle" type="Node" parent="RootStateChart/InSea/WaterMovement/MovingState" unique_id=510350738]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../IdleState")
+event = &"stopped"
+delay_in_seconds = "0.0"
+
+[node name="SubmergedState" type="Node" parent="RootStateChart/InSea/WaterMovement" unique_id=117932314]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToSurface" type="Node" parent="RootStateChart/InSea/WaterMovement/SubmergedState" unique_id=1513179619]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../IdleState")
+event = &"surfaced"
+delay_in_seconds = "0.0"
+
+[node name="ToAir" type="Node" parent="RootStateChart/InSea/WaterMovement" unique_id=563992767]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../AirMovement")
+event = &"jump"
+delay_in_seconds = "0.0"
+
+[node name="ToWave" type="Node" parent="RootStateChart/InSea/WaterMovement" unique_id=198679861]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../InsideWaveMovement")
+event = &"wave_entered"
+delay_in_seconds = "0.0"
+
+[node name="ToSubmerged" type="Node" parent="RootStateChart/InSea/WaterMovement" unique_id=2064246142]
+script = ExtResource("5_qjkh3")
+to = NodePath("../SubmergedState")
+event = &"dive"
+delay_in_seconds = "0.0"
+
+[node name="AirMovement" type="Node" parent="RootStateChart/InSea" unique_id=935190035]
+unique_name_in_owner = true
+script = ExtResource("2_yw30f")
+initial_state = NodePath("RisingState")
+
+[node name="RisingState" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=711677569]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToFalling" type="Node" parent="RootStateChart/InSea/AirMovement/RisingState" unique_id=14810159]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../FallingState")
+event = &"falling"
+delay_in_seconds = "0.0"
+
+[node name="FallingState" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=1573575338]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="LandingState" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=226635481]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToWater" type="Node" parent="RootStateChart/InSea/AirMovement/LandingState" unique_id=743263010]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../../WaterMovement")
+delay_in_seconds = "0.15"
+
+[node name="ToJump" type="Node" parent="RootStateChart/InSea/AirMovement/LandingState" unique_id=341907989]
+script = ExtResource("5_qjkh3")
+to = NodePath("../..")
+event = &"jump"
+delay_in_seconds = "0.0"
+
+[node name="DivingState" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=1493966544]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="LeapState" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=1661529903]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToFalling" type="Node" parent="RootStateChart/InSea/AirMovement/DivingState" unique_id=295166578]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../FallingState")
+event = &"dive_released"
+delay_in_seconds = "0.0"
+
+[node name="ToDiving" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=1888399463]
+script = ExtResource("5_qjkh3")
+to = NodePath("../DivingState")
+event = &"dive"
+delay_in_seconds = "0.0"
+
+[node name="ToLanding" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=2139381027]
+script = ExtResource("5_qjkh3")
+to = NodePath("../LandingState")
+event = &"landed"
+delay_in_seconds = "0.0"
+
+[node name="ToSplash" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=1635602214]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../WaterMovement/SubmergedState")
+event = &"splash"
+delay_in_seconds = "0.0"
+
+[node name="ToWave" type="Node" parent="RootStateChart/InSea/AirMovement" unique_id=1423610891]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../InsideWaveMovement")
+event = &"wave_entered"
+delay_in_seconds = "0.0"
+
+[node name="InsideWaveMovement" type="Node" parent="RootStateChart/InSea" unique_id=1519278057]
+unique_name_in_owner = true
+script = ExtResource("2_yw30f")
+initial_state = NodePath("RidingState")
+
+[node name="RidingState" type="Node" parent="RootStateChart/InSea/InsideWaveMovement" unique_id=485014515]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="ToAir" type="Node" parent="RootStateChart/InSea/InsideWaveMovement/RidingState" unique_id=970325963]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../../AirMovement/LeapState")
+event = &"jump_off"
+delay_in_seconds = "0.0"
+
+[node name="ToWater" type="Node" parent="RootStateChart/InSea/InsideWaveMovement/RidingState" unique_id=1141647811]
+script = ExtResource("5_qjkh3")
+to = NodePath("../../../WaterMovement")
+event = &"wave_exited"
+delay_in_seconds = "0.0"
+
+[node name="JumpOffState" type="Node" parent="RootStateChart/InSea/InsideWaveMovement" unique_id=388941728]
+unique_name_in_owner = true
+script = ExtResource("3_qjkh3")
+
+[node name="CameraRig" type="Node3D" parent="." unique_id=1285703222]
+unique_name_in_owner = true
+script = ExtResource("6_rig")
+
+[node name="Pivot" type="Node3D" parent="CameraRig" unique_id=570242237]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" unique_id=1794410702]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+current = true

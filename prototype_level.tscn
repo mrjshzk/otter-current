@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://f34t5e6j30o3"]
+
+[ext_resource type="Shader" uid="uid://dpfnrla4cemce" path="res://shaders/toon_water.gdshader" id="1_qkken"]
+[ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="1_qm13l"]
+[ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="2_8sc3k"]
+[ext_resource type="Script" uid="uid://dw6q4rxavue13" path="res://scenes/current/wave_spawner.gd" id="3_spawn"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1kmq1"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_tq3vd"]
+sky_material = SubResource("ProceduralSkyMaterial_1kmq1")
+
+[sub_resource type="Environment" id="Environment_al8lf"]
+background_mode = 2
+sky = SubResource("Sky_tq3vd")
+glow_enabled = true
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 0.0645
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+render_priority = 0
+shader = ExtResource("1_qkken")
+shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
+shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
+shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
+shader_parameter/distortion_speed = 2.0
+shader_parameter/tile = Vector2(1000, 1000)
+shader_parameter/height = 0.5
+shader_parameter/wave_size = Vector2(2, 2)
+shader_parameter/wave_speed = 1.2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sk68b"]
+material = SubResource("ShaderMaterial_water")
+size = Vector2(2000, 2000)
+
+[node name="PrototypeLevel" type="Node3D" unique_id=1708134055]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1864291039]
+environment = SubResource("Environment_al8lf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1368849657]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=508079819]
+mesh = SubResource("PlaneMesh_sk68b")
+
+[node name="Player" parent="." unique_id=741711365 instance=ExtResource("1_qm13l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9902804, 0)
+
+[node name="Current" parent="." unique_id=1736336799 instance=ExtResource("2_8sc3k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9)
+wave_direction = Vector3(0, 0, -1)
+
+[node name="WaveSpawner" type="Node3D" parent="." unique_id=2086774259]
+script = ExtResource("3_spawn")
+wave_scene = ExtResource("2_8sc3k")
+player = NodePath("../Player")
