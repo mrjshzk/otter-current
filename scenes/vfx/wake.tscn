@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="StandardMaterial3D" id="mat_foam"]
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 1)
+
+[sub_resource type="QuadMesh" id="quad_foam"]
+size = Vector2(1, 1)
+material = SubResource("mat_foam")
+
+[sub_resource type="ParticleProcessMaterial" id="ppm_wake"]
+lifetime = 1.2
+spread = 180.0
+initial_velocity_min = 0.5
+initial_velocity_max = 1.5
+gravity = Vector3(0, 0.4, 0)
+damping_min = 2.0
+damping_max = 3.0
+scale_min = 0.15
+scale_max = 0.4
+billboard_mode = 3
+emission_shape = 1
+emission_sphere_radius = 0.5
+
+[node name="Wake" type="GPUParticles3D"]
+amount = 40
+lifetime = 1.2
+local_coords = false
+visibility_aabb = AABB(-4, -1, -4, 8, 4, 8)
+process_material = SubResource("ppm_wake")
+draw_pass_1 = SubResource("quad_foam")

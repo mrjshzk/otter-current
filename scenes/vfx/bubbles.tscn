@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3]
+
+[sub_resource type="StandardMaterial3D" id="mat_bubble"]
+shading_mode = 0
+transparency = 1
+albedo_color = Color(0.8, 0.9, 1, 0.55)
+
+[sub_resource type="QuadMesh" id="quad_bubble"]
+size = Vector2(1, 1)
+material = SubResource("mat_bubble")
+
+[sub_resource type="ParticleProcessMaterial" id="ppm_bubbles"]
+lifetime = 2.2
+direction = Vector3(0, 1, 0)
+spread = 20.0
+initial_velocity_min = 0.6
+initial_velocity_max = 1.4
+gravity = Vector3(0, 1.5, 0)
+damping_min = 0.3
+damping_max = 0.8
+scale_min = 0.02
+scale_max = 0.06
+billboard_mode = 3
+emission_shape = 1
+emission_sphere_radius = 0.4
+
+[node name="Bubbles" type="GPUParticles3D"]
+amount = 24
+lifetime = 2.2
+local_coords = false
+visibility_aabb = AABB(-2, -3, -2, 4, 6, 4)
+process_material = SubResource("ppm_bubbles")
+draw_pass_1 = SubResource("quad_bubble")

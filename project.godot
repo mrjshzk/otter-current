@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="uber-otter"
-run/main_scene="uid://f34t5e6j30o3"
+run/main_scene="uid://b7dx6wpmbaqr6"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
@@ -21,11 +21,14 @@ GUIDE="*uid://p2jwrgjcbexr"
 Definitions="*uid://cglh8848lbkxg"
 DialogueManager="*uid://c3rodes2l3gxb"
 DeliveryManager="*uid://pksgbyg4spci"
+AudioManager="*uid://cpcnpkmtuqod0"
+VFXManager="*uid://dyiuwe4ujrkd2"
 
 [display]
 
-window/stretch/mode="canvas_items"
-window/stretch/aspect="expand"
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="viewport"
 
 [editor_plugins]
 
@@ -79,7 +82,11 @@ dive={
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
+shading/overrides/force_vertex_shading=true
+shading/overrides/force_lambert_over_burley=true
+anti_aliasing/screen_space_roughness_limiter/enabled=false
 
 [shader_globals]
 

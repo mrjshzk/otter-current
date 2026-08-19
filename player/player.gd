@@ -108,11 +108,17 @@ class_name Player
 @export_category("Land")
 @export var walk_speed: float = 4.0
 @export var walk_acceleration: float = 12.0
+@export var footstep_interval: float = 0.35
 
 @export_category("Rotation")
 @export var rotation_speed: float = 16.0
 ## How fast the body pitches for diving/falling.
 @export var pitch_speed: float = 8.0
+
+const SPLASH_VFX := preload("res://scenes/vfx/splash.tscn")
+const WAKE_VFX := preload("res://scenes/vfx/wake.tscn")
+const BUBBLES_VFX := preload("res://scenes/vfx/bubbles.tscn")
+const DUST_VFX := preload("res://scenes/vfx/dust.tscn")
 
 var current_velocity := Vector3.ZERO
 var _jump_buffer := 0.0
@@ -124,6 +130,11 @@ var _jumped_from_wave: OceanCurrent = null
 var _launch_velocity: Vector3 = Vector3.ZERO
 var _air_boost_active := false
 var _submerged_vy := 0.0
+var _was_in_sea := true
+var _was_submerged := false
+var _land_step_timer := 0.0
+var _wake: GPUParticles3D
+var _bubbles: GPUParticles3D
 
 var in_sea := true
 
@@ -144,7 +155,11 @@ func _ready() -> void:
 	rising_state.state_entered.connect(_on_rising_entered)
 	leap_state.state_entered.connect(_on_leap_entered)
 	submerged_state.state_entered.connect(_on_submerged_entered)
-	diving_state.state_entered.connect(func(): _dive_jump_primed = true)
+	diving_state.state_entered.connect(func():
+		_dive_jump_primed = true
+		AudioManager.play_sfx(SfxLibrary.DIVE, global_position, -2.0, 1.0, 0.1)
+		camera_rig.add_shake(0.25)
+	)
 	water_movement.state_entered.connect(func():
 		_jumped_from_wave = null
 		_dive_jump_primed = false
@@ -165,6 +180,14 @@ func _ready() -> void:
 	walk_land.state_entered.connect(walk_land_state_entered)
 	idle_land.state_physics_processing.connect(idle_land_phy_process)
 	walk_land.state_physics_processing.connect(walk_land_phy_process)
+
+	## docked VFX
+	_wake = VFXManager.dock(WAKE_VFX, self)
+	_wake.emitting = false
+	_wake.visible = false
+	_bubbles = VFXManager.dock(BUBBLES_VFX, self)
+	_bubbles.emitting = false
+	_bubbles.visible = false
 
 func _play_swim() -> void:
 	animation_player.play("otter_swim")
@@ -200,6 +223,11 @@ func walk_land_phy_process(delta: float):
 	current_velocity.x = lerp(current_velocity.x, target.x, walk_acceleration * delta)
 	current_velocity.z = lerp(current_velocity.z, target.z, walk_acceleration * delta)
 	_face_direction(dir, delta)
+	_land_step_timer -= delta
+	if _land_step_timer <= 0.0:
+		_land_step_timer = footstep_interval
+		VFXManager.spawn(DUST_VFX, global_position + Vector3(0.0, -0.45, 0.0))
+		AudioManager.play_sfx(SfxLibrary.STEP, global_position, -6.0, 1.0, 0.25)
 
 func _apply_land_gravity(delta: float) -> void:
 	if not is_on_floor():
@@ -220,17 +248,44 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	current_velocity = velocity
 	RenderingServer.global_shader_parameter_set("player_position", self.global_position)
+	_update_water_effects()
 
 func on_wave_entered(wave: OceanCurrent) -> void:
 	if _jumped_from_wave != null and wave == _jumped_from_wave:
 		return
 	_current_wave = wave
+	_wake.emitting = true
+	_wake.visible = true
+	AudioManager.play_sfx(SfxLibrary.WHOOSH, global_position, -4.0, 1.0, 0.15)
 	root_state_chart.send_event("wave_entered")
 
 func on_wave_exited(wave: OceanCurrent) -> void:
 	if _current_wave == wave:
 		_current_wave = null
+		_wake.emitting = false
+		_wake.visible = false
+		_play_splash(global_position, SfxLibrary.SPLASH, 0.1)
 		root_state_chart.send_event("wave_exited")
+
+func _update_water_effects() -> void:
+	if in_sea and not _was_in_sea:
+		_play_splash(global_position, SfxLibrary.SPLASH, 0.3)
+	_was_in_sea = in_sea
+	var submerged := in_sea and global_position.y < water_level_y - splash_dip_depth * 0.5
+	if submerged and not _was_submerged:
+		_bubbles.emitting = true
+		_bubbles.visible = true
+		AudioManager.play_sfx(SfxLibrary.BUBBLE, global_position, -4.0, 1.0, 0.2)
+	elif not submerged and _was_submerged:
+		_bubbles.emitting = false
+		_bubbles.visible = false
+	_was_submerged = submerged
+
+func _play_splash(at: Vector3, sfx: AudioStream, shake: float) -> void:
+	var splash_pos := Vector3(at.x, water_level_y, at.z)
+	VFXManager.spawn(SPLASH_VFX, splash_pos)
+	AudioManager.play_sfx(sfx, splash_pos, -2.0, 1.0, 0.15)
+	camera_rig.add_shake(shake)
 
 # --- Shared helpers ---
 
@@ -287,6 +342,8 @@ func _glide_damping() -> float:
 	return glide_damping if _horizontal_speed() > swim_speed * 1.5 else deceleration
 
 func _on_rising_entered() -> void:
+	if _was_in_sea:
+		_play_splash(global_position, SfxLibrary.WHOOSH, 0.15)
 	current_velocity.y = jump_velocity
 	_air_boost_active = false
 	var primed := _dive_jump_primed
@@ -306,6 +363,9 @@ func _on_rising_entered() -> void:
 
 func _on_leap_entered() -> void:
 	_air_boost_active = true
+	_wake.emitting = false
+	_wake.visible = false
+	_play_splash(global_position, SfxLibrary.WHOOSH, 0.2)
 	if _launch_velocity != Vector3.ZERO:
 		current_velocity = _launch_velocity
 		_launch_velocity = Vector3.ZERO

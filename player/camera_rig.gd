@@ -18,6 +18,11 @@ class_name CameraRig
 @export var fov_speed_full: float = 12.0
 @export var fov_lerp_speed: float = 6.0
 
+@export_group("Shake")
+@export var shake_max_offset: float = 0.06
+@export var shake_max_roll: float = 0.04
+@export var shake_decay: float = 2.5
+
 @onready var pivot: Node3D = %Pivot
 @onready var spring: SpringArm3D = %SpringArm
 @onready var camera: Camera3D = %Camera3D
@@ -25,6 +30,7 @@ class_name CameraRig
 
 var _yaw := 0.0
 var _pitch := 0.0
+var _trauma := 0.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -44,9 +50,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+func add_shake(amount: float) -> void:
+	_trauma = clampf(_trauma + amount, 0.0, 1.0)
+
 func _physics_process(delta: float) -> void:
 	global_rotation = Vector3(0.0, _yaw, 0.0)
-	pivot.rotation = Vector3(_pitch, 0.0, 0.0)
+	_trauma = maxf(0.0, _trauma - shake_decay * delta)
+	var shake := _trauma * _trauma
+	pivot.rotation = Vector3(
+		_pitch + randf_range(-1.0, 1.0) * shake * shake_max_offset,
+		0.0,
+		randf_range(-1.0, 1.0) * shake * shake_max_roll
+	)
+	camera.position = Vector3(
+		randf_range(-1.0, 1.0) * shake * shake_max_offset,
+		randf_range(-1.0, 1.0) * shake * shake_max_offset,
+		0.0
+	)
 	_update_camera(delta)
 
 func _update_camera(delta: float) -> void:

@@ -1,6 +1,8 @@
 extends Area3D
 class_name SnackPickup
 
+const SPARKLE_VFX := preload("res://scenes/vfx/sparkle.tscn")
+
 @export var snack: Snack
 
 func _ready() -> void:
@@ -15,6 +17,8 @@ func on_interact(player: Node) -> void:
 	if backpack == null:
 		return
 	if backpack.add_snack(snack):
+		VFXManager.spawn(SPARKLE_VFX, global_position)
+		AudioManager.play_ui(SfxLibrary.CHIME, -4.0)
 		queue_free()
 
 func _update_visual() -> void:

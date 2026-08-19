@@ -784,6 +784,7 @@ dive_jump_speed_retention = 0.7
 dive_jump_forward_boost = 3.5
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1344793968]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_sk68b")
 
 [node name="RootStateChart" type="Node" parent="." unique_id=685716276]
@@ -985,6 +986,8 @@ delay_in_seconds = "0.0"
 [node name="CameraRig" type="Node3D" parent="." unique_id=1285703222]
 unique_name_in_owner = true
 script = ExtResource("6_rig")
+max_fov = 100.0
+shake_max_roll = 0.22
 
 [node name="Pivot" type="Node3D" parent="CameraRig" unique_id=570242237]
 unique_name_in_owner = true
@@ -993,7 +996,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 [node name="SpringArm" type="SpringArm3D" parent="CameraRig/Pivot" unique_id=872001443]
 unique_name_in_owner = true
 spring_length = 3.0
-collision_mask = 1
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot/SpringArm" unique_id=1794410702]
 unique_name_in_owner = true

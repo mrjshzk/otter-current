@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/vfx/vfx_burst.gd" id="1_burst"]
+
+[sub_resource type="Gradient" id="gradient_confetti"]
+offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
+colors = PackedColorArray(0.95, 0.25, 0.25, 1, 0.95, 0.7, 0.2, 1, 0.3, 0.85, 0.35, 1, 0.25, 0.5, 0.95, 1, 0.85, 0.3, 0.8, 1)
+
+[sub_resource type="GradientTexture1D" id="gradtex_confetti"]
+gradient = SubResource("gradient_confetti")
+
+[sub_resource type="StandardMaterial3D" id="mat_confetti"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+
+[sub_resource type="BoxMesh" id="mesh_confetti"]
+size = Vector3(0.08, 0.08, 0.02)
+material = SubResource("mat_confetti")
+
+[sub_resource type="ParticleProcessMaterial" id="ppm_confetti"]
+lifetime = 1.8
+spread = 180.0
+initial_velocity_min = 2.5
+initial_velocity_max = 6.0
+gravity = Vector3(0, -9.8, 0)
+damping_min = 0.2
+damping_max = 0.6
+scale_min = 0.06
+scale_max = 0.12
+billboard_mode = 3
+color_ramp = SubResource("gradtex_confetti")
+emission_shape = 1
+emission_sphere_radius = 0.2
+
+[node name="Confetti" type="GPUParticles3D"]
+script = ExtResource("1_burst")
+amount = 60
+lifetime = 1.8
+explosiveness = 1.0
+visibility_aabb = AABB(-4, -3, -4, 8, 12, 8)
+process_material = SubResource("ppm_confetti")
+draw_pass_1 = SubResource("mesh_confetti")

@@ -1,6 +1,8 @@
 extends Area3D
 class_name NPC
 
+const CONFETTI_VFX := preload("res://scenes/vfx/confetti.tscn")
+
 signal talked(player: Node, npc: NPC, cue: StringName)
 signal snack_received(player: Node, npc: NPC, snack: Snack)
 
@@ -26,6 +28,8 @@ func on_interact(player: Node) -> void:
 			backpack.remove_snack()
 			DeliveryManager.complete_delivery()
 			snack_received.emit(player, self, delivered)
+			VFXManager.spawn(CONFETTI_VFX, global_position)
+			AudioManager.play_ui(SfxLibrary.JINGLE, -3.0)
 			_talk(player, &"snack_received")
 		else:
 			_talk(player, &"wrong_snack")
@@ -33,5 +37,9 @@ func on_interact(player: Node) -> void:
 		_talk(player, &"greeting")
 
 func _talk(player: Node, cue: StringName) -> void:
+	if cue == &"wrong_snack":
+		AudioManager.play_ui(SfxLibrary.BUZZ, -6.0)
+	else:
+		AudioManager.play_ui(SfxLibrary.BLIP, -8.0)
 	talked.emit(player, self, cue)
 	## TODO(dialogue): open the Dialogue Manager balloon with `dialogue` at `cue`.
