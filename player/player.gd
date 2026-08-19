@@ -151,6 +151,7 @@ func _physics_process(delta: float) -> void:
 	velocity = current_velocity
 	move_and_slide()
 	current_velocity = velocity
+	RenderingServer.global_shader_parameter_set("player_position", self.global_position)
 
 func on_wave_entered(wave: OceanCurrent) -> void:
 	if _jumped_from_wave != null and wave == _jumped_from_wave:

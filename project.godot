@@ -78,4 +78,18 @@ dive={
 [rendering]
 
 rendering_device/driver.windows="d3d12"
-renderer/rendering_method="mobile"
+
+[shader_globals]
+
+wind_intensity={
+"type": "float",
+"value": 0.5
+}
+wind_direction={
+"type": "vec3",
+"value": Vector3(0.5, 0, 1)
+}
+player_position={
+"type": "vec3",
+"value": Vector3(0, 0, 10)
+}
