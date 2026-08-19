@@ -60,7 +60,6 @@ mesh = SubResource("PlaneMesh_sk68b")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9902804, 0)
 
 [node name="WaveSpawner" type="Node3D" parent="." unique_id=2086774259]
-process_mode = 4
 script = ExtResource("3_spawn")
 wave_scene = ExtResource("2_8sc3k")
 player = NodePath("../Player")

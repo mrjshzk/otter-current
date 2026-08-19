@@ -990,8 +990,13 @@ script = ExtResource("6_rig")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
-[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot" unique_id=1794410702]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+[node name="SpringArm" type="SpringArm3D" parent="CameraRig/Pivot" unique_id=872001443]
+unique_name_in_owner = true
+spring_length = 3.0
+collision_mask = 1
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot/SpringArm" unique_id=1794410702]
+unique_name_in_owner = true
 current = true
 
 [node name="InteractionManager" type="Area3D" parent="." unique_id=998711249]
@@ -1108,28 +1113,28 @@ bones/14/parent = 0
 bones/14/rest = Transform3D(-0.0002259016, -0.016929787, -0.9998568, 0.02235565, -0.99960685, 0.01692051, -0.9997501, -0.022348622, 0.00060428935, -0.12773079, -0.007861435, -0.004086226)
 bones/14/enabled = true
 bones/14/position = Vector3(-0.12773079, -0.007861435, -0.004086226)
-bones/14/rotation = Quaternion(-0.6691439, -0.21701536, 0.6730656, 0.22832751)
+bones/14/rotation = Quaternion(-0.7068905, -0.0019189186, 0.7071841, 0.013887984)
 bones/14/scale = Vector3(1, 1, 1.0000001)
 bones/15/name = "leg.L"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.9779703, -0.20874122, -0.0009815149, 0.20872608, 0.9779388, -0.008318305, 0.0026962343, 0.0079301875, 0.99996495, 8.458301e-10, 0.10475128, -1.5470505e-09)
 bones/15/enabled = true
 bones/15/position = Vector3(8.458301e-10, 0.10475128, -1.5470505e-09)
-bones/15/rotation = Quaternion(0.003942177, -0.0019090485, 0.057939228, 0.99831057)
+bones/15/rotation = Quaternion(0.004084716, -0.00092455104, 0.1049473, 0.994469)
 bones/15/scale = Vector3(0.9999999, 1, 1)
 bones/16/name = "thigh.R"
 bones/16/parent = 0
 bones/16/rest = Transform3D(-0.00022625923, 0.016930073, 0.99985677, -0.022355657, -0.99960685, 0.016920788, 0.9997501, -0.022348622, 0.00060465327, 0.12773076, -0.007861435, -0.004086226)
 bones/16/enabled = true
 bones/16/position = Vector3(0.12773076, -0.007861435, -0.004086226)
-bones/16/rotation = Quaternion(0.68476236, 0.18764253, 0.68183833, 0.17603227)
+bones/16/rotation = Quaternion(0.7068904, -0.0019188216, 0.7071842, -0.013888083)
 bones/16/scale = Vector3(1, 1, 1.0000001)
 bones/17/name = "leg.R"
 bones/17/parent = 16
 bones/17/rest = Transform3D(0.97797036, 0.20874122, 0.0009810154, -0.2087261, 0.9779388, -0.008317787, -0.0026956378, 0.007929786, 0.99996495, -4.3837645e-10, 0.10475129, 4.8194124e-09)
 bones/17/enabled = true
 bones/17/position = Vector3(-4.3837645e-10, 0.10475129, 4.8194124e-09)
-bones/17/rotation = Quaternion(0.004489965, -0.0023379328, -0.25834984, 0.9660382)
+bones/17/rotation = Quaternion(0.0040844847, 0.0009242756, -0.1049473, 0.994469)
 bones/17/scale = Vector3(0.99999994, 1, 1)
 
 [node name="otter" type="MeshInstance3D" parent="OtterSkeleton" unique_id=1924125088]

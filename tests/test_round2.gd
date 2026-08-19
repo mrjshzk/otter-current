@@ -11,7 +11,6 @@ func _run() -> void:
 	get_tree().root.add_child(level)
 	var spawner: WaveSpawner = level.get_node("WaveSpawner")
 	spawner.spawn_interval = 999.0
-	level.get_node("Current").queue_free()
 	var player: Player = level.get_node("Player")
 	await get_tree().physics_frame
 	await get_tree().physics_frame
@@ -22,10 +21,12 @@ func _run() -> void:
 	await _wait(1.5)
 	_check(player.water_movement._active_state == player.idle_state, "settled in idle")
 	_check(absf(player.global_position.y + 0.25) < 0.05, "idle bobs at swim depth")
+	_check(player.animation_player.current_animation == "otter_swim", "swim animation while in water")
 
 	_tap(player.jump_action)
 	await get_tree().physics_frame
 	_check(player.air_movement._active_state == player.rising_state, "jump -> rising")
+	_check(player.animation_player.current_animation == "otter_surfjump", "surfjump animation while jumping")
 	await _wait(2.0)
 	_check(player.water_movement._active_state == player.idle_state, "jump landed back to idle")
 	_tap(player.jump_action)
@@ -67,6 +68,7 @@ func _run() -> void:
 	air_wave.speed = 8.0
 	await _wait(0.3)
 	_check(player.inside_wave_movement._active_state == player.riding_state, "caught wave mid-air")
+	_check(player.animation_player.current_animation == "otter_surf", "surf animation while riding")
 	air_wave.queue_free()
 	await _wait(0.9)
 	_check(player.water_movement._active_state == player.idle_state, "back to water after air catch")
@@ -306,6 +308,45 @@ func _run() -> void:
 		_check(absf(spawned_wave.global_position.y) < 0.001, "wave spawned at sea level (y=0)")
 
 	spawner.queue_free()
+
+	# --- land moveset ---
+	# step into the movement mode context and interact to switch to land
+	var ctx: MovementModeContext = level.get_node("MovementModeContext")
+	player.global_position = Vector3(2.0, 0.7, 2.2)
+	await _wait(0.2)
+	var interact_action: GUIDEAction = player.get_node("InteractionManager").interact_action
+	interact_action._triggered(Vector3.ONE, 1.0 / 60.0)
+	interact_action._completed(Vector3.ZERO)
+	await get_tree().physics_frame
+	_check(player.land._active_state == player.idle_land, "interact switches to land")
+	_check(player.in_sea == false, "in_sea flag flips to land")
+	await _wait(1.5)
+	_check(player.is_on_floor(), "landed on the platform")
+	_check(player.animation_player.current_animation == "otter_idle", "land idle animation")
+
+	# walk forward (+X) on the platform
+	await _hold_walk(player, 0.6, Vector3(1, 0, 0))
+	_check(player.land._active_state == player.walk_land, "walk state entered")
+	_check(player.animation_player.current_animation == "otter_walk", "walk animation")
+	_check(player._horizontal_speed() > 2.0, "walking moves (%.1f m/s)" % player._horizontal_speed())
+	player.walk_action._completed(Vector3.ZERO)
+	await _wait(0.3)
+	_check(player.land._active_state == player.idle_land, "input released -> idle")
+	_check(player.animation_player.current_animation == "otter_idle", "land idle animation after stop")
+	_check(player._horizontal_speed() < 0.1, "stopped on land")
+
+	# walk off the platform edge -> falls into the sea -> auto-switch back to water
+	await _hold_walk(player, 0.6)
+	_check(player.global_position.z < 1.7, "walked off the platform edge (z=%.2f)" % player.global_position.z)
+	await _wait(1.8)
+	_check(player.in_sea == true, "auto-switched back to sea after falling in")
+	_check(player.water_movement._active_state == player.idle_state
+		or player.water_movement._active_state == player.moving_state, "swimming in the water again")
+	_check(absf(player.global_position.y + 0.25) < 0.2, "bobbing at swim depth after fall (y=%.2f)" % player.global_position.y)
+	_check(player.animation_player.current_animation == "otter_swim", "swim animation after falling in")
+	player.walk_action._completed(Vector3.ZERO)
+	player.current_velocity = Vector3.ZERO
+
 	level.queue_free()
 	await get_tree().physics_frame
 	if _failures.is_empty():
@@ -325,9 +366,9 @@ func _hold(action: GUIDEAction, seconds: float) -> void:
 		action._triggered(Vector3.ONE, 1.0 / 60.0)
 		await get_tree().physics_frame
 
-func _hold_walk(player: Player, seconds: float) -> void:
+func _hold_walk(player: Player, seconds: float, input: Vector3 = Vector3(0, -1, 0)) -> void:
 	for i in int(seconds * 60.0):
-		player.walk_action._triggered(Vector3(0, -1, 0), 1.0 / 60.0)
+		player.walk_action._triggered(input, 1.0 / 60.0)
 		await get_tree().physics_frame
 
 func _wait(seconds: float) -> void:

@@ -19,6 +19,8 @@ config/icon="res://icon.svg"
 
 GUIDE="*uid://p2jwrgjcbexr"
 Definitions="*uid://cglh8848lbkxg"
+DialogueManager="*uid://c3rodes2l3gxb"
+DeliveryManager="*uid://pksgbyg4spci"
 
 [display]
 
@@ -27,7 +29,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot_state_charts/plugin.cfg", "res://addons/guide/plugin.cfg")
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/godot_state_charts/plugin.cfg", "res://addons/guide/plugin.cfg")
 
 [file_customization]
 

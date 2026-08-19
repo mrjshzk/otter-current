@@ -105,6 +105,10 @@ class_name Player
 ## How long a dive press stays buffered so it can chain with a landing jump (dive-jump combo).
 @export var dive_buffer_time: float = 0.15
 
+@export_category("Land")
+@export var walk_speed: float = 4.0
+@export var walk_acceleration: float = 12.0
+
 @export_category("Rotation")
 @export var rotation_speed: float = 16.0
 ## How fast the body pitches for diving/falling.
@@ -149,21 +153,36 @@ func _ready() -> void:
 	jump_action.just_triggered.connect(func(): _jump_buffer = jump_buffer_time)
 	dive_action.just_triggered.connect(func(): _dive_buffer = dive_buffer_time)
 	
+	## animations
+	for state: AtomicState in [idle_state, moving_state, submerged_state, landing_state]:
+		state.state_entered.connect(_play_swim)
+	riding_state.state_entered.connect(_play_surf)
+	for state: AtomicState in [rising_state, falling_state, leap_state, diving_state]:
+		state.state_entered.connect(_play_surfjump)
+	
 	## land movement
 	idle_land.state_entered.connect(idle_land_state_entered)
 	walk_land.state_entered.connect(walk_land_state_entered)
 	idle_land.state_physics_processing.connect(idle_land_phy_process)
 	walk_land.state_physics_processing.connect(walk_land_phy_process)
 
+func _play_swim() -> void:
+	animation_player.play("otter_swim")
+
+func _play_surf() -> void:
+	animation_player.play("otter_surf")
+
+func _play_surfjump() -> void:
+	animation_player.play("otter_surfjump")
+
 func idle_land_state_entered():
 	animation_player.play("otter_idle")
 
-func idle_land_phy_process(_delta: float):
+func idle_land_phy_process(delta: float):
+	_apply_land_gravity(delta)
 	current_velocity.x = 0
 	current_velocity.z = 0
-	
-	## TODO: apply gravity if not grounded
-	
+
 	if !walk_action.value_axis_2d.is_zero_approx():
 		root_state_chart.send_event("moving")
 
@@ -171,9 +190,25 @@ func walk_land_state_entered():
 	animation_player.play("otter_walk")
 
 func walk_land_phy_process(delta: float):
-	## TODO: apply currently from the walk_action, apply gravity, and always rotate character towards direction
-	if walk_action.value_axis_2d.is_zero_approx():
+	_apply_land_gravity(delta)
+	var input := walk_action.value_axis_2d
+	if input.is_zero_approx():
 		root_state_chart.send_event("stopped")
+		return
+	var dir := get_move_direction(input)
+	var target := dir * walk_speed
+	current_velocity.x = lerp(current_velocity.x, target.x, walk_acceleration * delta)
+	current_velocity.z = lerp(current_velocity.z, target.z, walk_acceleration * delta)
+	_face_direction(dir, delta)
+
+func _apply_land_gravity(delta: float) -> void:
+	if not is_on_floor():
+		current_velocity.y -= gravity * delta
+	else:
+		current_velocity.y = 0.0
+	if global_position.y <= water_level_y:
+		in_sea = true
+		root_state_chart.send_event("switch_moveset")
 
 func _physics_process(delta: float) -> void:
 	_jump_buffer = maxf(0.0, _jump_buffer - delta)
