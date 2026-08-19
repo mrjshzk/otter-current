@@ -8,6 +8,7 @@ class_name Player
 @export var jump_action: GUIDEAction
 
 @onready var root_state_chart: StateChart = %RootStateChart
+@onready var animation_player: AnimationPlayer = %AnimationPlayer
 
 @onready var water_movement: CompoundState = %WaterMovement
 @onready var idle_state: AtomicState = %IdleState
@@ -23,6 +24,10 @@ class_name Player
 
 @onready var inside_wave_movement: CompoundState = %InsideWaveMovement
 @onready var riding_state: AtomicState = %RidingState
+
+@onready var land: CompoundState = %Land
+@onready var idle_land: AtomicState = %IdleLandState
+@onready var walk_land: AtomicState = %WalkLandState
 
 @onready var camera_rig: CameraRig = %CameraRig
 
@@ -116,6 +121,8 @@ var _launch_velocity: Vector3 = Vector3.ZERO
 var _air_boost_active := false
 var _submerged_vy := 0.0
 
+var in_sea := true
+
 func _ready() -> void:
 	GUIDE.enable_mapping_context(guide_context)
 	add_to_group(Definitions.PLAYER_GROUP)
@@ -141,6 +148,32 @@ func _ready() -> void:
 
 	jump_action.just_triggered.connect(func(): _jump_buffer = jump_buffer_time)
 	dive_action.just_triggered.connect(func(): _dive_buffer = dive_buffer_time)
+	
+	## land movement
+	idle_land.state_entered.connect(idle_land_state_entered)
+	walk_land.state_entered.connect(walk_land_state_entered)
+	idle_land.state_physics_processing.connect(idle_land_phy_process)
+	walk_land.state_physics_processing.connect(walk_land_phy_process)
+
+func idle_land_state_entered():
+	animation_player.play("otter_idle")
+
+func idle_land_phy_process(_delta: float):
+	current_velocity.x = 0
+	current_velocity.z = 0
+	
+	## TODO: apply gravity if not grounded
+	
+	if !walk_action.value_axis_2d.is_zero_approx():
+		root_state_chart.send_event("moving")
+
+func walk_land_state_entered():
+	animation_player.play("otter_walk")
+
+func walk_land_phy_process(delta: float):
+	## TODO: apply currently from the walk_action, apply gravity, and always rotate character towards direction
+	if walk_action.value_axis_2d.is_zero_approx():
+		root_state_chart.send_event("stopped")
 
 func _physics_process(delta: float) -> void:
 	_jump_buffer = maxf(0.0, _jump_buffer - delta)

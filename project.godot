@@ -93,3 +93,23 @@ player_position={
 "type": "vec3",
 "value": Vector3(0, 0, 10)
 }
+diffuse_curve={
+"type": "sampler2D",
+"value": ""
+}
+specular_smoothness={
+"type": "float",
+"value": 0.05
+}
+fresnel_smoothness={
+"type": "float",
+"value": 0.05
+}
+outline_color={
+"type": "color",
+"value": Color(0, 0, 0, 1)
+}
+outline_width={
+"type": "float",
+"value": 4.0
+}
