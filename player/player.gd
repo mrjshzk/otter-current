@@ -40,7 +40,7 @@ class_name Player
 
 @export_category("Air")
 @export var gravity: float = 18.0
-@export var jump_velocity: float = 6.0
+@export var jump_velocity: float = 7.5
 @export var air_control: float = 1.5
 ## Weak air control target speed (normal jumps).
 @export var air_control_max_speed: float = 4.0
@@ -55,7 +55,7 @@ class_name Player
 ## Rate of the high-speed aligned air boost.
 @export var air_boost_rate: float = 3.0
 ## Horizontal speed bleed while airborne. Higher = less floaty.
-@export var air_drag: float = 0.1
+@export var air_drag: float = 0.05
 
 @export_category("Diving")
 ## Allow diving from the water surface into a submerged state.
@@ -75,8 +75,15 @@ class_name Player
 @export var jump_off_directional_boost: float = 3.0
 ## Vertical velocity of the wave leap (small = shallow forward dive).
 @export var leap_velocity_y: float = 3.0
-## Horizontal speed retained per normal (non-wave) jump. Lower = chains die faster.
-@export var hop_speed_retention: float = 0.88
+## Horizontal speed retained per plain (non-dive) hop. Lower = momentum dies fast without the dive-jump combo.
+@export var hop_speed_retention: float = 0.6
+## Momentum kept when hopping with the dive+jump combo (crouch-jump).
+@export var dive_jump_speed_retention: float = 0.99
+## Extra speed added along the move input when landing a dive-jump hop (forward launch).
+@export var dive_jump_forward_boost: float = 2.5
+## Above this horizontal speed, diving in the water doesn't submerge: you keep gliding
+## and the next jump becomes a momentum-preserving hop (silent crouch-jump arm).
+@export var dive_glide_speed_threshold: float = 5.0
 ## Hard cap on horizontal speed (leap boosts, glide and steering respect it).
 @export var max_speed: float = 20.0
 
@@ -84,10 +91,14 @@ class_name Player
 ## Horizontal damping right after splashing into water. Low = keeps momentum (bunnyhop).
 @export var splash_damping: float = 1.2
 ## Horizontal damping while gliding at speed in the water (wave momentum carry).
-@export var glide_damping: float = 0.25
+@export var glide_damping: float = 0.18
 ## Speed bleed while moving fast in the water (no input-hold infinite gliding).
 @export var momentum_damping: float = 0.15
+## How far below the surface splash dives dip before bobbing back up.
+@export var splash_dip_depth: float = 0.6
 @export var jump_buffer_time: float = 0.15
+## How long a dive press stays buffered so it can chain with a landing jump (dive-jump combo).
+@export var dive_buffer_time: float = 0.15
 
 @export_category("Rotation")
 @export var rotation_speed: float = 16.0
@@ -96,6 +107,8 @@ class_name Player
 
 var current_velocity := Vector3.ZERO
 var _jump_buffer := 0.0
+var _dive_buffer := 0.0
+var _dive_jump_primed := false
 var _current_wave: OceanCurrent = null
 ## The wave the player jumped off. It can't grab the player again until they leave its area.
 var _jumped_from_wave: OceanCurrent = null
@@ -120,12 +133,18 @@ func _ready() -> void:
 	rising_state.state_entered.connect(_on_rising_entered)
 	leap_state.state_entered.connect(_on_leap_entered)
 	submerged_state.state_entered.connect(_on_submerged_entered)
-	water_movement.state_entered.connect(func(): _jumped_from_wave = null)
+	diving_state.state_entered.connect(func(): _dive_jump_primed = true)
+	water_movement.state_entered.connect(func():
+		_jumped_from_wave = null
+		_dive_jump_primed = false
+	)
 
 	jump_action.just_triggered.connect(func(): _jump_buffer = jump_buffer_time)
+	dive_action.just_triggered.connect(func(): _dive_buffer = dive_buffer_time)
 
 func _physics_process(delta: float) -> void:
 	_jump_buffer = maxf(0.0, _jump_buffer - delta)
+	_dive_buffer = maxf(0.0, _dive_buffer - delta)
 	if _jumped_from_wave != null and not is_instance_valid(_jumped_from_wave):
 		_jumped_from_wave = null
 	_apply_speed_cap()
@@ -172,13 +191,24 @@ func _try_jump() -> void:
 		_jump_buffer = 0.0
 		root_state_chart.send_event("jump")
 
+## Landing hop: jump alone keeps a little momentum; a dive earlier in the flight (or dive+jump here) keeps most of it.
+func _try_dive_jump() -> void:
+	if _jump_buffer > 0.0:
+		_jump_buffer = 0.0
+		_dive_jump_primed = _dive_jump_primed or _dive_buffer > 0.0
+		_dive_buffer = 0.0
+		root_state_chart.send_event("jump")
+
 func _try_catch_wave() -> void:
 	if is_instance_valid(_current_wave):
 		root_state_chart.send_event("wave_entered")
 
 func _try_dive() -> void:
 	if allow_underwater_dive and dive_action.is_triggered():
-		root_state_chart.send_event("dive")
+		if _horizontal_speed() > dive_glide_speed_threshold:
+			_dive_jump_primed = true
+		else:
+			root_state_chart.send_event("dive")
 
 func _horizontal_speed() -> float:
 	return Vector2(current_velocity.x, current_velocity.z).length()
@@ -190,8 +220,20 @@ func _glide_damping() -> float:
 func _on_rising_entered() -> void:
 	current_velocity.y = jump_velocity
 	_air_boost_active = false
-	current_velocity.x *= hop_speed_retention
-	current_velocity.z *= hop_speed_retention
+	var primed := _dive_jump_primed
+	var retention := dive_jump_speed_retention if primed else hop_speed_retention
+	current_velocity.x *= retention
+	current_velocity.z *= retention
+	if primed:
+		var boost_dir := get_move_direction(walk_action.value_axis_2d)
+		if boost_dir.is_zero_approx():
+			boost_dir = -transform.basis.z
+			boost_dir.y = 0.0
+			if not boost_dir.is_zero_approx():
+				boost_dir = boost_dir.normalized()
+		current_velocity += boost_dir * dive_jump_forward_boost
+		_apply_speed_cap()
+	_dive_jump_primed = false
 
 func _on_leap_entered() -> void:
 	_air_boost_active = true
@@ -203,13 +245,14 @@ func _on_leap_entered() -> void:
 
 func _on_submerged_entered() -> void:
 	_submerged_vy = clampf(current_velocity.y, wave_dive_velocity, underwater_dive_velocity)
+	_dive_jump_primed = false
 
 func _check_landing() -> void:
 	if global_position.y <= water_level_y and current_velocity.y < 0.0:
 		root_state_chart.send_event("landed")
 
 func _check_splash() -> void:
-	if global_position.y <= water_level_y and current_velocity.y < 0.0:
+	if global_position.y <= water_level_y - splash_dip_depth and current_velocity.y < 0.0:
 		root_state_chart.send_event("splash")
 
 ## Keeps the player bobbing at swim depth while in the water. Also levels the body.
@@ -323,8 +366,6 @@ func diving_state_phy_process(delta: float) -> void:
 	current_velocity.y = lerp(current_velocity.y, dive_velocity, 10.0 * delta)
 	_apply_air_control(delta)
 	_face_pitch(-75.0, delta)
-	if !dive_action.is_triggered():
-		root_state_chart.send_event("dive_released")
 	_check_splash()
 
 func leap_state_phy_process(delta: float) -> void:
@@ -340,7 +381,7 @@ func landing_state_phy_process(delta: float) -> void:
 	var damping := _glide_damping()
 	current_velocity.x = lerp(current_velocity.x, 0.0, damping * delta)
 	current_velocity.z = lerp(current_velocity.z, 0.0, damping * delta)
-	_try_jump()
+	_try_dive_jump()
 
 # --- Wave states ---
 
