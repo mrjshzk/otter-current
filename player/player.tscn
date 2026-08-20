@@ -14,17 +14,18 @@
 [ext_resource type="Shader" uid="uid://ceijfyg4nwlc0" path="res://shaders/toon_v2.gdshader" id="11_ebec5"]
 [ext_resource type="Script" uid="uid://c8o24q2h6crj" path="res://player/interaction_manager.gd" id="13_yllr7"]
 [ext_resource type="Resource" uid="uid://dqtqwbtwpsbyk" path="res://player/input/interact_action.tres" id="14_kb6p2"]
+[ext_resource type="Script" uid="uid://crkraxa0cqmnm" path="res://scripts/backpack/backpack.gd" id="15_wodsf"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sk68b"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ebec5"]
-radius = 1.5
+radius = 0.7
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yllr7"]
 render_priority = 0
 shader = ExtResource("11_ebec5")
 shader_parameter/backlight = Color(0, 0, 0, 1)
-shader_parameter/color = Color(1, 1, 1, 1)
+shader_parameter/color = Color(0.8992584, 0.8992584, 0.8992584, 1)
 shader_parameter/base_texture = ExtResource("11_2ieo8")
 shader_parameter/specular = Color(0.3, 0.3, 0.3, 0.5)
 shader_parameter/fresnel = Color(0.2, 0.2, 0.2, 0.3)
@@ -949,7 +950,7 @@ script = ExtResource("3_qjkh3")
 [node name="ToLand" type="Node" parent="RootStateChart/FsmRoot/InSea" unique_id=1497659637]
 script = ExtResource("5_qjkh3")
 to = NodePath("../../Land")
-event = &"switch_moveset"
+event = &"to_in_land"
 delay_in_seconds = "0.0"
 
 [node name="Land" type="Node" parent="RootStateChart/FsmRoot" unique_id=167499855]
@@ -980,13 +981,14 @@ delay_in_seconds = "0.0"
 [node name="ToInSea" type="Node" parent="RootStateChart/FsmRoot/Land" unique_id=182559789]
 script = ExtResource("5_qjkh3")
 to = NodePath("../../InSea")
-event = &"switch_moveset"
+event = &"to_in_sea"
 delay_in_seconds = "0.0"
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=1285703222]
 unique_name_in_owner = true
 script = ExtResource("6_rig")
-max_fov = 100.0
+base_fov = 70.0
+max_fov = 110.0
 shake_max_roll = 0.22
 
 [node name="Pivot" type="Node3D" parent="CameraRig" unique_id=570242237]
@@ -995,6 +997,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="SpringArm" type="SpringArm3D" parent="CameraRig/Pivot" unique_id=872001443]
 unique_name_in_owner = true
+collision_mask = 5
 spring_length = 3.0
 
 [node name="Camera3D" type="Camera3D" parent="CameraRig/Pivot/SpringArm" unique_id=1794410702]
@@ -1007,6 +1010,7 @@ script = ExtResource("13_yllr7")
 interact_action = ExtResource("14_kb6p2")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionManager" unique_id=393730814]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7411467, 0)
 shape = SubResource("SphereShape3D_ebec5")
 debug_color = Color(1, 0.6, 0.69803923, 0.41960785)
 
@@ -1016,7 +1020,7 @@ bones/0/name = "spine"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7252903e-09, 0.26390666, -0.0062328726)
 bones/0/enabled = true
-bones/0/position = Vector3(-3.7252903e-09, 0.26390666, -0.0062328726)
+bones/0/position = Vector3(-3.7252903e-09, 0.23135303, -0.0062328726)
 bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "torso"
@@ -1024,7 +1028,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, 0.2832107, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.2832107, 0)
-bones/1/rotation = Quaternion(0, 1.1920929e-07, 0, 1)
+bones/1/rotation = Quaternion(0, 0.26455736, 0, 0.96436995)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "head"
 bones/2/parent = 1
@@ -1087,7 +1091,7 @@ bones/10/parent = 9
 bones/10/rest = Transform3D(1, -8.6470536e-08, -7.906282e-09, 8.647061e-08, 0.98341995, 0.1813423, -7.905571e-09, -0.1813423, 0.98342, -1.0658141e-14, 0.2540713, 1.7763568e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-1.0658141e-14, 0.2540713, 1.7763568e-15)
-bones/10/rotation = Quaternion(-0.09104934, -1.85645e-13, 4.3415632e-08, 0.9958464)
+bones/10/rotation = Quaternion(-0.09100237, -0.025296379, -0.019792343, 0.99533266)
 bones/10/scale = Vector3(1, 0.9999999, 0.99999994)
 bones/11/name = "tail3"
 bones/11/parent = 10
@@ -1115,28 +1119,28 @@ bones/14/parent = 0
 bones/14/rest = Transform3D(-0.0002259016, -0.016929787, -0.9998568, 0.02235565, -0.99960685, 0.01692051, -0.9997501, -0.022348622, 0.00060428935, -0.12773079, -0.007861435, -0.004086226)
 bones/14/enabled = true
 bones/14/position = Vector3(-0.12773079, -0.007861435, -0.004086226)
-bones/14/rotation = Quaternion(-0.7068905, -0.0019189186, 0.7071841, 0.013887984)
+bones/14/rotation = Quaternion(-0.68069935, 0.20268485, 0.67751896, -0.1911423)
 bones/14/scale = Vector3(1, 1, 1.0000001)
 bones/15/name = "leg.L"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.9779703, -0.20874122, -0.0009815149, 0.20872608, 0.9779388, -0.008318305, 0.0026962343, 0.0079301875, 0.99996495, 8.458301e-10, 0.10475128, -1.5470505e-09)
 bones/15/enabled = true
 bones/15/position = Vector3(8.458301e-10, 0.10475128, -1.5470505e-09)
-bones/15/rotation = Quaternion(0.004084716, -0.00092455104, 0.1049473, 0.994469)
+bones/15/rotation = Quaternion(0.0048187915, 0.0059856125, 0.42548162, 0.9049345)
 bones/15/scale = Vector3(0.9999999, 1, 1)
 bones/16/name = "thigh.R"
 bones/16/parent = 0
 bones/16/rest = Transform3D(-0.00022625923, 0.016930073, 0.99985677, -0.022355657, -0.99960685, 0.016920788, 0.9997501, -0.022348622, 0.00060465327, 0.12773076, -0.007861435, -0.004086226)
 bones/16/enabled = true
 bones/16/position = Vector3(0.12773076, -0.007861435, -0.004086226)
-bones/16/rotation = Quaternion(0.7068904, -0.0019188216, 0.7071842, -0.013888083)
+bones/16/rotation = Quaternion(0.64494634, -0.27881125, 0.64990574, -0.28970867)
 bones/16/scale = Vector3(1, 1, 1.0000001)
 bones/17/name = "leg.R"
 bones/17/parent = 16
 bones/17/rest = Transform3D(0.97797036, 0.20874122, 0.0009810154, -0.2087261, 0.9779388, -0.008317787, -0.0026956378, 0.007929786, 0.99996495, -4.3837645e-10, 0.10475129, 4.8194124e-09)
 bones/17/enabled = true
 bones/17/position = Vector3(-4.3837645e-10, 0.10475129, 4.8194124e-09)
-bones/17/rotation = Quaternion(0.0040844847, 0.0009242756, -0.1049473, 0.994469)
+bones/17/rotation = Quaternion(0.0046852753, -0.004317736, -0.3496565, 0.93685627)
 bones/17/scale = Vector3(0.99999994, 1, 1)
 
 [node name="otter" type="MeshInstance3D" parent="OtterSkeleton" unique_id=1924125088]
@@ -1154,11 +1158,11 @@ settings/0/extend_end_bone = false
 settings/0/center_from = 0
 settings/0/individual_config = false
 settings/0/rotation_axis = 3
-settings/0/radius/value = 0.02
+settings/0/radius/value = 0.165
 settings/0/radius/damping_curve = null
-settings/0/stiffness/value = 1.0
+settings/0/stiffness/value = 0.65
 settings/0/stiffness/damping_curve = null
-settings/0/drag/value = 0.4
+settings/0/drag/value = 0.05
 settings/0/drag/damping_curve = null
 settings/0/gravity/value = 0.0
 settings/0/gravity/damping_curve = null
@@ -1173,3 +1177,7 @@ settings/0/exclude_collision_count = 0
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1606592942]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_wodsf")
+
+[node name="Backpack" type="Node3D" parent="." unique_id=237966807]
+script = ExtResource("15_wodsf")
+metadata/_custom_type_script = "uid://crkraxa0cqmnm"

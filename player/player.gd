@@ -109,11 +109,28 @@ class_name Player
 @export var walk_speed: float = 4.0
 @export var walk_acceleration: float = 12.0
 @export var footstep_interval: float = 0.35
+## How far the land-detection ray reaches downward from the player center.
+@export var land_check_distance: float = 1.2
+## Max water depth at the ground hit point that still counts as land (shallow shores).
+@export var shore_tolerance: float = 0.3
+## How high the body rests above the ground. The switch only fires when standing stays above water.
+@export var stand_height: float = 0.5
+## Grace period after switching to land during which the automatic back-to-sea check is suppressed
+## (lets gravity settle the body onto the shore before it rises above the water level).
+@export var land_settle_grace: float = 0.5
+## Ignore exits of the currently ridden wave within this window after it was entered. The rider is
+## glued to the wave's peak, so a real leave can only be a jump-off or the wave dying — a spurious
+## body_exited (boundary overlap) must never end a ride.
+@export var wave_exit_grace_ms: int = 120
 
 @export_category("Rotation")
 @export var rotation_speed: float = 16.0
 ## How fast the body pitches for diving/falling.
 @export var pitch_speed: float = 8.0
+
+@export_category("Visual")
+## Vertical offset applied to the otter mesh while swimming so the body sits in the water.
+@export var mesh_offset_y: float = -0.4
 
 const SPLASH_VFX := preload("res://scenes/vfx/splash.tscn")
 const WAKE_VFX := preload("res://scenes/vfx/wake.tscn")
@@ -133,6 +150,8 @@ var _submerged_vy := 0.0
 var _was_in_sea := true
 var _was_submerged := false
 var _land_step_timer := 0.0
+var _land_settle_time := 0.0
+var _wave_enter_time_ms := 0
 var _wake: GPUParticles3D
 var _bubbles: GPUParticles3D
 
@@ -189,6 +208,8 @@ func _ready() -> void:
 	_bubbles.emitting = false
 	_bubbles.visible = false
 
+	%OtterSkeleton.position.y = mesh_offset_y
+
 func _play_swim() -> void:
 	animation_player.play("otter_swim")
 
@@ -234,9 +255,11 @@ func _apply_land_gravity(delta: float) -> void:
 		current_velocity.y -= gravity * delta
 	else:
 		current_velocity.y = 0.0
-	if global_position.y <= water_level_y:
+	if _land_settle_time > 0.0:
+		_land_settle_time = maxf(0.0, _land_settle_time - delta)
+	if global_position.y <= water_level_y and _land_settle_time == 0.0:
 		in_sea = true
-		root_state_chart.send_event("switch_moveset")
+		root_state_chart.send_event("to_in_sea")
 
 func _physics_process(delta: float) -> void:
 	_jump_buffer = maxf(0.0, _jump_buffer - delta)
@@ -249,10 +272,14 @@ func _physics_process(delta: float) -> void:
 	current_velocity = velocity
 	RenderingServer.global_shader_parameter_set("player_position", self.global_position)
 	_update_water_effects()
+	_check_auto_land_switch()
 
 func on_wave_entered(wave: OceanCurrent) -> void:
+	if not in_sea:
+		return
 	if _jumped_from_wave != null and wave == _jumped_from_wave:
 		return
+	_wave_enter_time_ms = Time.get_ticks_msec()
 	_current_wave = wave
 	_wake.emitting = true
 	_wake.visible = true
@@ -261,6 +288,8 @@ func on_wave_entered(wave: OceanCurrent) -> void:
 
 func on_wave_exited(wave: OceanCurrent) -> void:
 	if _current_wave == wave:
+		if Time.get_ticks_msec() - _wave_enter_time_ms < wave_exit_grace_ms:
+			return
 		_current_wave = null
 		_wake.emitting = false
 		_wake.visible = false
@@ -270,6 +299,9 @@ func on_wave_exited(wave: OceanCurrent) -> void:
 func _update_water_effects() -> void:
 	if in_sea and not _was_in_sea:
 		_play_splash(global_position, SfxLibrary.SPLASH, 0.3)
+		%OtterSkeleton.position.y = mesh_offset_y
+	elif not in_sea and _was_in_sea:
+		%OtterSkeleton.position.y = 0.0
 	_was_in_sea = in_sea
 	var submerged := in_sea and global_position.y < water_level_y - splash_dip_depth * 0.5
 	if submerged and not _was_submerged:
@@ -379,6 +411,32 @@ func _on_submerged_entered() -> void:
 func _check_landing() -> void:
 	if global_position.y <= water_level_y and current_velocity.y < 0.0:
 		root_state_chart.send_event("landed")
+
+func _check_auto_land_switch() -> void:
+	if in_sea and not is_instance_valid(_current_wave):
+		if _ground_below_above_water():
+			_switch_to_land()
+
+func _ground_below_above_water() -> bool:
+	var query := PhysicsRayQueryParameters3D.create(
+		global_position,
+		global_position + Vector3.DOWN * land_check_distance,
+		1
+	)
+	query.exclude = [get_rid()]
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	return not hit.is_empty() \
+		and hit.position.y > water_level_y - shore_tolerance \
+		and hit.position.y + stand_height > water_level_y
+
+func _switch_to_land() -> void:
+	in_sea = false
+	_land_settle_time = land_settle_grace
+	_current_wave = null
+	_wake.emitting = false
+	_wake.visible = false
+	%OtterSkeleton.position.y = 0.0
+	root_state_chart.send_event("to_in_land")
 
 func _check_splash() -> void:
 	if global_position.y <= water_level_y - splash_dip_depth and current_velocity.y < 0.0:

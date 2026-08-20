@@ -16,21 +16,30 @@ func on_interact(player: Node) -> void:
 	var backpack := Backpack.from_player(player)
 	if backpack == null:
 		return
+
 	if backpack.add_snack(snack):
 		VFXManager.spawn(SPARKLE_VFX, global_position)
 		AudioManager.play_ui(SfxLibrary.CHIME, -4.0)
 		queue_free()
 
 func _update_visual() -> void:
-	if snack != null and snack.pickup_scene != null:
-		var visual := snack.pickup_scene.instantiate()
-		visual.name = "SnackVisual"
-		add_child(visual)
+	if snack == null:
+		return
+	var scene := snack.get_visual_scene()
+	if scene == null:
+		return
+	var visual := scene.instantiate()
+	if visual is SnackPickup:
+		visual.free()
+		push_error("Snack visual scene must not be a SnackPickup: %s" % snack.visual_scene_uid)
+		return
+	visual.name = "SnackVisual"
+	add_child(visual)
 
 ## Creates a pickup in the world. Used by the boss to place the snack at the shop.
-static func spawn(snack: Snack, parent: Node, at: Vector3) -> SnackPickup:
+static func spawn(s: Snack, parent: Node, at: Vector3) -> SnackPickup:
 	var pickup := SnackPickup.new()
-	pickup.snack = snack
+	pickup.snack = s
 	parent.add_child(pickup)
 	pickup.global_position = at
 	var collider := CollisionShape3D.new()

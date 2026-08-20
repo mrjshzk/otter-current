@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://jggg86p742ev"]
+
+[ext_resource type="Script" uid="uid://ceinjr4ibqckn" path="res://scripts/islands/island.gd" id="1_kaj1q"]
+[ext_resource type="PackedScene" uid="uid://k8054v2hv3kv" path="res://scenes/core_loop_prototype/test_npc.tscn" id="2_t6s8s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6s8s"]
+albedo_color = Color(0.27819774, 0.5447929, 5.7756904e-07, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk68b"]
+material = SubResource("StandardMaterial3D_t6s8s")
+size = Vector3(6, 1, 6)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_h6xu7"]
+data = PackedVector3Array(-3, 0.5, 3, 3, 0.5, 3, -3, -0.5, 3, 3, 0.5, 3, 3, -0.5, 3, -3, -0.5, 3, 3, 0.5, -3, -3, 0.5, -3, 3, -0.5, -3, -3, 0.5, -3, -3, -0.5, -3, 3, -0.5, -3, 3, 0.5, 3, 3, 0.5, -3, 3, -0.5, 3, 3, 0.5, -3, 3, -0.5, -3, 3, -0.5, 3, -3, 0.5, -3, -3, 0.5, 3, -3, -0.5, -3, -3, 0.5, 3, -3, -0.5, 3, -3, -0.5, -3, 3, 0.5, 3, -3, 0.5, 3, 3, 0.5, -3, -3, 0.5, 3, -3, 0.5, -3, 3, 0.5, -3, -3, -0.5, 3, 3, -0.5, 3, -3, -0.5, -3, 3, -0.5, 3, 3, -0.5, -3, -3, -0.5, -3)
+
+[node name="TestIsland" type="Marker3D" unique_id=1962706580 node_paths=PackedStringArray("customer")]
+script = ExtResource("1_kaj1q")
+island_name = "TestIsland"
+customer = NodePath("TestNpc")
+metadata/_custom_type_script = "uid://ceinjr4ibqckn"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=807164210]
+mesh = SubResource("BoxMesh_sk68b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=1339806676]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=1091332956]
+shape = SubResource("ConcavePolygonShape3D_h6xu7")
+
+[node name="TestNpc" parent="." unique_id=237381187 instance=ExtResource("2_t6s8s")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5019636, 0)

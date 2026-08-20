@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://belan52lw0pu7"]
+
+[ext_resource type="Shader" uid="uid://udmyg4sth3qy" path="res://shaders/stylized_sky.gdshader" id="1_lq6u6"]
+[ext_resource type="PackedScene" uid="uid://jggg86p742ev" path="res://scenes/core_loop_prototype/test_island.tscn" id="1_v7p0y"]
+[ext_resource type="PackedScene" uid="uid://lkwt02vsw551" path="res://scenes/core_loop_prototype/test_boss_island.tscn" id="2_imrlo"]
+[ext_resource type="Shader" uid="uid://cljuh57ahwsjo" path="res://shaders/water_v2.gdshader" id="3_imrlo"]
+[ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="4_5i1ex"]
+[ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="6_jdp0e"]
+[ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="7_0qfbd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5i1ex"]
+shader = ExtResource("1_lq6u6")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_jdp0e"]
+sky_material = SubResource("ShaderMaterial_5i1ex")
+
+[sub_resource type="Environment" id="Environment_0qfbd"]
+background_mode = 2
+sky = SubResource("Sky_jdp0e")
+ambient_light_source = 2
+ambient_light_color = Color(0.7204674, 0.7204675, 0.7204674, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmn6o"]
+render_priority = 0
+shader = ExtResource("3_imrlo")
+shader_parameter/absorption_color = Color(1, 0.35, 0, 1)
+shader_parameter/fresnel_radius = 2.0
+shader_parameter/fresnel_color = Color(0, 0.57, 0.72, 1)
+shader_parameter/roughness = 0.15
+shader_parameter/specular = 0.25
+shader_parameter/depth_distance = 25.0
+shader_parameter/beers_law = 4.5
+shader_parameter/displacement_strength = 0.3
+shader_parameter/displacement_scroll_speed = 0.1
+shader_parameter/displacement_scroll_offset = Vector2(-0.2, 0.3)
+shader_parameter/displacement_scale_offset = 0.5
+shader_parameter/displacement_scale = Vector2(0.04, 0.04)
+shader_parameter/edge_thickness = 0.3
+shader_parameter/edge_speed = 0.35
+shader_parameter/edge_noise_scale = Vector2(0.4, 0.4)
+shader_parameter/influence_size = 1.0
+shader_parameter/player_wave_frequenzy = 10.0
+shader_parameter/player_wave_speed = 5.0
+shader_parameter/caustic_size = 2.0
+shader_parameter/caustic_range = 40.0
+shader_parameter/caustic_strength = 0.08
+shader_parameter/ssr_mix_strength = 0.65
+shader_parameter/ssr_travel = 100.0
+shader_parameter/ssr_resolution_near = 1.0
+shader_parameter/ssr_resolution_far = 5.0
+shader_parameter/ssr_tolerance = 1.0
+shader_parameter/refraction_strength = 1.25
+shader_parameter/normal_map_strength = 1.0
+shader_parameter/scroll_speed = 0.3
+shader_parameter/scroll_offset = Vector2(0.1, -0.3)
+shader_parameter/scale_offset = 0.5
+shader_parameter/normal_map_scale = Vector2(0.1, 0.1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sk68b"]
+material = SubResource("ShaderMaterial_hmn6o")
+size = Vector2(100, 100)
+
+[node name="CoreLoopPrototype" type="Node3D" unique_id=612473099]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1038213911]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=347790644]
+environment = SubResource("Environment_0qfbd")
+
+[node name="TestIsland" parent="." unique_id=1962706580 instance=ExtResource("1_v7p0y")]
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, -14, 0, -11)
+
+[node name="TestBossIsland" parent="." unique_id=21733024 instance=ExtResource("2_imrlo")]
+
+[node name="TestNpc" parent="TestBossIsland" index="1" unique_id=270855070 node_paths=PackedStringArray("pickup_spawn_point", "target_customer")]
+pickup_spawn_point = NodePath("../../Spawn")
+target_customer = NodePath("../../TestIsland/TestNpc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1812750347]
+mesh = SubResource("PlaneMesh_sk68b")
+
+[node name="Spawn" type="Marker3D" parent="." unique_id=847506048]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5060272, 0.5000001, -0.099521875)
+
+[node name="Player" parent="." unique_id=741711365 instance=ExtResource("4_5i1ex")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.84520936, 0, -5.0139184)
+
+[node name="TargetWaveManager" type="Node3D" parent="." unique_id=2072990145 node_paths=PackedStringArray("player")]
+script = ExtResource("6_jdp0e")
+wave_scene = ExtResource("7_0qfbd")
+player = NodePath("../Player")
+metadata/_custom_type_script = "uid://8n4ubq0rsopv"
+
+[editable path="TestIsland"]
+[editable path="TestBossIsland"]

@@ -3,7 +3,6 @@ class_name InteractionManager
 
 @export var interact_action: GUIDEAction
 @onready var player: Player = get_parent()
-@onready var root_state_chart: StateChart = %RootStateChart
 
 var _interactables: Array[CollisionObject3D] = []
 
@@ -47,13 +46,6 @@ func on_interact_pressed() -> void:
 	var current_object := _nearest_interactable()
 	if current_object == null:
 		return
-	
+
 	if current_object.has_method("on_interact"):
 		current_object.on_interact(player)
-		return
-
-	if is_instance_of(current_object, MovementModeContext):
-		var ctx = current_object as MovementModeContext
-		player.global_position = ctx.get_tp_position(player.in_sea)
-		player.in_sea = !player.in_sea
-		root_state_chart.send_event("switch_moveset")

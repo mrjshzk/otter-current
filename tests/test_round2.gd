@@ -285,6 +285,34 @@ func _run() -> void:
 	player.current_velocity = Vector3.ZERO
 	await _wait(0.2)
 
+	# ride stability: a ride persists on its own without flickering out
+	var stable_wave: OceanCurrent = wave_scene.instantiate()
+	level.add_child(stable_wave)
+	await get_tree().physics_frame
+	stable_wave.global_position = player.global_position
+	stable_wave.wave_direction = Vector3(0, 0, -1)
+	stable_wave.speed = 8.0
+	await _wait(0.3)
+	_check(player.inside_wave_movement._active_state == player.riding_state, "riding for stability test")
+	await _wait(1.7)
+	_check(player.inside_wave_movement._active_state == player.riding_state, "ride persists without flicker (2s)")
+
+	# transfer: a faster wave catching up must hand the ride over, not drop it
+	var chaser: OceanCurrent = wave_scene.instantiate()
+	level.add_child(chaser)
+	await get_tree().physics_frame
+	chaser.global_position = stable_wave.global_position + Vector3(0, 0, 4)
+	chaser.wave_direction = Vector3(0, 0, -1)
+	chaser.speed = 12.0
+	await _wait(2.0)
+	_check(player.inside_wave_movement._active_state == player.riding_state, "faster wave transfer keeps riding")
+	stable_wave.queue_free()
+	chaser.queue_free()
+	await _wait(0.9)
+	_check(player.water_movement._active_state == player.idle_state, "back to water after stability waves")
+	player.current_velocity = Vector3.ZERO
+	await _wait(0.2)
+
 	# any dive in the air is a committed splash dive (no windup threshold)
 	_tap(player.jump_action)
 	await _wait(0.5)
@@ -309,18 +337,18 @@ func _run() -> void:
 
 	spawner.queue_free()
 
-	# --- land moveset ---
-	# step into the movement mode context and interact to switch to land
-	var ctx: MovementModeContext = level.get_node("MovementModeContext")
-	player.global_position = Vector3(2.0, 0.7, 2.2)
-	await _wait(0.2)
-	var interact_action: GUIDEAction = player.get_node("InteractionManager").interact_action
-	interact_action._triggered(Vector3.ONE, 1.0 / 60.0)
-	interact_action._completed(Vector3.ZERO)
+	# --- land moveset (automatic) ---
+	# landing on solid ground above the water auto-switches to the land moveset
+	player.global_position = Vector3(2.0, -0.25, 1.0)
+	player.current_velocity = Vector3.ZERO
+	await _wait(0.5)
+	_tap(player.jump_action)
 	await get_tree().physics_frame
-	_check(player.land._active_state == player.idle_land, "interact switches to land")
-	_check(player.in_sea == false, "in_sea flag flips to land")
+	_check(player.air_movement._active_state == player.rising_state, "jump from water for land switch")
+	player.global_position = Vector3(2.0, 1.5, 2.2)
 	await _wait(1.5)
+	_check(player.land._active_state == player.idle_land, "auto-switched to land on platform")
+	_check(player.in_sea == false, "in_sea flag flips to land")
 	_check(player.is_on_floor(), "landed on the platform")
 	_check(player.animation_player.current_animation == "otter_idle", "land idle animation")
 
@@ -346,6 +374,36 @@ func _run() -> void:
 	_check(player.animation_player.current_animation == "otter_swim", "swim animation after falling in")
 	player.walk_action._completed(Vector3.ZERO)
 	player.current_velocity = Vector3.ZERO
+
+	# shallow shore: swimming over ground just under the surface switches to land and STAYS
+	player.shore_tolerance = 0.5
+	var beach := StaticBody3D.new()
+	beach.name = "Beach"
+	level.add_child(beach)
+	var beach_collider := CollisionShape3D.new()
+	var beach_box := BoxShape3D.new()
+	beach_box.size = Vector3(4.0, 0.2, 4.0)
+	beach_collider.shape = beach_box
+	beach.add_child(beach_collider)
+	beach.global_position = Vector3(2.0, -0.45, 12.0)
+	player.global_position = Vector3(2.0, -0.25, 12.0)
+	player.current_velocity = Vector3.ZERO
+	await _wait(1.5)
+	_check(player.land._active_state == player.idle_land, "shallow shore switches to land")
+	_check(player.in_sea == false, "shallow shore stays on land (no flicker)")
+	_check(player.is_on_floor(), "standing on the shallow shore")
+	await _wait(0.5)
+	_check(player.land._active_state == player.idle_land, "shallow shore switch is stable")
+	_check(player.animation_player.current_animation == "otter_idle", "shore land idle animation")
+
+	# walk off the shore -> falls back into the sea
+	await _hold_walk(player, 0.8)
+	player.walk_action._completed(Vector3.ZERO)
+	await _wait(1.5)
+	_check(player.in_sea == true, "walked off shore back to sea")
+	_check(player.water_movement._active_state == player.idle_state, "swimming after leaving shore")
+	player.shore_tolerance = 0.3
+	beach.queue_free()
 
 	level.queue_free()
 	await get_tree().physics_frame

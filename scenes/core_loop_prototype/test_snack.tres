@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Snack" format=3 uid="uid://dv6ghqt368r48"]
+
+[ext_resource type="Script" uid="uid://craydiqj83rk3" path="res://scripts/snacks/snack.gd" id="1_snack"]
+[ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="2_icon"]
+
+[resource]
+script = ExtResource("1_snack")
+snack_name = "Test Snack"
+icon = ExtResource("2_icon")
+visual_scene_uid = "uid://b1umx2wf8fba8"
