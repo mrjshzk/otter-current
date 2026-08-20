@@ -24,14 +24,21 @@ fog_density = 0.0645
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
 render_priority = 0
 shader = ExtResource("1_qkken")
-shader_parameter/WATER_COL = Color(0.04, 0.38, 0.88, 1)
-shader_parameter/WATER2_COL = Color(0.04, 0.35, 0.78, 1)
-shader_parameter/FOAM_COL = Color(0.8125, 0.9609, 0.9648, 1)
-shader_parameter/distortion_speed = 2.0
-shader_parameter/tile = Vector2(1000, 1000)
-shader_parameter/height = 0.5
-shader_parameter/wave_size = Vector2(2, 2)
-shader_parameter/wave_speed = 1.2
+shader_parameter/time_speed = 1.0
+shader_parameter/surface_speed = 1.0
+shader_parameter/spin = 0.0
+shader_parameter/brightness = 0.6
+shader_parameter/color_intensity = 0.0
+shader_parameter/horizontal_frequency = 2.0
+shader_parameter/vertical_frequency = 2.0
+shader_parameter/size = 3.0
+shader_parameter/banding_bias = 0.6
+shader_parameter/wave_height = 0.5
+shader_parameter/texture_height = 0.5
+shader_parameter/color1 = Color(0.59, 0.761, 1, 1)
+shader_parameter/color2 = Color(0.274, 0.474, 0.98, 1)
+shader_parameter/color3 = Color(0.059, 0.389, 0.85, 1)
+shader_parameter/color4 = Color(0, 0.267, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sk68b"]
 material = SubResource("ShaderMaterial_water")

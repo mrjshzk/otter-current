@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="4_5i1ex"]
 [ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="6_jdp0e"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="7_0qfbd"]
+[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/Cabin.glb" id="8_k4sq1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5i1ex"]
 shader = ExtResource("1_lq6u6")
@@ -120,6 +121,9 @@ script = ExtResource("6_jdp0e")
 wave_scene = ExtResource("7_0qfbd")
 player = NodePath("../Player")
 metadata/_custom_type_script = "uid://8n4ubq0rsopv"
+
+[node name="Cabin2" parent="." unique_id=1714199283 instance=ExtResource("8_k4sq1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.1053615, -0.08599353, 0)
 
 [editable path="TestIsland"]
 [editable path="TestBossIsland"]
