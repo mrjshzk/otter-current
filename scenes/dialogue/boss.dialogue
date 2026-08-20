@@ -1,7 +1,7 @@
 ~ take_this
 Boss: Ola sou o chefe
 
-Boss: Leva {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.target_customer.npc_name}}.
+Boss: Leva {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.get_delivery_target_name()}}.
 
 Boss: Nao me desiludas!
 
@@ -10,7 +10,7 @@ Boss: Nao me desiludas!
 ~ welcome_back
 Boss: Bem vindo de volta
 
-Boss: A tua proxima entrega: {{DeliveryManager.current_snack.snack_name}} para {{DeliveryManager.target_customer.npc_name}}.
+Boss: A tua proxima entrega: {{DeliveryManager.current_snack.snack_name}} para {{DeliveryManager.get_delivery_target_name()}}.
 
 Boss: Agora toca a andar!
 
@@ -19,7 +19,7 @@ Boss: Agora toca a andar!
 ~ already_have_snack
 Boss: Ja tens um entrega ativa!
 
-Boss: Foca te a entregar {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.target_customer.npc_name}} primeiro.
+Boss: Foca te a entregar {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.get_delivery_target_name()}} primeiro.
 
 => END
 

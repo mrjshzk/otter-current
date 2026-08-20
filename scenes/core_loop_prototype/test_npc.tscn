@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://k8054v2hv3kv"]
 
 [ext_resource type="Script" uid="uid://dhevukq8a5q1m" path="res://scripts/npc/npc.gd" id="1_2h8qi"]
-[ext_resource type="Resource" uid="uid://dv6ghqt368r48" path="res://scenes/core_loop_prototype/test_snack.tres" id="2_tw3wq"]
+[ext_resource type="Resource" path="res://scenes/core_loop_prototype/test_customer.tres" id="2_tw3wq"]
 [ext_resource type="Texture2D" uid="uid://hxmc2x2aoslg" path="res://assets/otter_ottertexture.png" id="4_6ptc6"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sk68b"]
@@ -756,7 +756,7 @@ size = Vector3(0.5979004, 1.3702393, 0.77856445)
 
 [node name="TestNpc" type="Area3D" unique_id=237381187]
 script = ExtResource("1_2h8qi")
-accepted_snack = ExtResource("2_tw3wq")
+customer = ExtResource("2_tw3wq")
 metadata/_custom_type_script = "uid://dhevukq8a5q1m"
 
 [node name="OtterSkeleton" type="Skeleton3D" parent="." unique_id=511491747]

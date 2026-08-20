@@ -4,26 +4,26 @@ class_name BossNPC
 @export var snack_options: Array[Snack] = []
 ## Where a new snack pickup appears for the player to take.
 @export var pickup_spawn_point: Node3D = null
-## The customer the player has to deliver the assigned snack to.
-@export var target_customer: NPC = null
 
 var has_met := false
 
 func _ready() -> void:
 	super()
-	if DeliveryManager.home_island == null and get_parent() is Island:
-		DeliveryManager.home_island = get_parent() as Island
 
 func on_interact(player: Node) -> void:
 	var backpack := Backpack.from_player(player)
 	if DeliveryManager.is_delivering() or (backpack != null and backpack.has_snack()):
 		_talk(player, &"already_have_snack")
 		return
-	if target_customer == null or snack_options.is_empty():
+	if snack_options.is_empty():
 		_talk(player, &"not_configured")
 		return
 	var snack: Snack = snack_options.pick_random()
-	DeliveryManager.start_delivery(snack, target_customer)
+	var info := DeliveryManager.get_npc_info_from_snack(snack)
+	if info.is_empty() or info["customer"] == null:
+		_talk(player, &"not_configured")
+		return
+	DeliveryManager.start_delivery(snack, info["customer"])
 	_spawn_pickup(snack)
 	var first_meeting := not has_met
 	has_met = true

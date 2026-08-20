@@ -758,7 +758,6 @@ size = Vector3(0.5979004, 1.3702393, 0.77856445)
 [node name="TestNpc" type="Area3D" unique_id=270855070]
 script = ExtResource("1_07vmx")
 snack_options = Array[ExtResource("2_ltk1m")]([ExtResource("2_07vmx")])
-accepted_snack = ExtResource("2_07vmx")
 metadata/_custom_type_script = "uid://fea2o3yao387"
 
 [node name="OtterSkeleton" type="Skeleton3D" parent="." unique_id=511491747]

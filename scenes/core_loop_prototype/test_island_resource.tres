@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="IslandResource" format=3]
+
+[ext_resource type="Script" path="res://scripts/islands/island_resource.gd" id="1_island"]
+[ext_resource type="Resource" path="res://scenes/core_loop_prototype/test_customer.tres" id="2_cust"]
+
+[resource]
+script = ExtResource("1_island")
+island_name = "TestIsland"
+customer = ExtResource("2_cust")

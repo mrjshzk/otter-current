@@ -22,14 +22,26 @@ class_name TargetWaveManager
 @export var delivery_speed_multiplier: float = 1.2
 
 var _timer := 0.0
+var _island_positions: Array[Vector3] = []
+var _island_radii: Array[float] = []
 
 func _ready() -> void:
 	if player == null:
 		var players := get_tree().get_nodes_in_group(Definitions.PLAYER_GROUP)
 		if not players.is_empty():
 			player = players[0]
+	_refresh_islands()
 	for i in initial_waves:
 		_spawn_wave()
+
+## Islands are static, so their positions/radii can be cached once.
+func _refresh_islands() -> void:
+	_island_positions.clear()
+	_island_radii.clear()
+	for island in get_tree().get_nodes_in_group(Definitions.ISLANDS_GROUP):
+		if island is Island:
+			_island_positions.append(island.global_position)
+			_island_radii.append(island.collision_radius)
 
 func _physics_process(delta: float) -> void:
 	var interval := delivery_spawn_interval if DeliveryManager.is_delivering() else spawn_interval
@@ -37,6 +49,25 @@ func _physics_process(delta: float) -> void:
 	if _timer >= interval:
 		_timer = 0.0
 		_spawn_wave()
+	for wave in get_children():
+		if not is_instance_valid(wave):
+			continue
+		if _hit_island(wave.global_position):
+			_destroy_wave(wave)
+
+func _hit_island(pos: Vector3) -> bool:
+	for i in _island_positions.size():
+		var center := _island_positions[i]
+		var distance := Vector2(pos.x - center.x, pos.z - center.z).length()
+		if distance <= _island_radii[i]:
+			return true
+	return false
+
+func _destroy_wave(wave: OceanCurrent) -> void:
+	if player is Player:
+		player.force_wave_jump_off(wave)
+	# TODO: play a wave-destroy animation and VFX here before freeing.
+	wave.queue_free()
 
 func _spawn_wave() -> void:
 	if wave_scene == null or player == null:
@@ -54,11 +85,15 @@ func _spawn_wave() -> void:
 		wave.speed *= delivery_speed_multiplier
 
 func _pick_travel_direction() -> Vector3:
-	var target := DeliveryManager.target_position()
-	if player == null or target.is_zero_approx() or player.global_position.distance_to(target) < 1.0:
+	var aim := player.global_position if player != null else Vector3.ZERO
+	if DeliveryManager.is_delivering() or DeliveryManager.is_returning():
+		var target := DeliveryManager.target_position()
+		if not target.is_zero_approx():
+			aim = target
+	if player == null or aim.is_zero_approx() or player.global_position.distance_to(aim) < 1.0:
 		return _random_heading()
-	var to_target := (target - player.global_position).normalized()
-	var heading := atan2(-to_target.x, -to_target.z)
+	var to_aim := (aim - player.global_position).normalized()
+	var heading := atan2(-to_aim.x, -to_aim.z)
 	var spread := deg_to_rad(target_cone_degrees * 0.5)
 	if randf() < toward_target_chance:
 		heading += randf_range(-spread, spread)

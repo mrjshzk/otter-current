@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://jggg86p742ev"]
 
 [ext_resource type="Script" uid="uid://ceinjr4ibqckn" path="res://scripts/islands/island.gd" id="1_kaj1q"]
+[ext_resource type="Resource" path="res://scenes/core_loop_prototype/test_island_resource.tres" id="3_res"]
 [ext_resource type="PackedScene" uid="uid://k8054v2hv3kv" path="res://scenes/core_loop_prototype/test_npc.tscn" id="2_t6s8s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6s8s"]
@@ -13,10 +14,9 @@ size = Vector3(6, 1, 6)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_h6xu7"]
 data = PackedVector3Array(-3, 0.5, 3, 3, 0.5, 3, -3, -0.5, 3, 3, 0.5, 3, 3, -0.5, 3, -3, -0.5, 3, 3, 0.5, -3, -3, 0.5, -3, 3, -0.5, -3, -3, 0.5, -3, -3, -0.5, -3, 3, -0.5, -3, 3, 0.5, 3, 3, 0.5, -3, 3, -0.5, 3, 3, 0.5, -3, 3, -0.5, -3, 3, -0.5, 3, -3, 0.5, -3, -3, 0.5, 3, -3, -0.5, -3, -3, 0.5, 3, -3, -0.5, 3, -3, -0.5, -3, 3, 0.5, 3, -3, 0.5, 3, 3, 0.5, -3, -3, 0.5, 3, -3, 0.5, -3, 3, 0.5, -3, -3, -0.5, 3, 3, -0.5, 3, -3, -0.5, -3, 3, -0.5, 3, 3, -0.5, -3, -3, -0.5, -3)
 
-[node name="TestIsland" type="Marker3D" unique_id=1962706580 node_paths=PackedStringArray("customer")]
+[node name="TestIsland" type="Marker3D" unique_id=1962706580]
 script = ExtResource("1_kaj1q")
-island_name = "TestIsland"
-customer = NodePath("TestNpc")
+resource = ExtResource("3_res")
 metadata/_custom_type_script = "uid://ceinjr4ibqckn"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=807164210]

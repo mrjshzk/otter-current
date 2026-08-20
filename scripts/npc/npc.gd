@@ -7,8 +7,8 @@ signal talked(player: Node, npc: NPC, cue: StringName)
 signal snack_received(player: Node, npc: NPC, snack: Snack)
 
 @export var npc_name: String = ""
-## The snack this NPC accepts as a delivery.
-@export var accepted_snack: Snack = null
+## Data resource describing this NPC as a delivery customer (name + snack).
+@export var customer: CustomerNPC = null
 ## Used by the dialogue system at a later stage.
 @export var dialogue: DialogueResource = null
 
@@ -26,7 +26,7 @@ func on_interact(player: Node) -> void:
 		return
 	if backpack.has_snack():
 		var delivered := backpack.snack
-		if delivered == accepted_snack:
+		if customer != null and delivered == customer.snack:
 			backpack.remove_snack()
 			DeliveryManager.complete_delivery()
 			snack_received.emit(player, self, delivered)
@@ -42,7 +42,7 @@ func on_interact(player: Node) -> void:
 			_talk(player, &"greeting")
 
 func _is_delivery_target() -> bool:
-	return DeliveryManager.is_delivering() and DeliveryManager.target_customer == self
+	return DeliveryManager.is_delivering() and DeliveryManager.target_customer == customer
 
 func _talk(player: Node, cue: StringName) -> void:
 	if cue == &"wrong_snack":

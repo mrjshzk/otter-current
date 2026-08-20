@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://lkwt02vsw551"]
 
 [ext_resource type="Script" uid="uid://ceinjr4ibqckn" path="res://scripts/islands/island.gd" id="1_fyej6"]
+[ext_resource type="Resource" path="res://scenes/core_loop_prototype/test_home_island_resource.tres" id="3_res"]
 [ext_resource type="PackedScene" uid="uid://cl6ucoat2267e" path="res://scenes/core_loop_prototype/test_boss.tscn" id="2_pvm16"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pvm16"]
@@ -15,7 +16,7 @@ data = PackedVector3Array(-3, 0.5, 3, 3, 0.5, 3, -3, -0.5, 3, 3, 0.5, 3, 3, -0.5
 
 [node name="TestBossIsland" type="Marker3D" unique_id=21733024]
 script = ExtResource("1_fyej6")
-island_name = "TessBossIsland"
+resource = ExtResource("3_res")
 metadata/_custom_type_script = "uid://ceinjr4ibqckn"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=308131458]

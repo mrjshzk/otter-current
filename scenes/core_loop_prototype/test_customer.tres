@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CustomerNPC" format=3]
+
+[ext_resource type="Script" path="res://scripts/delivery/customer_npc.gd" id="1_cust"]
+[ext_resource type="Resource" uid="uid://dv6ghqt368r48" path="res://scenes/core_loop_prototype/test_snack.tres" id="2_snack"]
+
+[resource]
+script = ExtResource("1_cust")
+npc_name = "TestNpc"
+snack = ExtResource("2_snack")

@@ -608,3 +608,21 @@ func riding_state_phy_process(delta: float) -> void:
 		_jumped_from_wave = _current_wave
 		_current_wave = null
 		root_state_chart.send_event("jump_off")
+
+## The wave the player is riding is about to be destroyed (e.g. island collision).
+## Forces the player off with a jump before the wave is freed.
+func force_wave_jump_off(wave: OceanCurrent) -> void:
+	if not in_sea or _current_wave != wave or not is_instance_valid(wave):
+		return
+	var wave_velocity := wave.get_velocity()
+	var boost := Vector3.ZERO
+	if not walk_action.value_axis_2d.is_zero_approx():
+		boost = get_move_direction(walk_action.value_axis_2d) * jump_off_directional_boost
+	_launch_velocity = wave_velocity * jump_off_speed_multiplier + boost
+	_launch_velocity.y = leap_velocity_y
+	_jumped_from_wave = wave
+	_current_wave = null
+	_jump_buffer = 0.0
+	_wake.emitting = false
+	_wake.visible = false
+	root_state_chart.send_event("jump_off")
