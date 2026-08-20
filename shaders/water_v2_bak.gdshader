@@ -5,24 +5,16 @@ render_mode shadows_disabled;
 #define FRESNEL
 #define PLAYER_WAVES
 #define DISPLACEMENT
-//#define SSR
-#define DEPTH_TINT
-#define FOAM
+#define SSR
 
 group_uniforms color;
-uniform vec3 absorption_color : source_color = vec3(0.55, 0.45, 0.35);
+uniform vec3 absorption_color : source_color = vec3(1.0, 0.35, 0.0);
 #ifdef FRESNEL
 uniform float fresnel_radius : hint_range(0.0, 6.0, 0.01) = 2.0;
-uniform vec3 fresnel_color : source_color = vec3(0.1, 0.5, 0.62);
+uniform vec3 fresnel_color : source_color = vec3(0.0, 0.57, 0.72);
 #endif
 uniform float roughness : hint_range(0.0, 1.0, 0.01) = 0.15;
 uniform float specular : hint_range(0.0, 1.0, 0.01) = 0.25;
-
-#ifdef DEPTH_TINT
-group_uniforms water_color;
-uniform vec3 deep_color : source_color = vec3(0.02, 0.18, 0.32);
-uniform float deep_color_mix : hint_range(0.0, 1.0, 0.01) = 1.0;
-#endif
 // Depth adjustment
 uniform float depth_distance : hint_range(0.0, 50.0, 0.1) = 25.0;
 uniform float beers_law : hint_range(0.0, 20.0, 0.1) = 4.5;
@@ -75,18 +67,6 @@ uniform vec2 scroll_offset = vec2(0.1, -0.3);
 uniform float scale_offset = 0.5;
 uniform vec2 normal_map_scale = vec2(0.1);
 uniform sampler2D normal_map : hint_normal, filter_linear_mipmap;
-
-#ifdef FOAM
-group_uniforms foam;
-uniform sampler2D foam_texture : source_color, repeat_enable;
-uniform float foam_strength : hint_range(0.0, 1.0, 0.01) = 0.6;
-uniform float foam_speed : hint_range(0.0, 2.0, 0.01) = 0.3;
-uniform vec2 foam_offset = vec2(0.2, 0.35);
-uniform float foam_scale : hint_range(0.0, 8.0, 0.1) = 0.8;
-uniform float foam_threshold : hint_range(0.0, 1.0, 0.01) = 0.65;
-uniform float foam_softness : hint_range(0.01, 0.5, 0.01) = 0.2;
-uniform vec3 foam_color : source_color = vec3(0.85, 0.96, 1.0);
-#endif
 
 // Hidden Uniforms
 global uniform float wind_intensity; // Global shader parameter between 0.0 and 1.0
@@ -345,11 +325,7 @@ void fragment() {
 	#endif
 
 	vec3 color = clamp(screen - absorption_color.rgb * depth_blend, vec3(0.0), vec3(1.0)); // Absorb Screen Color
-	#ifdef DEPTH_TINT
-	color = mix(color, deep_color, depth_blend * deep_color_mix); // Apply depth color
-	#else
 	color = mix(color, opposing_color, depth_blend*depth_blend); // Apply depth color
-	#endif
 	#ifdef FRESNEL
 	color = mix(color, fresnel_color, fresnel_value); // Apply fresnel color
 	#endif
@@ -358,14 +334,6 @@ void fragment() {
 	#endif
 	#ifdef SSR
 	color = mix(color, sampled_color, alpha_hit * (1.0 - roughness) * ssr_mix_strength);
-	#endif
-	#ifdef FOAM
-	float foam_time = TIME * foam_speed;
-	vec2 foam_uv = global_position.xz * foam_scale + foam_offset * foam_time;
-	float foam_n1 = texture(foam_texture, foam_uv).r;
-	float foam_n2 = texture(foam_texture, global_position.xz * foam_scale * 2.0 - foam_offset * foam_time * 1.3).g;
-	float foam_mask = smoothstep(foam_threshold, foam_threshold + foam_softness, (foam_n1 + foam_n2) * 0.5);
-	color = mix(color, foam_color, foam_mask * foam_strength); // Apply Whitecaps
 	#endif
 	color = mix(color, vec3(0.98), ripple_mask); // Apply Ripples
 	ALBEDO = color;

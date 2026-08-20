@@ -2,9 +2,14 @@ extends Area3D
 class_name OceanCurrent
 
 @export var _peak_position_node: Node3D
-@export var wave_direction: Vector3
+@export var wave_direction: Vector3:
+	set(value):
+		wave_direction = value
+		_face_direction()
 @export var speed: float = 10.0
 @export var lifetime: float = 60.0
+
+@onready var _wave_visual: Node3D = $Wave
 
 var _lifetime_left: float
 
@@ -12,6 +17,11 @@ func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	_lifetime_left = lifetime
+
+func _face_direction() -> void:
+	if _wave_visual == null or wave_direction.is_zero_approx():
+		return
+	_wave_visual.rotation.y = atan2(-wave_direction.x, -wave_direction.z)
 
 func _physics_process(delta: float) -> void:
 	global_position += wave_direction.normalized() * speed * delta

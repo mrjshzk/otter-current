@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://b8dw5pnch4pic" path="res://assets/Island1_T_Island1.png" id="9_8vcvq"]
 [ext_resource type="Script" uid="uid://cc87v2v2o16f4" path="res://scripts/debug/debug_target_arrow.gd" id="13_arrow"]
 [ext_resource type="PackedScene" path="res://addons/debug_draw/debug_draw_3d.tscn" id="14_dbg"]
+[ext_resource type="Texture2D" path="res://assets/textures/essentials/Noise/perlin-noise.png" id="15_noise"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5i1ex"]
 shader = ExtResource("1_lq6u6")
@@ -57,13 +58,15 @@ ambient_light_color = Color(0.7204674, 0.7204675, 0.7204674, 1)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hmn6o"]
 render_priority = 0
 shader = ExtResource("3_imrlo")
-shader_parameter/absorption_color = Color(1, 0.35, 0, 1)
+shader_parameter/absorption_color = Color(0.55, 0.45, 0.35, 1)
 shader_parameter/fresnel_radius = 2.0
-shader_parameter/fresnel_color = Color(0, 0.57, 0.72, 1)
+shader_parameter/fresnel_color = Color(0.1, 0.5, 0.62, 1)
 shader_parameter/roughness = 0.15
 shader_parameter/specular = 0.25
 shader_parameter/depth_distance = 25.0
 shader_parameter/beers_law = 4.5
+shader_parameter/deep_color = Color(0.02, 0.18, 0.32, 1)
+shader_parameter/deep_color_mix = 1.0
 shader_parameter/displacement_strength = 0.3
 shader_parameter/displacement_scroll_speed = 0.1
 shader_parameter/displacement_scroll_offset = Vector2(-0.2, 0.3)
@@ -89,6 +92,14 @@ shader_parameter/scroll_speed = 0.3
 shader_parameter/scroll_offset = Vector2(0.1, -0.3)
 shader_parameter/scale_offset = 0.5
 shader_parameter/normal_map_scale = Vector2(0.1, 0.1)
+shader_parameter/foam_texture = ExtResource("15_noise")
+shader_parameter/foam_strength = 0.6
+shader_parameter/foam_speed = 0.3
+shader_parameter/foam_offset = Vector2(0.2, 0.35)
+shader_parameter/foam_scale = 0.8
+shader_parameter/foam_threshold = 0.65
+shader_parameter/foam_softness = 0.2
+shader_parameter/foam_color = Color(0.85, 0.96, 1, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_sk68b"]
 material = SubResource("ShaderMaterial_hmn6o")
@@ -176,6 +187,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.84520936, 0, -5.0139184)
 script = ExtResource("6_jdp0e")
 wave_scene = ExtResource("7_0qfbd")
 player = NodePath("../Player")
+spawn_interval = 1.0
+delivery_spawn_interval = 0.5
 metadata/_custom_type_script = "uid://8n4ubq0rsopv"
 
 [node name="Cabin2" parent="." unique_id=1714199283 instance=ExtResource("8_k4sq1")]
