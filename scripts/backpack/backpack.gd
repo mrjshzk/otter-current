@@ -10,7 +10,6 @@ func has_snack() -> bool:
 	return snack != null
 
 func add_snack(new_snack: Snack) -> bool:
-	print(new_snack)
 	if has_snack() or new_snack == null:
 		return false
 	snack = new_snack

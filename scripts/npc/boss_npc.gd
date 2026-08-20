@@ -7,6 +7,8 @@ class_name BossNPC
 ## The customer the player has to deliver the assigned snack to.
 @export var target_customer: NPC = null
 
+var has_met := false
+
 func _ready() -> void:
 	super()
 	if DeliveryManager.home_island == null and get_parent() is Island:
@@ -23,7 +25,9 @@ func on_interact(player: Node) -> void:
 	var snack: Snack = snack_options.pick_random()
 	DeliveryManager.start_delivery(snack, target_customer)
 	_spawn_pickup(snack)
-	_talk(player, &"take_this")
+	var first_meeting := not has_met
+	has_met = true
+	_talk(player, &"take_this" if first_meeting else &"welcome_back")
 
 func _spawn_pickup(snack: Snack) -> void:
 	if pickup_spawn_point == null:
@@ -32,3 +36,6 @@ func _spawn_pickup(snack: Snack) -> void:
 		if child is SnackPickup:
 			return
 	SnackPickup.spawn(snack, pickup_spawn_point, pickup_spawn_point.global_position)
+
+func _default_dialogue_path() -> String:
+	return "res://scenes/dialogue/boss.dialogue"

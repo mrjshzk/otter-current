@@ -17,6 +17,8 @@ func _ready() -> void:
 	self.set_collision_layer_value(1, false)
 	self.set_collision_mask_value(1, false)
 	self.set_collision_layer_value(Definitions.INTERACTION_PHYSICS_LAYER, true)
+	if dialogue == null:
+		dialogue = load(_default_dialogue_path())
 
 func on_interact(player: Node) -> void:
 	var backpack := Backpack.from_player(player)
@@ -34,7 +36,13 @@ func on_interact(player: Node) -> void:
 		else:
 			_talk(player, &"wrong_snack")
 	else:
-		_talk(player, &"greeting")
+		if _is_delivery_target():
+			_talk(player, &"awaiting_snack")
+		else:
+			_talk(player, &"greeting")
+
+func _is_delivery_target() -> bool:
+	return DeliveryManager.is_delivering() and DeliveryManager.target_customer == self
 
 func _talk(player: Node, cue: StringName) -> void:
 	if cue == &"wrong_snack":
@@ -42,4 +50,8 @@ func _talk(player: Node, cue: StringName) -> void:
 	else:
 		AudioManager.play_ui(SfxLibrary.BLIP, -8.0)
 	talked.emit(player, self, cue)
-	## TODO(dialogue): open the Dialogue Manager balloon with `dialogue` at `cue`.
+	if dialogue != null:
+		DialogueManager.show_dialogue_balloon(dialogue, String(cue), [player, self])
+
+func _default_dialogue_path() -> String:
+	return "res://scenes/dialogue/npc.dialogue"

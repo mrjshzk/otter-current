@@ -24,6 +24,7 @@ class_name Player
 
 @onready var inside_wave_movement: CompoundState = %InsideWaveMovement
 @onready var riding_state: AtomicState = %RidingState
+@onready var jump_off_state: AtomicState = %JumpOffState
 
 @onready var land: CompoundState = %Land
 @onready var idle_land: AtomicState = %IdleLandState
@@ -158,8 +159,13 @@ var _bubbles: GPUParticles3D
 var in_sea := true
 
 func _ready() -> void:
+	Log.set_log_level(Log.Levels.DEBUG)
 	GUIDE.enable_mapping_context(guide_context)
 	add_to_group(Definitions.PLAYER_GROUP)
+
+	root_state_chart.event_received.connect(func(event: StringName):
+		Log.debug("state chart event: ", event)
+	)
 
 	idle_state.state_physics_processing.connect(idle_state_phy_process)
 	moving_state.state_physics_processing.connect(moving_state_phy_process)
@@ -199,6 +205,12 @@ func _ready() -> void:
 	walk_land.state_entered.connect(walk_land_state_entered)
 	idle_land.state_physics_processing.connect(idle_land_phy_process)
 	walk_land.state_physics_processing.connect(walk_land_phy_process)
+
+	for state: AtomicState in [idle_state, moving_state, submerged_state, rising_state, falling_state,
+			landing_state, diving_state, leap_state, riding_state, jump_off_state, idle_land, walk_land]:
+		state.state_entered.connect(func():
+			Log.debug("state entered: ", state.name)
+		)
 
 	## docked VFX
 	_wake = VFXManager.dock(WAKE_VFX, self)
@@ -259,6 +271,7 @@ func _apply_land_gravity(delta: float) -> void:
 		_land_settle_time = maxf(0.0, _land_settle_time - delta)
 	if global_position.y <= water_level_y and _land_settle_time == 0.0:
 		in_sea = true
+		Log.info("switched to sea")
 		root_state_chart.send_event("to_in_sea")
 
 func _physics_process(delta: float) -> void:
@@ -435,7 +448,9 @@ func _switch_to_land() -> void:
 	_current_wave = null
 	_wake.emitting = false
 	_wake.visible = false
+	global_rotation.x = 0.0
 	%OtterSkeleton.position.y = 0.0
+	Log.info("switched to land")
 	root_state_chart.send_event("to_in_land")
 
 func _check_splash() -> void:

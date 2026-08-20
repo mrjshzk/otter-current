@@ -1,0 +1,31 @@
+~ take_this
+Boss: Ola sou o chefe
+
+Boss: Leva {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.target_customer.npc_name}}.
+
+Boss: Nao me desiludas!
+
+=> END
+
+~ welcome_back
+Boss: Bem vindo de volta
+
+Boss: A tua proxima entrega: {{DeliveryManager.current_snack.snack_name}} para {{DeliveryManager.target_customer.npc_name}}.
+
+Boss: Agora toca a andar!
+
+=> END
+
+~ already_have_snack
+Boss: Ja tens um entrega ativa!
+
+Boss: Foca te a entregar {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.target_customer.npc_name}} primeiro.
+
+=> END
+
+~ not_configured
+Boss: Nao tenho nenhuma entrega para ti neste momento
+
+Boss: Volta mais tarde
+
+=> END

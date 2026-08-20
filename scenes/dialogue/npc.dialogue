@@ -1,0 +1,25 @@
+~ greeting
+Otis: ola sou um ganda otario
+
+=> END
+
+~ awaiting_snack
+Otis: ainda estou a espera da {{DeliveryManager.current_snack.snack_name}}!
+
+Otis: traz me isso o mais rapido possivel!
+
+=> END
+
+~ wrong_snack
+Otis: isso nao e a comida que pedi
+
+Otis: traz me o que pedi por favor!
+
+=> END
+
+~ snack_received
+Otis: isto e exatamente o que queria!
+
+Otis: obrigado otario
+
+=> END
