@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/vfx/vfx_ring.gd" id="1_ring"]
+[ext_resource type="Texture2D" uid="uid://cj522n8pnikja" path="res://assets/vfx/ring.png" id="2_tex"]
+
+[sub_resource type="StandardMaterial3D" id="mat_ring"]
+shading_mode = 0
+texture_filter = 0
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.9)
+albedo_texture = ExtResource("2_tex")
+
+[sub_resource type="QuadMesh" id="quad_ring"]
+size = Vector2(1, 1)
+material = SubResource("mat_ring")
+
+[node name="SplashRing" type="Node3D"]
+script = ExtResource("1_ring")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0, 0)
+mesh = SubResource("quad_ring")

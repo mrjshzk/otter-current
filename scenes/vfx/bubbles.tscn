@@ -1,9 +1,13 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Texture2D" uid="uid://vmjkrst66f8g" path="res://assets/vfx/blob.png" id="2_tex"]
 
 [sub_resource type="StandardMaterial3D" id="mat_bubble"]
 shading_mode = 0
+texture_filter = 0
 transparency = 1
 albedo_color = Color(0.8, 0.9, 1, 0.55)
+albedo_texture = ExtResource("2_tex")
 
 [sub_resource type="QuadMesh" id="quad_bubble"]
 size = Vector2(1, 1)
