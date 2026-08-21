@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://nwfs5748s27o"]
+
+[ext_resource type="Script" uid="uid://curui5x4fx8x0" path="res://scripts/ui/main_menu.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://bngjb6vpr6er4" path="res://scenes/game/game.tscn" id="2_game"]
+[ext_resource type="Shader" uid="uid://dihinwuidvvur" path="res://shaders/transition.gdshader" id="3_transition"]
+[ext_resource type="PackedScene" uid="uid://erfdxvuklw7j" path="res://scenes/ui/title_screen_background.tscn" id="3_uhagc"]
+[ext_resource type="Shader" uid="uid://c4otrcm63wlnr" path="res://shaders/animated_stripes.gdshader" id="4_uhagc"]
+[ext_resource type="Texture2D" uid="uid://2yp0lt62xeqx" path="res://ottereatslogo.png" id="4_x2yvf"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings_panel.tscn" id="5_settings"]
+[ext_resource type="Texture2D" uid="uid://mm121kewyns" path="res://assets/textures/buttonstart.png" id="6_wb0q5"]
+[ext_resource type="Texture2D" uid="uid://dw0xev5th7gxb" path="res://assets/textures/buttonstartclicked.png" id="7_8ekit"]
+[ext_resource type="Texture2D" uid="uid://c3nkv73if25y" path="res://assets/textures/buttonsettings.png" id="7_q85j6"]
+[ext_resource type="Texture2D" uid="uid://b6jamff8bvxbo" path="res://assets/textures/buttonquit.png" id="8_8g5eo"]
+[ext_resource type="Texture2D" uid="uid://dsb7y2jxt6k5c" path="res://assets/textures/buttonsettingsclicked.png" id="9_n4uci"]
+[ext_resource type="Texture2D" uid="uid://dq5am8t88ibp4" path="res://assets/textures/buttonquitclicked.png" id="11_877pj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sk68b"]
+shader = ExtResource("4_uhagc")
+shader_parameter/flash_speed = 0.8
+shader_parameter/stripe_width = 0.12
+shader_parameter/stripe_angle = -0.35
+shader_parameter/flash_intensity = 0.8
+shader_parameter/flash_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/wobble_amplitude = 0.008
+shader_parameter/wobble_frequency = 5.0
+shader_parameter/wobble_speed = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_transition"]
+shader = ExtResource("3_transition")
+shader_parameter/use_sprite_alpha = true
+shader_parameter/use_transition_texture = false
+shader_parameter/transition_type = 2
+shader_parameter/position = Vector2(0, 0)
+shader_parameter/invert = false
+shader_parameter/grid_size = Vector2(1, 1)
+shader_parameter/rotation_angle = 0.0
+shader_parameter/global_x_mirror = false
+shader_parameter/global_y_mirror = false
+shader_parameter/local_x_mirror = false
+shader_parameter/local_y_mirror = false
+shader_parameter/stagger = Vector2(0, 0)
+shader_parameter/cumulative_stagger_flip = false
+shader_parameter/cumulative_stagger = Vector2(0, 0)
+shader_parameter/stagger_frequency = Vector2i(2, 2)
+shader_parameter/flip_frequency = Vector2i(1, 1)
+shader_parameter/basic_feather = 0.0
+shader_parameter/use_mask_size = false
+shader_parameter/mask_size = Vector2(100, 100)
+shader_parameter/edges = 6
+shader_parameter/shape_feather = 0.15
+shader_parameter/sectors = 1
+shader_parameter/clock_feather = 0.0
+shader_parameter/progress = 1.5
+shader_parameter/progress_bias = Vector2(0, 0)
+
+[node name="MainMenu" type="Control" unique_id=850569475]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+start_scene = ExtResource("2_game")
+
+[node name="Background" type="SubViewportContainer" parent="." unique_id=629303063]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Background" unique_id=2130986681]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="TitleScreenBackground" parent="Background/SubViewport" unique_id=520023887 instance=ExtResource("3_uhagc")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=107429845]
+
+[node name="Center" type="CenterContainer" parent="UI" unique_id=1247410961]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="MenuBox" type="VBoxContainer" parent="UI/Center" unique_id=757797375]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="Logo" type="TextureRect" parent="UI/Center/MenuBox" unique_id=713335933]
+material = SubResource("ShaderMaterial_sk68b")
+layout_mode = 2
+texture = ExtResource("4_x2yvf")
+expand_mode = 5
+
+[node name="MenuButtons" type="HBoxContainer" parent="UI/Center/MenuBox" unique_id=804065516]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="StartButton" type="TextureButton" parent="UI/Center/MenuBox/MenuButtons" unique_id=1481394458]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+texture_normal = ExtResource("6_wb0q5")
+texture_pressed = ExtResource("7_8ekit")
+
+[node name="SettingsButton" type="TextureButton" parent="UI/Center/MenuBox/MenuButtons" unique_id=714813220]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+texture_normal = ExtResource("7_q85j6")
+texture_pressed = ExtResource("9_n4uci")
+
+[node name="QuitButton" type="TextureButton" parent="UI/Center/MenuBox/MenuButtons" unique_id=1625252447]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+texture_normal = ExtResource("8_8g5eo")
+texture_pressed = ExtResource("11_877pj")
+
+[node name="SettingsPanel" parent="UI/Center" unique_id=976732211 instance=ExtResource("5_settings")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="TransitionLayer" type="CanvasLayer" parent="." unique_id=662370236]
+layer = 2
+
+[node name="TransitionRect" type="ColorRect" parent="TransitionLayer" unique_id=1552438170]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_transition")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

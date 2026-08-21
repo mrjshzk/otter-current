@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ddbc6btpmvdsq"]
+
+[ext_resource type="Script" path="res://tests/test_pause.gd" id="1_test"]
+
+[node name="TestPause" type="Node"]
+script = ExtResource("1_test")

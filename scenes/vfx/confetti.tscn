@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=11 format=3]
 
-[ext_resource type="Script" path="res://scripts/vfx/vfx_burst.gd" id="1_burst"]
+[ext_resource type="Script" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
+[ext_resource type="PackedScene" path="res://scenes/vfx/splash_ring.tscn" id="2_ring"]
+[ext_resource type="Texture2D" path="res://assets/vfx/star.png" id="3_startex"]
 
 [sub_resource type="Gradient" id="gradient_confetti"]
 offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
@@ -32,11 +34,54 @@ color_ramp = SubResource("gradtex_confetti")
 emission_shape = 1
 emission_sphere_radius = 0.2
 
-[node name="Confetti" type="GPUParticles3D"]
-script = ExtResource("1_burst")
+[sub_resource type="ParticleProcessMaterial" id="ppm_stars"]
+lifetime = 0.5
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 4.0
+gravity = Vector3(0, -2, 0)
+damping_min = 0.5
+damping_max = 1.0
+scale_min = 0.04
+scale_max = 0.1
+billboard_mode = 3
+emission_shape = 1
+emission_sphere_radius = 0.3
+color = Color(1, 0.95, 0.7, 1)
+
+[sub_resource type="StandardMaterial3D" id="mat_stars"]
+shading_mode = 0
+texture_filter = 0
+blend_mode = 1
+transparency = 2
+alpha_scissor_threshold = 0.25
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_startex")
+
+[sub_resource type="QuadMesh" id="quad_stars"]
+material = SubResource("mat_stars")
+
+[node name="Confetti" type="Node3D"]
+script = ExtResource("1_layered")
+
+[node name="ConfettiPaper" type="GPUParticles3D" parent="."]
 amount = 60
 lifetime = 1.8
 explosiveness = 1.0
+fixed_fps = 24
+one_shot = true
 visibility_aabb = AABB(-4, -3, -4, 8, 12, 8)
 process_material = SubResource("ppm_confetti")
 draw_pass_1 = SubResource("mesh_confetti")
+
+[node name="PopRing" parent="." instance=ExtResource("2_ring")]
+
+[node name="StarBurst" type="GPUParticles3D" parent="."]
+amount = 16
+lifetime = 0.5
+explosiveness = 1.0
+fixed_fps = 24
+one_shot = true
+visibility_aabb = AABB(-2, -2, -2, 4, 4, 4)
+process_material = SubResource("ppm_stars")
+draw_pass_1 = SubResource("quad_stars")

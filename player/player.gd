@@ -6,6 +6,7 @@ class_name Player
 @export var walk_action: GUIDEAction
 @export var dive_action: GUIDEAction
 @export var jump_action: GUIDEAction
+@export var pause_action: GUIDEAction
 
 @onready var root_state_chart: StateChart = %RootStateChart
 @onready var animation_player: AnimationPlayer = %AnimationPlayer
@@ -153,8 +154,8 @@ var _was_submerged := false
 var _land_step_timer := 0.0
 var _land_settle_time := 0.0
 var _wave_enter_time_ms := 0
-var _wake: GPUParticles3D
-var _bubbles: GPUParticles3D
+var _wake: VFXDocked
+var _bubbles: VFXDocked
 
 var in_sea := true
 
@@ -192,6 +193,18 @@ func _ready() -> void:
 
 	jump_action.just_triggered.connect(func(): _jump_buffer = jump_buffer_time)
 	dive_action.just_triggered.connect(func(): _dive_buffer = dive_buffer_time)
+
+	## lock movement/interact input while a dialogue is on screen
+	DialogueManager.dialogue_started.connect(_lock_controls)
+	DialogueManager.dialogue_ended.connect(_unlock_controls)
+
+	## a timed delivery expired: drop the snack and signal the failure
+	DeliveryManager.delivery_failed.connect(func(_snack: Snack, _customer: CustomerNPC) -> void:
+		var backpack := get_node_or_null("Backpack") as Backpack
+		if backpack != null:
+			backpack.remove_snack()
+		AudioManager.play_ui(SfxLibrary.BUZZ, -6.0)
+	)
 	
 	## animations
 	for state: AtomicState in [idle_state, moving_state, submerged_state, landing_state]:
@@ -224,6 +237,17 @@ func _ready() -> void:
 
 func _play_swim() -> void:
 	animation_player.play("otter_swim")
+
+func _lock_controls(_resource: DialogueResource = null) -> void:
+	if guide_context != null:
+		GUIDE.disable_mapping_context(guide_context)
+	_jump_buffer = 0.0
+	_dive_buffer = 0.0
+
+func _unlock_controls(_resource: DialogueResource = null) -> void:
+	if guide_context != null:
+		GUIDE.enable_mapping_context(guide_context)
+
 
 func _play_surf() -> void:
 	animation_player.play("otter_surf")
@@ -269,7 +293,7 @@ func _apply_land_gravity(delta: float) -> void:
 		current_velocity.y = 0.0
 	if _land_settle_time > 0.0:
 		_land_settle_time = maxf(0.0, _land_settle_time - delta)
-	if global_position.y <= water_level_y and _land_settle_time == 0.0:
+	if _land_settle_time == 0.0 and _should_return_to_sea():
 		in_sea = true
 		Log.info("switched to sea")
 		root_state_chart.send_event("to_in_sea")
@@ -289,6 +313,8 @@ func _physics_process(delta: float) -> void:
 
 func on_wave_entered(wave: OceanCurrent) -> void:
 	if not in_sea:
+		return
+	if _current_wave != null:
 		return
 	if _jumped_from_wave != null and wave == _jumped_from_wave:
 		return
@@ -430,17 +456,36 @@ func _check_auto_land_switch() -> void:
 		if _ground_below_above_water():
 			_switch_to_land()
 
+## Land -> sea. Uses the same ground-height criterion as the land switch so the
+## two checks never overlap (no oscillation band): leave land when the player
+## falls into the water, or walks onto ground submerged past the shore tolerance.
+func _should_return_to_sea() -> bool:
+	if not is_on_floor() and global_position.y <= water_level_y:
+		return true
+	return _ground_y_below() <= water_level_y - shore_tolerance
+
 func _ground_below_above_water() -> bool:
+	var ground_y := _ground_y_below()
+	return ground_y > water_level_y - shore_tolerance \
+		and ground_y + stand_height > water_level_y
+
+## Y of the ground directly below the player, or -INF when the ray hits nothing.
+## The ray starts slightly above the body: the player rests with its shape
+## bottom sunk into the ground, so a ray from the root can start inside a
+## collider and read its far face instead of the surface. From-inside hits
+## are rejected for the same reason.
+func _ground_y_below() -> float:
+	var origin := global_position + Vector3.UP * 0.1
 	var query := PhysicsRayQueryParameters3D.create(
-		global_position,
-		global_position + Vector3.DOWN * land_check_distance,
+		origin,
+		origin + Vector3.DOWN * land_check_distance,
 		1
 	)
 	query.exclude = [get_rid()]
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	return not hit.is_empty() \
-		and hit.position.y > water_level_y - shore_tolerance \
-		and hit.position.y + stand_height > water_level_y
+	if hit.is_empty() or hit.get("hit_from_inside", false):
+		return -INF
+	return hit.position.y
 
 func _switch_to_land() -> void:
 	in_sea = false

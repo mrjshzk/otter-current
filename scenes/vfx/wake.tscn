@@ -1,19 +1,17 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=10 format=3]
 
-[ext_resource type="Texture2D" uid="uid://vmjkrst66f8g" path="res://assets/vfx/blob.png" id="2_tex"]
+[ext_resource type="Script" path="res://scripts/vfx/vfx_docked.gd" id="1_docked"]
+[ext_resource type="Texture2D" path="res://assets/textures/particles/circle_03.png" id="2_foamtex"]
+[ext_resource type="Texture2D" path="res://assets/textures/particles/smoke_10.png" id="3_misttex"]
 
-[sub_resource type="StandardMaterial3D" id="mat_foam"]
-shading_mode = 0
-texture_filter = 0
-transparency = 1
-albedo_color = Color(1, 1, 1, 0.85)
-albedo_texture = ExtResource("2_tex")
+[sub_resource type="Curve" id="Curve_fade"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="QuadMesh" id="quad_foam"]
-size = Vector2(1, 1)
-material = SubResource("mat_foam")
+[sub_resource type="CurveTexture" id="CurveTexture_fade"]
+curve = SubResource("Curve_fade")
 
-[sub_resource type="ParticleProcessMaterial" id="ppm_wake"]
+[sub_resource type="ParticleProcessMaterial" id="ppm_foam"]
 lifetime = 1.2
 spread = 180.0
 initial_velocity_min = 0.5
@@ -23,14 +21,67 @@ damping_min = 2.0
 damping_max = 3.0
 scale_min = 0.15
 scale_max = 0.4
+scale_curve = SubResource("CurveTexture_fade")
 billboard_mode = 3
 emission_shape = 1
 emission_sphere_radius = 0.5
+color = Color(0.96, 0.98, 1, 0.85)
 
-[node name="Wake" type="GPUParticles3D"]
-amount = 40
+[sub_resource type="StandardMaterial3D" id="mat_foam"]
+shading_mode = 0
+texture_filter = 0
+transparency = 2
+alpha_scissor_threshold = 0.25
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_foamtex")
+
+[sub_resource type="QuadMesh" id="quad_foam"]
+material = SubResource("mat_foam")
+
+[sub_resource type="ParticleProcessMaterial" id="ppm_mist"]
+lifetime = 1.6
+spread = 180.0
+initial_velocity_min = 0.2
+initial_velocity_max = 0.6
+gravity = Vector3(0, 0.3, 0)
+damping_min = 1.5
+damping_max = 2.5
+scale_min = 0.35
+scale_max = 0.7
+scale_curve = SubResource("CurveTexture_fade")
+billboard_mode = 3
+emission_shape = 1
+emission_sphere_radius = 0.6
+color = Color(0.95, 0.97, 1, 0.35)
+
+[sub_resource type="StandardMaterial3D" id="mat_mist"]
+shading_mode = 0
+texture_filter = 0
+transparency = 2
+alpha_scissor_threshold = 0.12
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("3_misttex")
+
+[sub_resource type="QuadMesh" id="quad_mist"]
+material = SubResource("mat_mist")
+
+[node name="Wake" type="Node3D"]
+script = ExtResource("1_docked")
+
+[node name="Foam" type="GPUParticles3D" parent="."]
+amount = 32
 lifetime = 1.2
 local_coords = false
+fixed_fps = 24
 visibility_aabb = AABB(-4, -1, -4, 8, 4, 8)
-process_material = SubResource("ppm_wake")
+process_material = SubResource("ppm_foam")
 draw_pass_1 = SubResource("quad_foam")
+
+[node name="Mist" type="GPUParticles3D" parent="."]
+amount = 10
+lifetime = 1.6
+local_coords = false
+fixed_fps = 24
+visibility_aabb = AABB(-4, -1, -4, 8, 4, 8)
+process_material = SubResource("ppm_mist")
+draw_pass_1 = SubResource("quad_mist")

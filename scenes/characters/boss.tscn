@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://c1jibmnue1og4"]
+
+[ext_resource type="Script" uid="uid://fea2o3yao387" path="res://scripts/npc/boss_npc.gd" id="1_imw47"]
+[ext_resource type="Texture2D" uid="uid://dgf50gi12h5l1" path="res://assets/textures/input_prompts/keyboard_e.png" id="2_edpq3"]
+[ext_resource type="Script" uid="uid://craydiqj83rk3" path="res://scripts/snacks/snack.gd" id="2_hxcvo"]
+[ext_resource type="Resource" uid="uid://bx83txbtv5meb" path="res://scenes/dialogue/boss.dialogue" id="2_r8uym"]
+[ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="3_j30ar"]
+[ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="4_j30ar"]
+
+[sub_resource type="Resource" id="Resource_hxcvo"]
+script = ExtResource("4_j30ar")
+npc_name = "Boss"
+metadata/_custom_type_script = "uid://d3uu1stmi2h5d"
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_sk68b"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_imw47"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_sk68b"]
+radius = 1.2314453
+
+[node name="Boss" type="Area3D" unique_id=828823001 node_paths=PackedStringArray("highlight_mesh", "prompt_label", "prompt_icon")]
+script = ExtResource("1_imw47")
+snack_options = Array[ExtResource("2_hxcvo")]([ExtResource("3_j30ar")])
+customer = SubResource("Resource_hxcvo")
+dialogue = ExtResource("2_r8uym")
+highlight_mesh = NodePath("MeshInstance3D")
+prompt_label = NodePath("Label3D")
+prompt_icon = NodePath("Sprite3D")
+metadata/_custom_type_script = "uid://fea2o3yao387"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1198292633]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CylinderMesh_sk68b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D" unique_id=815771683]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D" unique_id=930265922]
+shape = SubResource("CylinderShape3D_imw47")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=195663144]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_sk68b")
+
+[node name="Label3D" type="Label3D" parent="." unique_id=588007559]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4429338, 0)
+billboard = 1
+text = "Talk to dude"
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1484857359]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+billboard = 1
+texture = ExtResource("2_edpq3")

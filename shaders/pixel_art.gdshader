@@ -3,8 +3,8 @@ render_mode unshaded;
 
 uniform sampler2D screen_texture : hint_screen_texture, filter_nearest;
 
-const vec2 TARGET_RESOLUTION = vec2(640.0, 360.0);
-const float COLORS_PER_CHANNEL = 16.0;
+uniform vec2 TARGET_RESOLUTION = vec2(320.0, 180.0);
+uniform float COLORS_PER_CHANNEL = 16.0;
 
 void fragment() {
     // Pixelate the screen to 320x180

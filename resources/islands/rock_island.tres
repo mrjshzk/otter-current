@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="IslandResource" format=3 uid="uid://bsywugsv67i5y"]
+
+[ext_resource type="Resource" uid="uid://d06h0qjrevhks" path="res://resources/npcs/rock_guy.tres" id="1_fo2m4"]
+[ext_resource type="Script" uid="uid://c06r4onxd2avg" path="res://scripts/islands/island_resource.gd" id="1_mjffe"]
+
+[resource]
+script = ExtResource("1_mjffe")
+island_name = "Rock Island"
+customer = ExtResource("1_fo2m4")
+metadata/_custom_type_script = "uid://c06r4onxd2avg"

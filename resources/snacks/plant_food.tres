@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Snack" format=3 uid="uid://bh5lp483uftis"]
+
+[ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="1_bmmns"]
+[ext_resource type="Script" uid="uid://craydiqj83rk3" path="res://scripts/snacks/snack.gd" id="2_qyw11"]
+
+[resource]
+script = ExtResource("2_qyw11")
+snack_name = "Plant Food"
+icon = ExtResource("1_bmmns")
+visual_scene_uid = "uid://b1umx2wf8fba8"
+metadata/_custom_type_script = "uid://craydiqj83rk3"

@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://7jgg5lca4y1f"]
+
+[resource]
+resource_name = "coconut"
+albedo_color = Color(0.49411765, 0.3529412, 0.2627451, 1)
+emission = Color(0.49347478, 0.35236585, 0.26460457, 1)

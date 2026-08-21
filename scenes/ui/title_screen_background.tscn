@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://erfdxvuklw7j"]
+
+[ext_resource type="Shader" uid="uid://udmyg4sth3qy" path="res://shaders/stylized_sky.gdshader" id="1_vwm3h"]
+[ext_resource type="PackedScene" uid="uid://boxmlgnfx006p" path="res://scenes/islands/main_island.tscn" id="2_eb62g"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eb62g"]
+shader = ExtResource("1_vwm3h")
+shader_parameter/day_top_color = Color(0.1, 0.6, 1, 1)
+shader_parameter/day_bottom_color = Color(0.4, 0.8, 1, 1)
+shader_parameter/sunset_top_color = Color(0.7, 0.75, 1, 1)
+shader_parameter/sunset_bottom_color = Color(1, 0.5, 0.7, 1)
+shader_parameter/night_top_color = Color(0.02, 0, 0.04, 1)
+shader_parameter/night_bottom_color = Color(0.1, 0, 0.2, 1)
+shader_parameter/horizon_color = Color(0, 0.7, 0.8, 1)
+shader_parameter/horizon_blur = 0.05
+shader_parameter/sun_color = Color(10, 8, 1, 1)
+shader_parameter/sun_sunset_color = Color(10, 0, 0, 1)
+shader_parameter/sun_size = 0.2
+shader_parameter/sun_blur = 10.0
+shader_parameter/moon_color = Color(1, 0.95, 0.7, 1)
+shader_parameter/moon_size = 0.06
+shader_parameter/moon_blur = 0.1
+shader_parameter/clouds_edge_color = Color(0.8, 0.8, 0.98, 1)
+shader_parameter/clouds_top_color = Color(1, 1, 1, 1)
+shader_parameter/clouds_middle_color = Color(0.92, 0.92, 0.98, 1)
+shader_parameter/clouds_bottom_color = Color(0.83, 0.83, 0.94, 1)
+shader_parameter/clouds_speed = 2.0
+shader_parameter/clouds_direction = 0.2
+shader_parameter/clouds_scale = 1.0
+shader_parameter/clouds_cutoff = 0.3
+shader_parameter/clouds_fuzziness = 0.5
+shader_parameter/clouds_weight = 0.0
+shader_parameter/clouds_blur = 0.25
+shader_parameter/stars_speed = 1.0
+shader_parameter/overwritten_time = 0.0
+
+[sub_resource type="Sky" id="Sky_menu"]
+sky_material = SubResource("ShaderMaterial_eb62g")
+
+[sub_resource type="Environment" id="Environment_l71q4"]
+background_mode = 2
+sky = SubResource("Sky_menu")
+
+[node name="TitleScreenBackground" type="Node3D" unique_id=520023887]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=881121444]
+transform = Transform3D(-0.89737046, 0, -0.44127786, 0, 1, 0, 0.44127786, 0, -0.89737046, 8.094556, 2.154363, 5.7346206)
+current = true
+fov = 50.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=30912771]
+environment = SubResource("Environment_l71q4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=838736225]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+
+[node name="MainIsland" parent="." unique_id=234321246 instance=ExtResource("2_eb62g")]

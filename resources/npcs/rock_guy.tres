@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CustomerNPC" format=3 uid="uid://d06h0qjrevhks"]
+
+[ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="1_bcuuf"]
+[ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="1_irrvq"]
+[ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="3_78p20"]
+
+[resource]
+script = ExtResource("1_irrvq")
+npc_name = "Builder Otter"
+snack = ExtResource("3_78p20")
+avatar = ExtResource("1_bcuuf")
+metadata/_custom_type_script = "uid://d3uu1stmi2h5d"

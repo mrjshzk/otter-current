@@ -1,0 +1,7 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bi7yxwwev7fsr"]
+
+[resource]
+resource_name = "leaves"
+cull_mode = 2
+albedo_color = Color(0.4, 0.68235296, 0.3529412, 1)
+emission = Color(0.39862865, 0.68292814, 0.35356656, 1)

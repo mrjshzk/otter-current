@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="uber-otter"
-run/main_scene="uid://belan52lw0pu7"
+run/main_scene="uid://s3rm3jx3fcgc"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
@@ -41,7 +41,8 @@ folder_colors={
 "res://assets/": "pink",
 "res://autoloads/": "yellow",
 "res://player/": "orange",
-"res://scenes/": "green"
+"res://scenes/": "green",
+"res://scenes/core_loop_prototype/": "gray"
 }
 
 [input]

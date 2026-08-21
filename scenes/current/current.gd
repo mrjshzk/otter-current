@@ -10,12 +10,14 @@ class_name OceanCurrent
 @export var lifetime: float = 60.0
 
 @onready var _wave_visual: Node3D = $Wave
+@onready var collision_checker: Area3D = %CollisionChecker
 
 var _lifetime_left: float
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	collision_checker.body_entered.connect(_on_collision_checker_body_entered)
 	_lifetime_left = lifetime
 
 func _face_direction() -> void:
@@ -42,3 +44,14 @@ func _on_body_entered(body: Node3D) -> void:
 func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group(Definitions.PLAYER_GROUP) and body.has_method("on_wave_exited"):
 		body.on_wave_exited(self)
+
+## The collision checker detected a solid body (island/terrain) in the wave's
+## path: force the player off if they are riding, then destroy the wave.
+func _on_collision_checker_body_entered(body: Node3D) -> void:
+	if body.is_in_group(Definitions.PLAYER_GROUP):
+		return
+	var player := get_tree().get_first_node_in_group(Definitions.PLAYER_GROUP) as Player
+	if player != null:
+		player.force_wave_jump_off(self)
+	# TODO: play a wave-destroy animation and VFX here before freeing.
+	queue_free()

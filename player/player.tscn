@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://c42f1n7nwkjiq" path="res://player/input/dive_action.tres" id="4_2ieo8"]
 [ext_resource type="Resource" uid="uid://c4lq68ofho35u" path="res://player/input/jump_action.tres" id="5_ebec5"]
 [ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="5_qjkh3"]
+[ext_resource type="Resource" uid="uid://bxesj1gg1xggy" path="res://player/input/pause_action.tres" id="6_32hag"]
 [ext_resource type="Script" uid="uid://c6wq4m14fir13" path="res://player/camera_rig.gd" id="6_rig"]
 [ext_resource type="Texture2D" uid="uid://hxmc2x2aoslg" path="res://assets/otter_ottertexture.png" id="11_2ieo8"]
 [ext_resource type="Shader" uid="uid://ceijfyg4nwlc0" path="res://shaders/toon_v2.gdshader" id="11_ebec5"]
@@ -780,6 +781,7 @@ guide_context = ExtResource("2_hg6s5")
 walk_action = ExtResource("3_8t03j")
 dive_action = ExtResource("4_2ieo8")
 jump_action = ExtResource("5_ebec5")
+pause_action = ExtResource("6_32hag")
 hop_speed_retention = 0.45
 dive_jump_speed_retention = 0.7
 dive_jump_forward_boost = 3.5
@@ -796,12 +798,12 @@ metadata/_custom_type_script = "uid://couw105c3bde4"
 [node name="FsmRoot" type="Node" parent="RootStateChart" unique_id=1112386793]
 unique_name_in_owner = true
 script = ExtResource("2_yw30f")
-initial_state = NodePath("InSea")
+initial_state = NodePath("Land")
 
 [node name="InSea" type="Node" parent="RootStateChart/FsmRoot" unique_id=373804906]
 unique_name_in_owner = true
 script = ExtResource("2_yw30f")
-initial_state = NodePath("InsideWaveMovement")
+initial_state = NodePath("WaterMovement")
 
 [node name="WaterMovement" type="Node" parent="RootStateChart/FsmRoot/InSea" unique_id=1591825835]
 unique_name_in_owner = true
@@ -1020,7 +1022,7 @@ bones/0/name = "spine"
 bones/0/parent = -1
 bones/0/rest = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7252903e-09, 0.26390666, -0.0062328726)
 bones/0/enabled = true
-bones/0/position = Vector3(-3.7252903e-09, 0.23135303, -0.0062328726)
+bones/0/position = Vector3(-3.7252903e-09, 0.26390666, -0.0062328726)
 bones/0/rotation = Quaternion(0, 0, 0, 1)
 bones/0/scale = Vector3(1, 1, 1)
 bones/1/name = "torso"
@@ -1028,7 +1030,7 @@ bones/1/parent = 0
 bones/1/rest = Transform3D(1, 0, 2.3841858e-07, 0, 1, 0, -2.3841858e-07, 0, 1, 0, 0.2832107, 0)
 bones/1/enabled = true
 bones/1/position = Vector3(0, 0.2832107, 0)
-bones/1/rotation = Quaternion(0, 0.26455736, 0, 0.96436995)
+bones/1/rotation = Quaternion(0, 1.1920929e-07, 0, 1)
 bones/1/scale = Vector3(1, 1, 1)
 bones/2/name = "head"
 bones/2/parent = 1
@@ -1091,7 +1093,7 @@ bones/10/parent = 9
 bones/10/rest = Transform3D(1, -8.6470536e-08, -7.906282e-09, 8.647061e-08, 0.98341995, 0.1813423, -7.905571e-09, -0.1813423, 0.98342, -1.0658141e-14, 0.2540713, 1.7763568e-15)
 bones/10/enabled = true
 bones/10/position = Vector3(-1.0658141e-14, 0.2540713, 1.7763568e-15)
-bones/10/rotation = Quaternion(-0.09100237, -0.025296379, -0.019792343, 0.99533266)
+bones/10/rotation = Quaternion(-0.09104934, -1.85645e-13, 4.3415632e-08, 0.9958464)
 bones/10/scale = Vector3(1, 0.9999999, 0.99999994)
 bones/11/name = "tail3"
 bones/11/parent = 10
@@ -1119,28 +1121,28 @@ bones/14/parent = 0
 bones/14/rest = Transform3D(-0.0002259016, -0.016929787, -0.9998568, 0.02235565, -0.99960685, 0.01692051, -0.9997501, -0.022348622, 0.00060428935, -0.12773079, -0.007861435, -0.004086226)
 bones/14/enabled = true
 bones/14/position = Vector3(-0.12773079, -0.007861435, -0.004086226)
-bones/14/rotation = Quaternion(-0.68069935, 0.20268485, 0.67751896, -0.1911423)
+bones/14/rotation = Quaternion(-0.6691439, -0.21701536, 0.6730656, 0.22832751)
 bones/14/scale = Vector3(1, 1, 1.0000001)
 bones/15/name = "leg.L"
 bones/15/parent = 14
 bones/15/rest = Transform3D(0.9779703, -0.20874122, -0.0009815149, 0.20872608, 0.9779388, -0.008318305, 0.0026962343, 0.0079301875, 0.99996495, 8.458301e-10, 0.10475128, -1.5470505e-09)
 bones/15/enabled = true
 bones/15/position = Vector3(8.458301e-10, 0.10475128, -1.5470505e-09)
-bones/15/rotation = Quaternion(0.0048187915, 0.0059856125, 0.42548162, 0.9049345)
+bones/15/rotation = Quaternion(0.003942177, -0.0019090485, 0.057939228, 0.99831057)
 bones/15/scale = Vector3(0.9999999, 1, 1)
 bones/16/name = "thigh.R"
 bones/16/parent = 0
 bones/16/rest = Transform3D(-0.00022625923, 0.016930073, 0.99985677, -0.022355657, -0.99960685, 0.016920788, 0.9997501, -0.022348622, 0.00060465327, 0.12773076, -0.007861435, -0.004086226)
 bones/16/enabled = true
 bones/16/position = Vector3(0.12773076, -0.007861435, -0.004086226)
-bones/16/rotation = Quaternion(0.64494634, -0.27881125, 0.64990574, -0.28970867)
+bones/16/rotation = Quaternion(0.68476236, 0.18764253, 0.68183833, 0.17603227)
 bones/16/scale = Vector3(1, 1, 1.0000001)
 bones/17/name = "leg.R"
 bones/17/parent = 16
 bones/17/rest = Transform3D(0.97797036, 0.20874122, 0.0009810154, -0.2087261, 0.9779388, -0.008317787, -0.0026956378, 0.007929786, 0.99996495, -4.3837645e-10, 0.10475129, 4.8194124e-09)
 bones/17/enabled = true
 bones/17/position = Vector3(-4.3837645e-10, 0.10475129, 4.8194124e-09)
-bones/17/rotation = Quaternion(0.0046852753, -0.004317736, -0.3496565, 0.93685627)
+bones/17/rotation = Quaternion(0.004489965, -0.0023379328, -0.25834984, 0.9660382)
 bones/17/scale = Vector3(0.99999994, 1, 1)
 
 [node name="otter" type="MeshInstance3D" parent="OtterSkeleton" unique_id=1924125088]
@@ -1174,9 +1176,38 @@ settings/0/joints/1/bone = 13
 settings/0/enable_all_child_collisions = true
 settings/0/exclude_collision_count = 0
 
+[node name="TailJiggle" type="SpringBoneSimulator3D" parent="OtterSkeleton" unique_id=1072962512]
+setting_count = 1
+settings/0/root_bone_name = "tail1"
+settings/0/root_bone = 9
+settings/0/end_bone_name = "tail3"
+settings/0/end_bone = 11
+settings/0/extend_end_bone = false
+settings/0/center_from = 0
+settings/0/individual_config = false
+settings/0/rotation_axis = 3
+settings/0/radius/value = 0.049
+settings/0/radius/damping_curve = null
+settings/0/stiffness/value = 1.0
+settings/0/stiffness/damping_curve = null
+settings/0/drag/value = 0.64
+settings/0/drag/damping_curve = null
+settings/0/gravity/value = 0.0
+settings/0/gravity/damping_curve = null
+settings/0/gravity/direction = Vector3(0, -1, 0)
+settings/0/joints/0/bone_name = "tail1"
+settings/0/joints/0/bone = 9
+settings/0/joints/1/bone_name = "tail2"
+settings/0/joints/1/bone = 10
+settings/0/joints/2/bone_name = "tail3"
+settings/0/joints/2/bone = 11
+settings/0/enable_all_child_collisions = true
+settings/0/exclude_collision_count = 0
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1606592942]
 unique_name_in_owner = true
 libraries/ = SubResource("AnimationLibrary_wodsf")
+playback_default_blend_time = 0.2
 
 [node name="Backpack" type="Node3D" parent="." unique_id=237966807]
 script = ExtResource("15_wodsf")

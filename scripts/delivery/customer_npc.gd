@@ -5,3 +5,6 @@ class_name CustomerNPC
 @export var npc_name: String = ""
 ## The snack this customer wants delivered.
 @export var snack: Snack = null
+
+## Portrait shown in dialogue balloons for this character.
+@export var avatar: Texture2D = null

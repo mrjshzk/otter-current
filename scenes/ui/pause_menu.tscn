@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://1bfmjawgwdyo"]
+
+[ext_resource type="Script" uid="uid://bh63j5joj8c1c" path="res://scripts/ui/pause_menu.gd" id="1_script"]
+[ext_resource type="Resource" uid="uid://bxesj1gg1xggy" path="res://player/input/pause_action.tres" id="2_pause"]
+[ext_resource type="Resource" uid="uid://d8050an2wx1q" path="res://player/input/input_context.tres" id="3_ctx"]
+[ext_resource type="PackedScene" path="res://scenes/ui/settings_panel.tscn" id="5_settings"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=77132858]
+process_mode = 3
+visible = false
+script = ExtResource("1_script")
+pause_action = ExtResource("2_pause")
+guide_context = ExtResource("3_ctx")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1679530242]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=103708257]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuBox" type="VBoxContainer" parent="Center" unique_id=1870432457]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="TitleLabel" type="Label" parent="Center/MenuBox" unique_id=1405442617]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="MenuButtons" type="HBoxContainer" parent="Center/MenuBox" unique_id=717342007]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="Center/MenuBox/MenuButtons" unique_id=2327765]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Resume"
+
+[node name="SettingsButton" type="Button" parent="Center/MenuBox/MenuButtons" unique_id=670915294]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Settings"
+
+[node name="QuitButton" type="Button" parent="Center/MenuBox/MenuButtons" unique_id=911267690]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+text = "Quit"
+
+[node name="SettingsPanel" parent="Center" unique_id=880469617 instance=ExtResource("5_settings")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2

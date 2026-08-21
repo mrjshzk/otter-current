@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CustomerNPC" format=3 uid="uid://sm473xuckwng"]
+
+[ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="1_ile31"]
+[ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="1_xmyfn"]
+
+[resource]
+script = ExtResource("1_ile31")
+npc_name = "Gardener"
+avatar = ExtResource("1_xmyfn")
+metadata/_custom_type_script = "uid://d3uu1stmi2h5d"

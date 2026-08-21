@@ -754,7 +754,10 @@ size = Vector3(0.5979004, 1.3702393, 0.77856445)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sk68b"]
 
-[node name="TestNpc" type="Area3D" unique_id=237381187]
+[node name="TestNpc" type="Area3D" unique_id=237381187 node_paths=PackedStringArray("highlight_mesh", "prompt_label", "prompt_icon")]
+highlight_mesh = NodePath("OtterSkeleton/otter")
+prompt_label = NodePath("PromptLabel")
+prompt_icon = NodePath("PromptIcon")
 script = ExtResource("1_2h8qi")
 customer = ExtResource("2_tw3wq")
 metadata/_custom_type_script = "uid://dhevukq8a5q1m"
@@ -907,3 +910,18 @@ shape = SubResource("BoxShape3D_sk68b")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_sk68b")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
+
+[node name="PromptIcon" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.6, 0)
+billboard = 1
+pixel_size = 0.0045
+visible = false
+
+[node name="PromptLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.6, 0)
+billboard = 1
+pixel_size = 0.0045
+font_size = 64
+outline_size = 8
+outline_modulate = Color(0, 0, 0, 1)
+visible = false

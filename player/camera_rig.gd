@@ -35,6 +35,8 @@ var _trauma := 0.0
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.fov = base_fov
+	# never let the arm collide with the player's own body
+	spring.add_excluded_object(player.get_rid())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:

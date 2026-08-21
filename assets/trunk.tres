@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dorlayyh3ogp0"]
+
+[resource]
+resource_name = "trunk"
+albedo_color = Color(1, 0.5568628, 0.3882353, 1)
+emission = Color(1, 0.55665994, 0.38631994, 1)

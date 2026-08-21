@@ -405,6 +405,56 @@ func _run() -> void:
 	player.shore_tolerance = 0.3
 	beach.queue_free()
 
+	# wave collision checker: a wave driving into the platform dies and force-jumps the rider
+	player.global_position = Vector3(4.83, -0.25, 18.0)
+	player.current_velocity = Vector3.ZERO
+	await _wait(0.5)
+	var collision_wave: OceanCurrent = wave_scene.instantiate()
+	level.add_child(collision_wave)
+	await get_tree().physics_frame
+	collision_wave.global_position = player.global_position
+	collision_wave.wave_direction = Vector3(0, 0, -1)
+	collision_wave.speed = 8.0
+	await _wait(0.3)
+	_check(player.inside_wave_movement._active_state == player.riding_state, "riding wave toward platform")
+	var freed := false
+	for i in int(2.0 * 60.0):
+		if not is_instance_valid(collision_wave):
+			freed = true
+			break
+		await get_tree().physics_frame
+	_check(freed, "wave destroyed by platform collision")
+	await get_tree().physics_frame
+	_check(player.air_movement._active_state == player.leap_state, "rider force-jumped into leap")
+	await _wait(1.5)
+	_check(player.inside_wave_movement._active_state != player.riding_state, "rider not riding after collision")
+
+	# marginal ground (top between -0.3 and -0.2) used to ping-pong land/sea
+	var osc_box := StaticBody3D.new()
+	osc_box.name = "OscBox"
+	level.add_child(osc_box)
+	var osc_collider := CollisionShape3D.new()
+	var osc_shape := BoxShape3D.new()
+	osc_shape.size = Vector3(4.0, 0.5, 4.0)
+	osc_collider.shape = osc_shape
+	osc_box.add_child(osc_collider)
+	osc_box.global_position = Vector3(8.0, -0.5, 14.0)
+	player.global_position = Vector3(8.0, -0.05, 14.0)
+	player.current_velocity = Vector3.ZERO
+	player.root_state_chart.send_event(&"to_in_land")
+	player.in_sea = false
+	await _wait(1.5)
+	_check(player.land._active_state == player.idle_land, "marginal ground settles on land")
+	var sea_events := 0
+	player.root_state_chart.event_received.connect(func(event: StringName) -> void:
+		if event == &"to_in_sea":
+			sea_events += 1
+	)
+	await _wait(2.0)
+	_check(sea_events == 0, "no land/sea oscillation on marginal ground (%d to_in_sea)" % sea_events)
+	_check(player.in_sea == false, "still on land after oscillation window")
+	osc_box.queue_free()
+
 	level.queue_free()
 	await get_tree().physics_frame
 	if _failures.is_empty():

@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://bngjb6vpr6er4"]
+
+[ext_resource type="PackedScene" uid="uid://s3rm3jx3fcgc" path="res://scenes/final_level.tscn" id="1_sul5r"]
+[ext_resource type="Shader" uid="uid://bnj5mgymxc4h0" path="res://shaders/pixel_art.gdshader" id="2_7h61r"]
+[ext_resource type="Shader" uid="uid://c1mrxv5nxxs4w" path="res://shaders/crt.gdshader" id="3_0sr1o"]
+[ext_resource type="PackedScene" uid="uid://1bfmjawgwdyo" path="res://scenes/ui/pause_menu.tscn" id="4_pause"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sul5r"]
+shader = ExtResource("2_7h61r")
+shader_parameter/TARGET_RESOLUTION = Vector2(640, 360)
+shader_parameter/COLORS_PER_CHANNEL = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7h61r"]
+shader = ExtResource("3_0sr1o")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.0400000019
+shader_parameter/warp_amount = 0.0130000006175
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[node name="Game" type="Control" unique_id=1808925262]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="WorldViewportContainer" type="SubViewportContainer" parent="." unique_id=1931650294]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+stretch = true
+
+[node name="WorldViewport" type="SubViewport" parent="WorldViewportContainer" unique_id=1301600796]
+handle_input_locally = false
+size = Vector2i(1280, 720)
+render_target_update_mode = 4
+
+[node name="FinalLevel" parent="WorldViewportContainer/WorldViewport" unique_id=1142203742 instance=ExtResource("1_sul5r")]
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1709333646]
+
+[node name="Pixel" type="CanvasLayer" parent="." unique_id=1300138579]
+
+[node name="PixelDither" type="ColorRect" parent="Pixel" unique_id=1062549206]
+material = SubResource("ShaderMaterial_sul5r")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CRT" type="CanvasLayer" parent="." unique_id=597966592]
+
+[node name="CRT" type="ColorRect" parent="CRT" unique_id=172142801]
+material = SubResource("ShaderMaterial_7h61r")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseMenu" parent="." unique_id=1848523534 instance=ExtResource("4_pause")]
