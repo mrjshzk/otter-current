@@ -5,6 +5,12 @@
 [ext_resource type="Resource" uid="uid://bsywugsv67i5y" path="res://resources/islands/rock_island.tres" id="2_qbfoh"]
 [ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/models/Dock.glb" id="4_ng1os"]
 [ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/models/Cabin.glb" id="5_4kqwu"]
+[ext_resource type="PackedScene" uid="uid://ihlt2ywr8e2d" path="res://assets/models/Boulder1.glb" id="6_3it7v"]
+[ext_resource type="PackedScene" uid="uid://db8xe55of5lvg" path="res://assets/models/Boulder2.glb" id="7_fyhfe"]
+[ext_resource type="PackedScene" uid="uid://cmr25srobht21" path="res://assets/models/Boulder3.glb" id="8_ube17"]
+[ext_resource type="PackedScene" uid="uid://c7hu7dhf47t8q" path="res://assets/models/Barrel_Wide.glb" id="9_npfew"]
+[ext_resource type="PackedScene" uid="uid://byc4r7yooaukq" path="res://assets/models/Bucket.glb" id="10_2j0mm"]
+[ext_resource type="PackedScene" uid="uid://deqm5sf0flg6m" path="res://assets/models/Barrel_Tall.glb" id="11_4ra7w"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_4kqwu"]
 size = Vector3(0.47436523, 1.9110107, 2.7363281)
@@ -35,3 +41,36 @@ transform = Transform3D(1, 3.2316893e-07, 1.7881393e-07, -3.222376e-07, 1, -3.31
 size = Vector3(4.67041, 3.7529297, 5.481079)
 box_projection = true
 enable_shadows = true
+
+[node name="Boulder12" parent="." unique_id=2050093485 instance=ExtResource("6_3it7v")]
+transform = Transform3D(0.9960248, 0, 0.089076556, 0, 1, 0, -0.089076556, 0, 0.9960248, 1.2930694, -0.24703467, 12.400951)
+
+[node name="Boulder13" parent="." unique_id=1374659019 instance=ExtResource("6_3it7v")]
+transform = Transform3D(-0.5579748, 0, 0.8298578, 0, 1, 0, -0.8298578, 0, -0.5579748, -0.93160033, -0.24703467, -6.966674)
+
+[node name="Boulder22" parent="." unique_id=219767193 instance=ExtResource("7_fyhfe")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0.3216188, -0.121022224, 6.46633)
+
+[node name="Boulder24" parent="." unique_id=1389307549 instance=ExtResource("7_fyhfe")]
+transform = Transform3D(0.3462719, 0, -0.9381342, 0, 1, 0, 0.9381342, 0, 0.3462719, 8.72915, -0.18595362, 21.167519)
+
+[node name="Boulder23" parent="." unique_id=13208689 instance=ExtResource("7_fyhfe")]
+transform = Transform3D(0.9821324, 0, -0.18819153, 0, 1, 0, 0.18819153, 0, 0.9821324, 4.471492, -0.12102175, -14.6249)
+
+[node name="Boulder32" parent="." unique_id=1275459163 instance=ExtResource("8_ube17")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 18.046793, 4.489914, -30.864376)
+
+[node name="Boulder33" parent="." unique_id=1310962134 instance=ExtResource("8_ube17")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 6.423684, -0.056881785, 25.752846)
+
+[node name="Barrel_Wide2" parent="." unique_id=2030654534 instance=ExtResource("9_npfew")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -4.577429, -0.00927186, -1.2811933)
+
+[node name="Bucket2" parent="." unique_id=1326759444 instance=ExtResource("10_2j0mm")]
+transform = Transform3D(0.507058, 0, -0.8619119, 0, 1, 0, 0.8619119, 0, 0.507058, -4.7665005, 0.74881303, -1.1208715)
+
+[node name="Bucket3" parent="." unique_id=275871963 instance=ExtResource("10_2j0mm")]
+transform = Transform3D(0.507058, 0, -0.8619119, 0, 1, 0, 0.8619119, 0, 0.507058, -4.389166, 0.74881303, -1.4590664)
+
+[node name="Barrel_Tall2" parent="." unique_id=966310530 instance=ExtResource("11_4ra7w")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -1.6664486, -0.013898611, -1.3956814)

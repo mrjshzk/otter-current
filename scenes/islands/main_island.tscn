@@ -15,6 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://cb35k0qu6o1lv" path="res://assets/kenney_food/pot-lid.glb" id="14_inwpa"]
 [ext_resource type="PackedScene" uid="uid://ixwuwck3nbic" path="res://assets/kenney_food/tajine.glb" id="15_w6mty"]
 [ext_resource type="PackedScene" uid="uid://ojw0n1yr2k6k" path="res://assets/kenney_food/tajine-lid.glb" id="16_8px8i"]
+[ext_resource type="PackedScene" uid="uid://deqm5sf0flg6m" path="res://assets/models/Barrel_Tall.glb" id="16_w6mty"]
+[ext_resource type="PackedScene" uid="uid://byc4r7yooaukq" path="res://assets/models/Bucket.glb" id="17_7yiyy"]
+[ext_resource type="PackedScene" uid="uid://c7hu7dhf47t8q" path="res://assets/models/Barrel_Wide.glb" id="18_bvxv4"]
 
 [sub_resource type="Resource" id="Resource_home"]
 script = ExtResource("11_home")
@@ -109,3 +112,12 @@ transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 23.304922, 3.3794608
 
 [node name="tajine-lid2" parent="tajine2" unique_id=571898296 instance=ExtResource("16_8px8i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1293273, 0)
+
+[node name="Barrel_Tall2" parent="." unique_id=966310530 instance=ExtResource("16_w6mty")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4328034, 2.8558514, -3.2287774)
+
+[node name="Bucket2" parent="." unique_id=1326759444 instance=ExtResource("17_7yiyy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4514723, 3.8361702, -3.200832)
+
+[node name="Barrel_Wide2" parent="." unique_id=2030654534 instance=ExtResource("18_bvxv4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8814027, 2.8332639, -2.2343936)

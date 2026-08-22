@@ -26,7 +26,7 @@ func _on_game_over() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	t = create_tween()
 	t.tween_property(panel_container, "global_position", Vector2.ZERO, 1.5)\
-		.set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_IN_OUT)
+		.set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_IN_OUT)
 
 func delivery_failed(_snack: Snack, customer: CustomerNPC):
 	match customer.npc_name:

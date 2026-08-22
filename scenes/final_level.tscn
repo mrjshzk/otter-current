@@ -146,14 +146,14 @@ transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.707
 player = NodePath("../../Player/LookAtPos")
 
 [node name="CustomerIsland3" parent="." unique_id=2061434372 instance=ExtResource("21_nntvn")]
-transform = Transform3D(-0.64779675, 0, -0.7618131, 0, 1, 0, 0.7618131, 0, -0.64779675, 75.71653, 0.3783331, 72.5526)
+transform = Transform3D(-0.64779675, 0, -0.7618131, 0, 1, 0, 0.7618131, 0, -0.64779675, 75.71653, 3.966217, 72.5526)
 
 [node name="MysteryGuy" parent="CustomerIsland3" unique_id=1870361321 node_paths=PackedStringArray("player") instance=ExtResource("22_fog77")]
 transform = Transform3D(-0.92707396, 0, -0.3748768, 0, 1, 0, 0.3748768, 0, -0.92707396, 4.8414536, -0.30890852, -2.8530807)
 player = NodePath("../../Player/LookAtPos")
 
 [node name="Player" parent="." unique_id=741711365 instance=ExtResource("7_vmrwc")]
-transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, -4.1695857, 2.8158383, -2.1390862)
+transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, -4.4560757, 2.8158383, -1.5611652)
 
 [node name="LookAtPos" type="Marker3D" parent="Player" unique_id=356680678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8238001, 0)

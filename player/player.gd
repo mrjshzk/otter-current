@@ -664,3 +664,8 @@ func force_wave_jump_off(wave: OceanCurrent) -> void:
 	_wake.emitting = false
 	_wake.visible = false
 	root_state_chart.send_event("jump_off")
+
+
+func _on_diving_state_state_physics_processing(delta: float) -> void:
+	if %ForceLandChecker.is_colliding():
+		root_state_chart.send_event("force_land")
