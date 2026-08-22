@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=4]
+
+[ext_resource type="Script" uid="uid://cjsovld7m4mlb" path="res://scripts/ui/debug_delivery_ui.gd" id="1_script"]
+
+[node name="DebugDeliveryUI" type="CanvasLayer"]
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 320.0
+offset_bottom = 250.0
+
+[node name="VBox" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="TitleLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Delivery Debug"
+
+[node name="StateLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "State: -"
+
+[node name="TargetIslandLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Target island: -"
+
+[node name="TargetCustomerLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Target customer: -"
+
+[node name="SnackLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Snack: -"
+
+[node name="TimerLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Timer: -"
+
+[node name="CompletedLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Deliveries completed: 0"
+
+[node name="HomeIslandLabel" type="Label" parent="Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Home island: -"

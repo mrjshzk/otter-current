@@ -150,6 +150,7 @@ func get_delivery_info() -> Dictionary:
 		"target_island_name": target_island.display_name() if target_island != null else "",
 		"target_island": target_island,
 		"returning_home": is_returning(),
+		"home_island_name": home_island.display_name() if home_island != null else "",
 		"time_limit": time_limit,
 		"time_remaining": time_remaining,
 		"timed": is_timed(),

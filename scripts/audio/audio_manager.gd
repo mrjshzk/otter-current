@@ -24,7 +24,7 @@ func _ready() -> void:
 	_music_player = AudioStreamPlayer.new()
 	_music_player.bus = &"Music"
 	add_child(_music_player)
-	_loop_stream(_ambience_player, SfxLibrary.AMBIENCE, -14.0)
+	#_loop_stream(_ambience_player, SfxLibrary.AMBIENCE, -14.0)
 
 ## Starts the looping level music. Idempotent: does nothing if it is already playing.
 ## Music is intentionally not started at boot; the level decides when to trigger it.

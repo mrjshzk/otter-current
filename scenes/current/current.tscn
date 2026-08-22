@@ -111,7 +111,7 @@ script = ExtResource("1_rbjix")
 _peak_position_node = NodePath("Wave/Peak")
 
 [node name="Wave" type="MeshInstance3D" parent="." unique_id=374874253]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.073, -0.19017994, 0.316)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.073, -0.52836204, 0.316)
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_dg0tx")
 
@@ -125,11 +125,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4565697, 0)
 gizmo_extents = 0.75
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=162173013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.26221037, 0.4418844)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07597172, 0.4418844)
 shape = SubResource("SphereShape3D_dg0tx")
 
 [node name="CollisionChecker" type="Area3D" parent="." unique_id=1471722043]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3381821, 0)
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionChecker" unique_id=1428010232]

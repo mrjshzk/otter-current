@@ -23,12 +23,15 @@ const HOVER_TIME := 0.12
 @onready var settings_panel: SettingsPanel = %SettingsPanel
 @onready var transition_rect: ColorRect = %TransitionRect
 @onready var _transition_material: ShaderMaterial = %TransitionRect.material as ShaderMaterial
+@onready var title_theme: AudioStreamPlayer = %TitleTheme
 
 var _button_tweens: Dictionary = {}
 
 func _ready() -> void:
+	title_theme.volume_linear = 0
+	title_theme.bus = &"Music"
 	transition_rect.visible = false
-
+	
 	start_button.pressed.connect(_on_start_pressed)
 	settings_button.pressed.connect(_open_settings)
 	quit_button.pressed.connect(func() -> void: get_tree().quit())
@@ -38,6 +41,16 @@ func _ready() -> void:
 		button.mouse_exited.connect(_on_button_hover.bind(button, false))
 		_button_tweens[button] = null
 	start_button.grab_focus()
+	
+	title_theme.play()
+	var t = create_tween()
+	t.finished.connect(
+		func():
+			var t2 = create_tween()
+			t2.tween_property(title_theme, "volume_linear", 1, 1.0)
+	)
+	t.tween_property(_transition_material, 'shader_parameter/progress', 3.36, 1.0)
+	
 
 func _on_button_hover(button: TextureButton, hovered: bool) -> void:
 	var previous: Tween = _button_tweens[button]

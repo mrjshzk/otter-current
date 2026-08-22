@@ -44,8 +44,10 @@ func on_interact(player: Node) -> void:
 			VFXManager.spawn(CONFETTI_VFX, global_position)
 			AudioManager.play_ui(SfxLibrary.JINGLE, -3.0)
 			_talk(player, &"snack_received")
-		else:
+		elif _is_delivery_target():
 			_talk(player, &"wrong_snack")
+		else:
+			_talk(player, &"greeting")
 	else:
 		if _is_delivery_target():
 			_talk(player, &"awaiting_snack")

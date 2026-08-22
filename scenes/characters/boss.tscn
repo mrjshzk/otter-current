@@ -17,6 +17,7 @@ metadata/_custom_type_script = "uid://d3uu1stmi2h5d"
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_imw47"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_sk68b"]
+height = 3.0
 radius = 1.2314453
 
 [node name="Boss" type="Area3D" unique_id=828823001 node_paths=PackedStringArray("highlight_mesh", "prompt_label", "prompt_icon")]
@@ -43,11 +44,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CylinderShape3D_sk68b")
 
 [node name="Label3D" type="Label3D" parent="." unique_id=588007559]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4429338, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1169827, 0.9207368, 0)
 billboard = 1
 text = "Talk to dude"
 
 [node name="Sprite3D" type="Sprite3D" parent="." unique_id=1484857359]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1169827, 1.477803, 0)
 billboard = 1
 texture = ExtResource("2_edpq3")

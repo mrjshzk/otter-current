@@ -24,6 +24,10 @@ DeliveryManager="*uid://pksgbyg4spci"
 AudioManager="*uid://cpcnpkmtuqod0"
 VFXManager="*uid://dyiuwe4ujrkd2"
 
+[dialogue_manager]
+
+runtime/balloon_path="res://scenes/dialogue/baloon/balloon.tscn"
+
 [display]
 
 window/size/viewport_width=1280

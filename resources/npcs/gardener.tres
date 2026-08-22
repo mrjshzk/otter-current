@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="1_ile31"]
 [ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="1_xmyfn"]
+[ext_resource type="Resource" uid="uid://bh5lp483uftis" path="res://resources/snacks/plant_food.tres" id="3_hsbrl"]
 
 [resource]
 script = ExtResource("1_ile31")
 npc_name = "Gardener"
+snack = ExtResource("3_hsbrl")
 avatar = ExtResource("1_xmyfn")
 metadata/_custom_type_script = "uid://d3uu1stmi2h5d"

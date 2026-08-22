@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="IslandResource" format=3 uid="uid://dfvoipug4c3kq"]
+
+[ext_resource type="Resource" uid="uid://l2woxdjlvg5m" path="res://resources/npcs/mystery_guy.tres" id="1_mwiy3"]
+[ext_resource type="Script" uid="uid://c06r4onxd2avg" path="res://scripts/islands/island_resource.gd" id="2_cgiil"]
+
+[resource]
+script = ExtResource("2_cgiil")
+island_name = "Mystery Island"
+customer = ExtResource("1_mwiy3")
+metadata/_custom_type_script = "uid://c06r4onxd2avg"
