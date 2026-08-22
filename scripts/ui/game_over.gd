@@ -7,9 +7,9 @@ class_name GameOverScreen
 @onready var restart_button: Button = %RestartButton
 @onready var dim: ColorRect = %Dim
 
-@export var builder_otter_text := ""
-@export var gardener_otter_text := ""
-@export var mysterious_otter_text := ""
+@export_multiline() var builder_otter_text := ""
+@export_multiline()var gardener_otter_text := ""
+@export_multiline() var mysterious_otter_text := ""
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
