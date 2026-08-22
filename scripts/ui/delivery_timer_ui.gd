@@ -6,7 +6,7 @@ var active := false
 
 func _ready() -> void:
 	self.hide()
-	
+	reset_rotator()
 	DeliveryManager.delivery_started.connect(
 		func(snack: Snack, _customer: CustomerNPC, _island: Island, time_limit: float):
 			if time_limit <= 0: return

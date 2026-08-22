@@ -25,12 +25,12 @@ environment = SubResource("Environment_jevby")
 script = ExtResource("1_jevby")
 
 [node name="MarginContainer2" type="MarginContainer" parent="." unique_id=1418857436]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -187.0
-offset_right = 187.0
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -187.0
+offset_bottom = 187.0
+grow_horizontal = 0
 mouse_filter = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_top = 25
@@ -57,12 +57,12 @@ metadata/_edit_lock_ = true
 
 [node name="MarginContainer" type="MarginContainer" parent="Control" unique_id=704037156]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -212.0
-offset_right = 212.0
-grow_vertical = 0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -212.0
+offset_bottom = 212.0
+grow_horizontal = 0
 mouse_filter = 2
 theme_override_constants/margin_left = 25
 theme_override_constants/margin_bottom = 25
@@ -81,7 +81,7 @@ render_target_update_mode = 4
 
 [node name="Rotator" type="Node3D" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld" unique_id=1032541944]
 unique_name_in_owner = true
-transform = Transform3D(-0.9948634, 0, -0.10122546, 0, 1, 0, 0.10122546, 0, -0.9948634, 0, -0.13932192, 0)
+transform = Transform3D(0.9754096, 0, -0.2203992, 0, 1, 0, 0.2203992, 0, 0.9754096, 0.135, -0.134, 0)
 script = ExtResource("1_x13tk")
 
 [node name="wine-red2" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld/Rotator" unique_id=572333199 instance=ExtResource("4_jevby")]

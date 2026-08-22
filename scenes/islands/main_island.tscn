@@ -22,7 +22,7 @@ island_name = "Boss Island"
 is_home = true
 metadata/_custom_type_script = "uid://c06r4onxd2avg"
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_a7ktl"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_inwpa"]
 size = Vector3(0.47436523, 1.9110107, 2.7363281)
 
 [node name="MainIsland" type="Marker3D" unique_id=234321246]
@@ -59,9 +59,10 @@ transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Dock2" unique_id=1088185765]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Dock2/StaticBody3D" unique_id=1933926571]
-transform = Transform3D(0.5991976, -0.8006012, 0, 0.8006012, 0.5991976, 0, 0, 0, 1, 0.30569172, -0.8178289, 0)
-shape = SubResource("BoxShape3D_a7ktl")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dock2/StaticBody3D" unique_id=487664132]
+transform = Transform3D(0.6761371, -0.7367763, 0.00021466611, 0.7367322, 0.67609966, 0.010722718, -0.008045391, -0.007091945, 0.99994284, 0.52437973, -0.8388258, 0.0023245255)
+shape = SubResource("BoxShape3D_inwpa")
+debug_color = Color(0, 1.1031685, 1.2902569, 1)
 
 [node name="RestaurantCabin2" parent="." unique_id=1384080155 instance=ExtResource("7_a7ktl")]
 transform = Transform3D(0.015059224, 0.00015213167, -0.99988663, -0.0101017095, 0.999949, 1.4551915e-11, 0.9998356, 0.010100564, 0.015059993, 24.635403, 2.7143857, 3.5478277)

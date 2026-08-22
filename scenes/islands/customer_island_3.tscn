@@ -57,9 +57,10 @@ transform = Transform3D(0.08579874, 0, -0.99631244, 0, 1, 0, 0.99631244, 0, 0.08
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Dock2" unique_id=1783859930]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Dock2/StaticBody3D" unique_id=541919181]
-transform = Transform3D(0.5991976, -0.8006012, 0, 0.8006012, 0.5991976, 0, 0, 0, 1, 0.30569172, -0.8178289, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dock2/StaticBody3D" unique_id=1975382314]
+transform = Transform3D(0.6761371, -0.7367763, 0.00021466611, 0.7367322, 0.67609966, 0.010722718, -0.008045391, -0.007091945, 0.99994284, 0.52437973, -0.8388258, 0.0023245255)
 shape = SubResource("BoxShape3D_foht8")
+debug_color = Color(0, 1.1031685, 1.2902569, 1)
 
 [node name="Island4" parent="." unique_id=986756628 instance=ExtResource("8_ppvwo")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -7)

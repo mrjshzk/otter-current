@@ -1,42 +1,87 @@
 [gd_scene format=3 uid="uid://n81vvmfccjwo"]
 
 [ext_resource type="Script" uid="uid://x44g50xbau8b" path="res://scripts/ui/game_over.gd" id="1_script"]
-
-[sub_resource type="SystemFont" id="SystemFont_o6b8n"]
+[ext_resource type="Texture2D" uid="uid://d03hhqfdv6pht" path="res://assets/avatarmysterious.png" id="2_fu4wh"]
+[ext_resource type="FontFile" uid="uid://bvse434cn5nda" path="res://assets/fonts/BoldPixels.ttf" id="3_x6o8e"]
 
 [node name="GameOver" type="CanvasLayer" unique_id=1928344612]
 unique_name_in_owner = true
 script = ExtResource("1_script")
+builder_otter_text = "im a didyblud build"
+gardener_otter_text = "im a didyblud gard"
+mysterious_otter_text = "im a didyblud myst"
 
 [node name="Dim" type="ColorRect" parent="." unique_id=1928344613]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 0, 0, 0.7)
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
-[node name="Center" type="CenterContainer" parent="." unique_id=1928344614]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=487265107]
+unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 720.0
+offset_bottom = 720.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBox" type="VBoxContainer" parent="Center" unique_id=1928344615]
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1575521056]
 layout_mode = 2
-theme_override_constants/separation = 24
 
-[node name="Title" type="Label" parent="Center/VBox" unique_id=1928344616]
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer" unique_id=974698453]
+layout_mode = 2
+
+[node name="CharacterIcon" type="TextureRect" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=473666101]
+unique_name_in_owner = true
+layout_mode = 2
+texture = ExtResource("2_fu4wh")
+expand_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/MarginContainer/HBoxContainer" unique_id=82453078]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_top = 121
+theme_override_constants/margin_right = 83
+
+[node name="VBox" type="VBoxContainer" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer" unique_id=1928344615]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 43
+alignment = 1
+
+[node name="Title" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBox" unique_id=1440761785]
 texture_filter = 1
 layout_mode = 2
-theme_override_fonts/font = SubResource("SystemFont_o6b8n")
-theme_override_font_sizes/font_size = 64
-text = "The food spoiled..."
+theme_override_fonts/normal_font = ExtResource("3_x6o8e")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
+text = "[wave]You've been [color=red]fired[/color][/wave]"
+fit_content = true
 horizontal_alignment = 1
 
-[node name="Message" type="Label" parent="Center/VBox" unique_id=1928344617]
+[node name="Message" type="RichTextLabel" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBox" unique_id=1211630862]
+unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 28
-text = "And you got fired...sorry..."
+theme_override_fonts/normal_font = ExtResource("3_x6o8e")
+theme_override_font_sizes/normal_font_size = 32
+text = "and the Builder Otter has starved to death [pausa] (not really)
+
+and the Gardener Otter is trying to convince your boss to hire you back
+"
+fit_content = true
 horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="PanelContainer/MarginContainer/HBoxContainer/MarginContainer/VBox" unique_id=764237616]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_x6o8e")
+theme_override_font_sizes/font_size = 34
+text = "Try Again"
