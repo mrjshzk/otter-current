@@ -4,8 +4,12 @@
 [ext_resource type="Script" uid="uid://dr1c4fi3a06ky" path="res://scenes/final_level.gd" id="1_qoix5"]
 [ext_resource type="PackedScene" uid="uid://boxmlgnfx006p" path="res://scenes/islands/main_island.tscn" id="2_fxkco"]
 [ext_resource type="PackedScene" uid="uid://deeyrq8rmyje4" path="res://scenes/islands/customer_island_1.tscn" id="5_7l6pa"]
+[ext_resource type="Script" uid="uid://craydiqj83rk3" path="res://scripts/snacks/snack.gd" id="5_fog77"]
 [ext_resource type="PackedScene" uid="uid://dlf5ix06qv2i4" path="res://scenes/islands/customer_island_2.tscn" id="6_u2pc8"]
+[ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="6_wur77"]
+[ext_resource type="Resource" uid="uid://bh5lp483uftis" path="res://resources/snacks/plant_food.tres" id="7_3dpx7"]
 [ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="7_vmrwc"]
+[ext_resource type="Resource" uid="uid://cc78jlcbokmf" path="res://resources/snacks/mystery_food.tres" id="8_f55xd"]
 [ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="8_mei1o"]
 [ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/water_standart.tres" id="8_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="9_1ppc5"]
@@ -105,9 +109,11 @@ environment = SubResource("Environment_jwyka")
 
 [node name="MainIsland" parent="." unique_id=234321246 instance=ExtResource("2_fxkco")]
 
-[node name="Boss" parent="MainIsland" unique_id=828823001 node_paths=PackedStringArray("pickup_spawn_point") instance=ExtResource("10_ji6ub")]
+[node name="Boss" parent="MainIsland" unique_id=828823001 node_paths=PackedStringArray("pickup_spawn_point", "player") instance=ExtResource("10_ji6ub")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.363836, 2.7190015, 2.6134918)
+snack_options = Array[ExtResource("5_fog77")]([ExtResource("6_wur77"), ExtResource("7_3dpx7"), ExtResource("8_f55xd")])
 pickup_spawn_point = NodePath("../FoodSpawnPoint")
+player = NodePath("../../Player/LookAtPos")
 npc_name = "Boss"
 
 [node name="FoodSpawnPoint" type="Marker3D" parent="MainIsland" unique_id=572957348]
@@ -120,24 +126,26 @@ mesh = SubResource("PlaneMesh_u2pc8")
 [node name="CustomerIsland1" parent="." unique_id=1787802090 instance=ExtResource("5_7l6pa")]
 transform = Transform3D(-0.40363026, 0, 0.91492224, 0, 1, 0, -0.91492224, 0, -0.40363026, -57.044456, 0, 91.89618)
 
-[node name="Gardener" parent="CustomerIsland1" unique_id=1822852545 instance=ExtResource("10_vmkuj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.003639, 0.99951625, -0.44293213)
+[node name="Gardener" parent="CustomerIsland1" unique_id=1822852545 node_paths=PackedStringArray("player") instance=ExtResource("10_vmkuj")]
+transform = Transform3D(-0.40111026, 0, 0.9160296, 0, 1, 0, -0.9160296, 0, -0.40111026, 15.053974, 0.8424032, 8.182465)
+player = NodePath("../../Player/LookAtPos")
 
 [node name="CustomerIsland2" parent="." unique_id=817794434 instance=ExtResource("6_u2pc8")]
 transform = Transform3D(4.722676e-06, 0, 1, 0, 1, 0, -1, 0, 4.722676e-06, 0.9221649, 1.1041832, 137.2778)
 
 [node name="RockGuy" parent="CustomerIsland2" unique_id=1913945634 node_paths=PackedStringArray("player") instance=ExtResource("11_q0j1x")]
-transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 3.0402222, -0.015613937, -1.0580292)
+transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 2.4729462, -0.015613914, 0.23376876)
 player = NodePath("../../Player/LookAtPos")
 
 [node name="CustomerIsland3" parent="." unique_id=2061434372 instance=ExtResource("21_nntvn")]
 transform = Transform3D(-0.64779675, 0, -0.7618131, 0, 1, 0, 0.7618131, 0, -0.64779675, 75.71653, 0.3783331, 72.5526)
 
-[node name="MysteryGuy" parent="CustomerIsland3" unique_id=1870361321 instance=ExtResource("22_fog77")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.179203, 0.982515, -0.68227386)
+[node name="MysteryGuy" parent="CustomerIsland3" unique_id=1870361321 node_paths=PackedStringArray("player") instance=ExtResource("22_fog77")]
+transform = Transform3D(-0.92707396, 0, -0.3748768, 0, 1, 0, 0.3748768, 0, -0.92707396, 4.8414536, -0.30890852, -2.8530807)
+player = NodePath("../../Player/LookAtPos")
 
 [node name="Player" parent="." unique_id=741711365 instance=ExtResource("7_vmrwc")]
-transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 4.0838804, 1.5682749, 133.61407)
+transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 21.448706, 2.6781535, 1.5958331)
 
 [node name="LookAtPos" type="Marker3D" parent="Player" unique_id=356680678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8238001, 0)

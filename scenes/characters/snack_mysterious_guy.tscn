@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://kepvq2owd1a4"]
+
+[ext_resource type="PackedScene" uid="uid://dbog0mex6rvc" path="res://assets/kenney_food/wine-red.glb" id="1_sy5eo"]
+
+[node name="SnackMysteriousGuy" type="Node3D" unique_id=1601761995]
+
+[node name="wine-red2" parent="." unique_id=268641922 instance=ExtResource("1_sy5eo")]

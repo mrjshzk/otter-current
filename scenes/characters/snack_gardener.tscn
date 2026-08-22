@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://br54gte5je4md"]
+
+[ext_resource type="PackedScene" uid="uid://cslalhiwpakq4" path="res://assets/kenney_food/bowl-soup.glb" id="1_ybja3"]
+
+[node name="SnackGardener" type="Node3D" unique_id=1601761995]
+
+[node name="bowl-soup2" parent="." unique_id=256060003 instance=ExtResource("1_ybja3")]

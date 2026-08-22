@@ -33,7 +33,7 @@ func _ready() -> void:
 	_player = AudioStreamPlayer.new()
 	_player.stream = stream
 	_player.bus = &"UI"
-	_player.volume_db = -8.0
+	_player.volume_db = 2.0
 	add_child(_player)
 
 func start(pitch: float = 1.0, speed: float = 1.0, tone: float = 0.5) -> void:

@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://djq71bwtlxr86"]
+
+[ext_resource type="Texture2D" uid="uid://b7qk7w84ces12" path="res://assets/gardenerotter_ottertexture2.png" id="1_yuoxd"]
+
+[resource]
+resource_name = "Material.003"
+cull_mode = 2
+albedo_texture = ExtResource("1_yuoxd")
+texture_filter = 2
+metadata/_gltf_primary_texture_coord = 0
