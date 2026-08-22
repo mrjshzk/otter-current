@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="uber-otter"
-run/main_scene="uid://bngjb6vpr6er4"
+run/main_scene="uid://nwfs5748s27o"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 

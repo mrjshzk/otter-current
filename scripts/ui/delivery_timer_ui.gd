@@ -8,7 +8,7 @@ func _ready() -> void:
 	self.hide()
 	
 	DeliveryManager.delivery_started.connect(
-		func(snack: Snack, customer: CustomerNPC, island: Island, time_limit: float):
+		func(snack: Snack, _customer: CustomerNPC, _island: Island, time_limit: float):
 			if time_limit <= 0: return
 			var scene_to_instance := snack.get_visual_scene().instantiate()
 			reset_rotator()
@@ -30,6 +30,6 @@ func stop(_s, _c):
 	self.hide()
 	active = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not active: return
 	progress.value = int(DeliveryManager.time_remaining)
