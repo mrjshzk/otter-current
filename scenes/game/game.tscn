@@ -5,6 +5,7 @@
 [ext_resource type="Shader" uid="uid://bnj5mgymxc4h0" path="res://shaders/pixel_art.gdshader" id="2_7h61r"]
 [ext_resource type="Shader" uid="uid://c1mrxv5nxxs4w" path="res://shaders/crt.gdshader" id="3_0sr1o"]
 [ext_resource type="PackedScene" uid="uid://1bfmjawgwdyo" path="res://scenes/ui/pause_menu.tscn" id="4_pause"]
+[ext_resource type="PackedScene" path="res://scenes/ui/game_over.tscn" id="5_gameover"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_sul5r"]
 shader = ExtResource("2_7h61r")
@@ -86,3 +87,5 @@ mouse_filter = 2
 [node name="Dialogue" type="CanvasLayer" parent="." unique_id=1709328465]
 
 [node name="PauseMenu" parent="." unique_id=1848523534 instance=ExtResource("4_pause")]
+
+[node name="GameOver" parent="." instance=ExtResource("5_gameover")]

@@ -16,6 +16,7 @@ class_name OceanCurrent
 @onready var _wave_visual: Node3D = $Wave
 @onready var collision_checker: Area3D = %CollisionChecker
 @onready var trail: GPUParticles3D = %Trail
+@onready var wave_sound: AudioStreamPlayer3D = %WaveSound
 
 var _lifetime_left: float
 var _sinking := false
@@ -30,6 +31,7 @@ func _ready() -> void:
 	_spawn_tween = create_tween()
 	_spawn_tween.tween_property(self, "global_position:y", 0.0, spawn_rise_duration) \
 		.set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
+	wave_sound.bus = &"SFX"
 
 func _face_direction() -> void:
 	if _wave_visual == null or wave_direction.is_zero_approx():

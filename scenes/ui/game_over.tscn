@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://n81vvmfccjwo"]
+
+[ext_resource type="Script" uid="uid://x44g50xbau8b" path="res://scripts/ui/game_over.gd" id="1_script"]
+
+[node name="GameOver" type="CanvasLayer" unique_id=1928344612]
+unique_name_in_owner = true
+script = ExtResource("1_script")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1928344613]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="Center" type="CenterContainer" parent="." unique_id=1928344614]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="Center" unique_id=1928344615]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Title" type="Label" parent="Center/VBox" unique_id=1928344616]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "You're fired!"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="Center/VBox" unique_id=1928344617]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Vai ta foder"
+horizontal_alignment = 1

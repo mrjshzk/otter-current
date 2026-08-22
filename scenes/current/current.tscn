@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://dt2cnltj7mq82" path="res://shaders/dissolve.gdshader" id="4_owl7n"]
 [ext_resource type="Shader" uid="uid://dhtnrj37bk70u" path="res://shaders/wave_foam.gdshader" id="5_qhbq3"]
 [ext_resource type="Texture2D" uid="uid://ee0xffe7ibvk" path="res://assets/textures/light_masks/circle_rings_b_noise.png" id="6_ji2bb"]
+[ext_resource type="AudioStream" uid="uid://d1dgefrlvlvlr" path="res://assets/audio/wave.wav" id="7_aty0o"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhbq3"]
 render_priority = 0
@@ -205,3 +206,10 @@ cast_shadow = 0
 amount = 80
 process_material = SubResource("ParticleProcessMaterial_hmn6o")
 draw_pass_1 = SubResource("QuadMesh_ji2bb")
+
+[node name="WaveSound" type="AudioStreamPlayer3D" parent="." unique_id=1000948851]
+unique_name_in_owner = true
+stream = ExtResource("7_aty0o")
+autoplay = true
+max_distance = 25.0
+max_polyphony = 8

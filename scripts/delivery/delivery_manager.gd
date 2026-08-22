@@ -4,6 +4,7 @@ signal delivery_started(snack: Snack, customer: CustomerNPC, island: Island, tim
 signal delivery_completed(snack: Snack)
 signal returning_home()
 signal delivery_failed(snack: Snack, customer: CustomerNPC)
+signal game_over()
 
 enum DeliveryState { IDLE, DELIVERING, RETURNING }
 
@@ -41,6 +42,7 @@ func _process(delta: float) -> void:
 	time_remaining = maxf(0.0, time_remaining - delta)
 	if time_remaining <= 0.0:
 		_fail_delivery()
+		game_over.emit()
 
 func is_delivering() -> bool:
 	return state == DeliveryState.DELIVERING
@@ -50,6 +52,18 @@ func is_returning() -> bool:
 
 func is_timed() -> bool:
 	return time_limit > 0.0
+
+func reset() -> void:
+	state = DeliveryState.IDLE
+	current_snack = null
+	target_customer = null
+	target_island = null
+	time_limit = 0.0
+	time_remaining = 0.0
+	deliveries_completed = 0
+	_dialogue_open = false
+	_islands.clear()
+	home_island = null
 
 func register_island(island: Island) -> void:
 	if island == null or _islands.has(island):

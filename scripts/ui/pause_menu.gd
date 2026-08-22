@@ -33,12 +33,19 @@ func _ready() -> void:
 	visible = false
 
 func toggle_pause() -> void:
-	if _dialogue_open:
+	if _dialogue_open or _is_game_over():
 		return
 	if get_tree().paused:
 		_resume()
 	else:
 		_pause()
+
+func _is_game_over() -> bool:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return false
+	var overlay := scene.get_node_or_null("%GameOver")
+	return overlay != null and overlay.visible
 
 func _pause() -> void:
 	get_tree().paused = true
