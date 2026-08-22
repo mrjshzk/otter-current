@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_k7v76")
-snack_name = "Mystery Food"
+snack_name = "Mysterious Bottle"
 icon = ExtResource("1_lnax0")
 visual_scene_uid = "uid://kepvq2owd1a4"
 metadata/_custom_type_script = "uid://craydiqj83rk3"

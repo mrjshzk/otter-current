@@ -2,6 +2,8 @@
 
 [ext_resource type="Script" uid="uid://x44g50xbau8b" path="res://scripts/ui/game_over.gd" id="1_script"]
 
+[sub_resource type="SystemFont" id="SystemFont_o6b8n"]
+
 [node name="GameOver" type="CanvasLayer" unique_id=1928344612]
 unique_name_in_owner = true
 script = ExtResource("1_script")
@@ -26,13 +28,15 @@ layout_mode = 2
 theme_override_constants/separation = 24
 
 [node name="Title" type="Label" parent="Center/VBox" unique_id=1928344616]
+texture_filter = 1
 layout_mode = 2
+theme_override_fonts/font = SubResource("SystemFont_o6b8n")
 theme_override_font_sizes/font_size = 64
-text = "You're fired!"
+text = "The food spoiled..."
 horizontal_alignment = 1
 
 [node name="Message" type="Label" parent="Center/VBox" unique_id=1928344617]
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
-text = "Vai ta foder"
+text = "And you got fired...sorry..."
 horizontal_alignment = 1

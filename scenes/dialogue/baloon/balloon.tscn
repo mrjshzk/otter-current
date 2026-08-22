@@ -5,8 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/nodes/dialogue_label/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/nodes/responses_menu/dialogue_responses_menu.gd" id="3_72ixx"]
 [ext_resource type="Script" uid="uid://chxrvav2bvso0" path="res://scripts/audio/procedural_voice.gd" id="4_voice"]
-[ext_resource type="FontFile" uid="uid://bvse434cn5nda" path="res://assets/fonts/BoldPixels.ttf" id="5_hqxt5"]
-[ext_resource type="Texture2D" uid="uid://vmjkrst66f8g" path="res://assets/vfx/blob.png" id="5_of2vd"]
+[ext_resource type="Texture2D" uid="uid://c6g7s53xxv2kc" path="res://assets/avatarchef.png" id="5_of2vd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 content_margin_left = 20.0
@@ -116,14 +115,18 @@ _data = {
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_afku3"]
-bg_color = Color(0.7907911, 0.54295754, 0.18634531, 1)
+bg_color = Color(1, 0.96862745, 0.92941177, 1)
 border_width_left = 10
 border_width_bottom = 10
-border_color = Color(0.8934805, 0.61267793, 0.21955423, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
+border_color = Color(1, 0.96862745, 0.92941177, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="SystemFont" id="SystemFont_fu4wh"]
+
+[sub_resource type="SystemFont" id="SystemFont_60xr3"]
 
 [node name="ExampleBalloon" type="CanvasLayer" unique_id=38036521]
 layer = 100
@@ -214,10 +217,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_afku3")
 
 [node name="MarginContainer" type="MarginContainer" parent="Balloon/MarginContainer/VBoxContainer/PanelContainer2" unique_id=1369722302]
 layout_mode = 2
-theme_override_constants/margin_left = 311
+theme_override_constants/margin_left = 275
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Balloon/MarginContainer/VBoxContainer/PanelContainer2/MarginContainer" unique_id=2067188521]
 layout_mode = 2
+offset_transform_enabled = true
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Balloon/MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer2" unique_id=13910718]
 custom_maximum_size = Vector2(700, -1)
@@ -229,8 +233,9 @@ alignment = 1
 [node name="CharacterLabel" type="RichTextLabel" parent="Balloon/MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer2/VBoxContainer" unique_id=1328768481]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_fonts/normal_font = ExtResource("5_hqxt5")
-theme_override_font_sizes/normal_font_size = 59
+theme_override_colors/default_color = Color(0.32759997, 0.3584, 0.42, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_fu4wh")
+theme_override_font_sizes/normal_font_size = 36
 bbcode_enabled = true
 text = "Character"
 fit_content = true
@@ -240,8 +245,9 @@ scroll_active = false
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
-theme_override_fonts/normal_font = ExtResource("5_hqxt5")
-theme_override_font_sizes/normal_font_size = 37
+theme_override_colors/default_color = Color(0.61920005, 0.6528, 0.72, 1)
+theme_override_fonts/normal_font = SubResource("SystemFont_60xr3")
+theme_override_font_sizes/normal_font_size = 27
 text = "Dialogue..."
 
 [node name="Control" type="Control" parent="Balloon/MarginContainer/VBoxContainer/PanelContainer2/MarginContainer/HBoxContainer2" unique_id=1178689386]
@@ -258,11 +264,15 @@ libraries/ = SubResource("AnimationLibrary_1337t")
 autoplay = &"progress"
 
 [node name="CharacterIcon" type="TextureRect" parent="Balloon" unique_id=216208393]
-layout_mode = 0
-offset_left = 157.9
-offset_top = 409.31
-offset_right = 397.8999
-offset_bottom = 649.31024
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 67.0
+offset_top = -353.5
+offset_right = 306.9999
+offset_bottom = -14.833435
+grow_vertical = 0
 texture = ExtResource("5_of2vd")
 expand_mode = 5
 

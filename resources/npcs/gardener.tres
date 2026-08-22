@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_ile31")
-npc_name = "Gardener"
+npc_name = "Gardener Otter"
 snack = ExtResource("3_hsbrl")
 avatar = ExtResource("1_xmyfn")
 metadata/_custom_type_script = "uid://d3uu1stmi2h5d"

@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_qyw11")
-snack_name = "Plant Food"
+snack_name = "Vegetable Soup"
 icon = ExtResource("1_bmmns")
 visual_scene_uid = "uid://br54gte5je4md"
 metadata/_custom_type_script = "uid://craydiqj83rk3"
