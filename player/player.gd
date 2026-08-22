@@ -157,7 +157,7 @@ func _ready() -> void:
 		camera_rig.add_shake(0.25)
 	)
 	water_movement.state_entered.connect(func():
-		if current_velocity.length_squared() > 35:
+		if current_velocity.length_squared() > 50:
 			AudioManager.play_sfx(SfxLibrary.BIG_SPLASH, global_position, -2.0, 1.0, 0.1)
 		else:
 			AudioManager.play_sfx(SfxLibrary.SMALL_SPLASH, global_position, -2.0, 1.0, 0.1)
@@ -335,7 +335,7 @@ func _splash_shake() -> float:
 
 func _play_splash(at: Vector3, sfx: AudioStream, shake: float) -> void:
 	var splash_pos := Vector3(at.x, water_level_y, at.z)
-	if current_velocity.length_squared() > 35:
+	if current_velocity.length_squared() > 50:
 		VFXManager.spawn(BIG_SPLASH_VFX, splash_pos)
 	else:
 		VFXManager.spawn(SPLASH_VFX, splash_pos)

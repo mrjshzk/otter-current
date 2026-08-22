@@ -9,11 +9,14 @@ func _ready() -> void:
 	reset_rotator()
 	DeliveryManager.delivery_started.connect(
 		func(snack: Snack, _customer: CustomerNPC, _island: Island, time_limit: float):
-			if time_limit <= 0: return
 			var scene_to_instance := snack.get_visual_scene().instantiate()
 			rotator.add_child.call_deferred(scene_to_instance)
-			progress.max_value = time_limit
-			progress.value = time_limit
+			if time_limit != 0:
+				progress.max_value = time_limit
+				progress.value = time_limit
+			else:
+				progress.max_value = 100
+				progress.value = 100
 			self.show()
 			active = true
 	)
@@ -37,4 +40,5 @@ func completed(_s):
 
 func _process(_delta: float) -> void:
 	if not active: return
+	if DeliveryManager.time_limit == 0: return
 	progress.value = int(DeliveryManager.time_remaining)

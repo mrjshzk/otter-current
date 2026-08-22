@@ -31,6 +31,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lfrn8")
+start_fade_time = 4.0
 
 [node name="WorldViewportContainer" type="SubViewportContainer" parent="." unique_id=1931650294]
 layout_mode = 1
