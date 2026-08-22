@@ -1,25 +1,25 @@
 ~ greeting
-Mysterious Otter: sou bue misterioso
+Mysterious Otter: Greetings!
 
 => END
 
 ~ awaiting_snack
-Mysterious Otter: Tou a espera da minha {{DeliveryManager.current_snack.snack_name}} a 50 horas
+Mysterious Otter: I require a {{DeliveryManager.current_snack.snack_name}} for my [wave]special concoction[/wave].
 
-Mysterious Otter: traz me essa merda
+Mysterious Otter: Please bring it post-haste!
 
 => END
 
 ~ wrong_snack
-Mysterious Otter: nao pedi essa merda vai te foder
+Mysterious Otter: Hmm, not quite what my [wave]special concoction[/wave] needs.
 
-Mysterious Otter: traz me o que pedi por favor!
+Mysterious Otter: I would recommend you bring what I asked for...lest I be compelled to [shake]hex[/shake] you!
 
 => END
 
 ~ snack_received
-Mysterious Otter: obrigado mano tava cheio de fome
+Mysterious Otter: Ah, splendid!
 
-Mysterious Otter: vai te foder
+Mysterious Otter: My [wave]special concoction[/wave] is almost complete...
 
 => END

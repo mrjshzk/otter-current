@@ -1,25 +1,25 @@
 ~ greeting
-Gardener Otter: sou o gajo das plantas
+Gardener Otter: Hello there!
 
 => END
 
 ~ awaiting_snack
-Gardener Otter: Tou a espera da minha {{DeliveryManager.current_snack.snack_name}} a 50 horas
+Gardener Otter: I'm waiting for a {{DeliveryManager.current_snack.snack_name}}.
 
-Gardener Otter: traz me essa merda
+Gardener Otter: Mind bringing it here if it's not too much of a bother?
 
 => END
 
 ~ wrong_snack
-Gardener Otter: nao pedi essa merda vai te foder
+Gardener Otter: Oh, sorry, that's not what I asked for...
 
-Gardener Otter: traz me o que pedi por favor!
+Gardener Otter: But I trust you'll get it right next time!
 
 => END
 
 ~ snack_received
-Gardener Otter: obrigado mano tava cheio de fome
+Gardener Otter: Oh, thank you so much!
 
-Gardener Otter: vai te foder
+Gardener Otter: This is my favourite...you should order some for yourself sometime...
 
 => END

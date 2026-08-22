@@ -1,26 +1,25 @@
 ~ greeting
-Builder Otter: sou o gajo das pedras
-Builder Otter: Tou a tocar me
+Builder Otter: Hey.
 
 => END
 
 ~ awaiting_snack
-Builder Otter: Tou a espera da minha {{DeliveryManager.current_snack.snack_name}} a 50 horas
+Builder Otter: I ordered a {{DeliveryManager.current_snack.snack_name}}.
 
-Builder Otter: traz me essa merda
+Builder Otter: Bring it before I starve to death over here.
 
 => END
 
 ~ wrong_snack
-Builder Otter: nao pedi essa merda vai te foder
+Builder Otter: That's not what I asked for.
 
-Builder Otter: traz me o que pedi por favor!
+Builder Otter: Get your [shake]$#?%[/shake] together.
 
 => END
 
 ~ snack_received
-Builder Otter: obrigado mano tava cheio de fome
+Builder Otter: Finally.
 
-Builder Otter: vai te foder
+Builder Otter: Can't work on an empty stomach, you know.
 
 => END

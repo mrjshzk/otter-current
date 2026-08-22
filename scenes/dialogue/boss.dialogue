@@ -1,29 +1,29 @@
 ~ take_this
-Boss: sou o manda chuva nesta merda
+Boss: Hey, kid.
 
-Boss: Leva {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.get_delivery_target_name()}}.
+Boss: Take this {{DeliveryManager.current_snack.snack_name}} to {{DeliveryManager.get_delivery_target_name()}}.
 
 => END
 
 ~ welcome_back
-Boss: bem vindo de bolta meu menino boa entrega
+Boss: Nice work, kid.
 
-Boss: A tua proxima entrega: {{DeliveryManager.current_snack.snack_name}} para {{DeliveryManager.get_delivery_target_name()}}.
+Boss: Your next delivery is this {{DeliveryManager.current_snack.snack_name}} for {{DeliveryManager.get_delivery_target_name()}}.
 
-Boss: toca a andar!
+Boss: And make it quick!
 
 => END
 
 ~ already_have_snack
-Boss: ja tens uma entrega
+Boss: What are you waiting for?!
 
-Boss: entrega {{DeliveryManager.current_snack.snack_name}} ao {{DeliveryManager.get_delivery_target_name()}} primeiro.
+Boss: Go deliver {{DeliveryManager.current_snack.snack_name}} to {{DeliveryManager.get_delivery_target_name()}}.
 
 => END
 
 ~ not_configured
-Boss: nao tenho nenhuma entrega para ti neste momento
+Boss: There's no deliveries for you right now.
 
-Boss: fode te
+Boss: Go build some sandcastles or something.
 
 => END
