@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://d06h0qjrevhks" path="res://resources/npcs/rock_guy.tres" id="2_08rfx"]
 [ext_resource type="Resource" uid="uid://ckaxdxhwwsmu8" path="res://scenes/dialogue/rock_guy.dialogue" id="3_08rfx"]
 [ext_resource type="Texture2D" uid="uid://dgf50gi12h5l1" path="res://assets/textures/input_prompts/keyboard_e.png" id="4_rcxvw"]
-[ext_resource type="Material" uid="uid://bpijy816mtnns" path="res://assets/M_builder.tres" id="5_3hwcr"]
+[ext_resource type="Material" uid="uid://bpijy816mtnns" path="res://assets/materials/M_builder.tres" id="5_3hwcr"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_sk68b"]
 radius = 1.2314453

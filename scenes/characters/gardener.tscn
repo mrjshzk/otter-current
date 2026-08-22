@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://sm473xuckwng" path="res://resources/npcs/gardener.tres" id="2_h755p"]
 [ext_resource type="Texture2D" uid="uid://dgf50gi12h5l1" path="res://assets/textures/input_prompts/keyboard_e.png" id="2_j1dhy"]
 [ext_resource type="Resource" uid="uid://ddi48ierxcbt8" path="res://scenes/dialogue/gardener.dialogue" id="3_h755p"]
-[ext_resource type="Material" uid="uid://djq71bwtlxr86" path="res://assets/M_Gardener.tres" id="5_b4iod"]
+[ext_resource type="Material" uid="uid://djq71bwtlxr86" path="res://assets/materials/M_Gardener.tres" id="5_b4iod"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_imw47"]
 

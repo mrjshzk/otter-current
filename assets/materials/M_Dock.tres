@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://brydtunrg3na3"]
+
+[ext_resource type="Texture2D" uid="uid://d3hc3qvflmv3y" path="res://assets/models/Dock_T_Dock.png" id="1_xt1re"]
+[ext_resource type="Texture2D" uid="uid://c0mh38ma4ualn" path="res://assets/models/Dock_R_Dock.png" id="2_3mqso"]
+[ext_resource type="Material" uid="uid://ble3t52ouo13" path="res://assets/materials/water_inside_pass.tres" id="3_3mqso"]
+
+[resource]
+resource_name = "M_Dock"
+next_pass = ExtResource("3_3mqso")
+depth_draw_mode = 2
+albedo_texture = ExtResource("1_xt1re")
+metallic_texture = ExtResource("2_3mqso")
+metallic_texture_channel = 2
+roughness_texture = ExtResource("2_3mqso")
+roughness_texture_channel = 1
+stencil_mode = 3
+stencil_flags = 1
+stencil_compare = 4
+metadata/_gltf_primary_texture_coord = 0

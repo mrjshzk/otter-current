@@ -2,7 +2,7 @@
 
 [ext_resource type="Shader" uid="uid://udmyg4sth3qy" path="res://shaders/stylized_sky.gdshader" id="1_vwm3h"]
 [ext_resource type="PackedScene" uid="uid://boxmlgnfx006p" path="res://scenes/islands/main_island.tscn" id="2_eb62g"]
-[ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/water_standart.tres" id="3_l71q4"]
+[ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/materials/water_standart.tres" id="3_l71q4"]
 [ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="4_7hyco"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="5_8e7ma"]
 

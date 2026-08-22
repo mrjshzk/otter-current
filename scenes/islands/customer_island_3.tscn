@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://ceinjr4ibqckn" path="res://scripts/islands/island.gd" id="1_jxfsa"]
 [ext_resource type="Resource" uid="uid://dfvoipug4c3kq" path="res://resources/islands/mystery_island.tres" id="2_foht8"]
-[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/Cabin.glb" id="6_uv783"]
-[ext_resource type="PackedScene" uid="uid://b7sjbcauimbiw" path="res://assets/tree.glb" id="7_jdivn"]
-[ext_resource type="PackedScene" uid="uid://eeaxlyy20cdj" path="res://assets/Plant1.glb" id="8_j7yp5"]
-[ext_resource type="PackedScene" uid="uid://cwkibyyfe44nd" path="res://assets/Island4.glb" id="8_ppvwo"]
-[ext_resource type="PackedScene" uid="uid://dadnpw86r7x5u" path="res://assets/Rock1.glb" id="9_foht8"]
-[ext_resource type="PackedScene" uid="uid://dmnhr4fpdbnfo" path="res://assets/Plant2.glb" id="10_7caia"]
-[ext_resource type="PackedScene" uid="uid://41ew1nway0v8" path="res://assets/Rock2.glb" id="10_jxfsa"]
-[ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/Dock.glb" id="11_kdshd"]
+[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/models/Cabin.glb" id="6_uv783"]
+[ext_resource type="PackedScene" uid="uid://b7sjbcauimbiw" path="res://assets/models/tree.glb" id="7_jdivn"]
+[ext_resource type="PackedScene" uid="uid://eeaxlyy20cdj" path="res://assets/models/Plant1.glb" id="8_j7yp5"]
+[ext_resource type="PackedScene" uid="uid://cwkibyyfe44nd" path="res://assets/models/Island4.glb" id="8_ppvwo"]
+[ext_resource type="PackedScene" uid="uid://dadnpw86r7x5u" path="res://assets/models/Rock1.glb" id="9_foht8"]
+[ext_resource type="PackedScene" uid="uid://dmnhr4fpdbnfo" path="res://assets/models/Plant2.glb" id="10_7caia"]
+[ext_resource type="PackedScene" uid="uid://41ew1nway0v8" path="res://assets/models/Rock2.glb" id="10_jxfsa"]
+[ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/models/Dock.glb" id="11_kdshd"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_foht8"]
 size = Vector3(0.47436523, 1.9110107, 2.7363281)
