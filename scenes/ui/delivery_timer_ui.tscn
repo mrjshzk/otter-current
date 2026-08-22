@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bv3k63qejlddq" path="res://assets/textures/ui/timercircle.png" id="1_715ox"]
 [ext_resource type="Script" uid="uid://dv3nfeggacir5" path="res://scripts/ui/delivery_timer_ui.gd" id="1_jevby"]
 [ext_resource type="Script" uid="uid://b3mylf58dwn5l" path="res://scripts/ui/rotator.gd" id="1_x13tk"]
-[ext_resource type="PackedScene" uid="uid://b6k87v5wqsy80" path="res://assets/kenney_food/sub.glb" id="4_jevby"]
+[ext_resource type="PackedScene" uid="uid://dbog0mex6rvc" path="res://assets/kenney_food/wine-red.glb" id="4_jevby"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x13tk"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -81,10 +81,10 @@ render_target_update_mode = 4
 
 [node name="Rotator" type="Node3D" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld" unique_id=1032541944]
 unique_name_in_owner = true
-transform = Transform3D(-0.79010344, 0, 0.6129736, 0, 1, 0, -0.6129736, 0, -0.79010344, 0, 0, 0)
+transform = Transform3D(-0.9948634, 0, -0.10122546, 0, 1, 0, 0.10122546, 0, -0.9948634, 0, -0.13932192, 0)
 script = ExtResource("1_x13tk")
 
-[node name="sub2" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld/Rotator" unique_id=419834279 instance=ExtResource("4_jevby")]
+[node name="wine-red2" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld/Rotator" unique_id=572333199 instance=ExtResource("4_jevby")]
 
 [node name="Camera3D" type="Camera3D" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld" unique_id=960976989]
 transform = Transform3D(1, 0, 0, 0, 0.8660254, 0.5, 0, -0.5, 0.8660254, 0.13227916, 1.1857636, 1.6436453)

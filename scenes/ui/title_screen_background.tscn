@@ -59,7 +59,7 @@ subdivide_width = 100
 subdivide_depth = 100
 
 [sub_resource type="BoxMesh" id="BoxMesh_l71q4"]
-size = Vector3(24.098206, 1, 16.429626)
+size = Vector3(75.89424, 1, 34.992233)
 
 [node name="TitleScreenBackground" type="Node3D" unique_id=520023887]
 
@@ -83,7 +83,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2337317, 0)
 mesh = SubResource("PlaneMesh_ovsny")
 
 [node name="Spawn" type="MeshInstance3D" parent="." unique_id=1000487692]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.418442, -9.536743e-07, 29.286758)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.50238, -9.536743e-07, 48.90472)
 visible = false
 mesh = SubResource("BoxMesh_l71q4")
 
@@ -95,7 +95,8 @@ spawn_interval = 1.5
 delivery_spawn_interval = 0.8
 initial_waves = 5
 spawn_area = NodePath("../Spawn")
+aim_at_player_chance = 0.01
 metadata/_custom_type_script = "uid://8n4ubq0rsopv"
 
 [node name="Marker3D" type="Marker3D" parent="." unique_id=2107920232]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.575033, 1.3513174, -1.6894732)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.04366, 0, 50.36412)
