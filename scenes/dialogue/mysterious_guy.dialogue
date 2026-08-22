@@ -23,3 +23,9 @@ Mysterious Otter: Ah, splendid!
 Mysterious Otter: My [wave]special concoction[/wave] is almost complete...
 
 => END
+
+~ not_configured
+Mysterious Otter: Hmm, not quite what my [wave]special concoction[/wave] needs.
+
+Mysterious Otter: I would recommend you bring what I asked for...lest I be compelled to [shake]hex[/shake] you!
+=> END

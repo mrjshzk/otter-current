@@ -1,9 +1,0 @@
-[gd_resource type="StandardMaterial3D" format=3 uid="uid://bml1o73e2b6wh"]
-
-[ext_resource type="Texture2D" uid="uid://b8dw5pnch4pic" path="res://assets/Island1_T_Island1.png" id="1_hil6n"]
-
-[resource]
-resource_name = "M_Island1"
-albedo_texture = ExtResource("1_hil6n")
-roughness = 0.5
-metadata/_gltf_primary_texture_coord = 0

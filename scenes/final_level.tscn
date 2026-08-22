@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="7_vmrwc"]
 [ext_resource type="Resource" uid="uid://cc78jlcbokmf" path="res://resources/snacks/mystery_food.tres" id="8_f55xd"]
 [ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="8_mei1o"]
-[ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/water_standart.tres" id="8_y6v6p"]
+[ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/materials/water_standart.tres" id="8_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="9_1ppc5"]
 [ext_resource type="PackedScene" uid="uid://c1jibmnue1og4" path="res://scenes/characters/boss.tscn" id="10_ji6ub"]
 [ext_resource type="PackedScene" uid="uid://bs4khywr7i3b7" path="res://scenes/characters/gardener.tscn" id="10_vmkuj"]
@@ -19,7 +19,6 @@
 [ext_resource type="AudioStream" uid="uid://ctctgrfa0fkqo" path="res://assets/audio/levelmusic.ogg" id="17_76anu"]
 [ext_resource type="AudioStream" uid="uid://b66p7bevbab78" path="res://assets/audio/ocean_ambience.mp3" id="18_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dcf7b6qbj8tv4" path="res://scenes/arrow/guiding_arrow.tscn" id="19_64uwm"]
-[ext_resource type="PackedScene" uid="uid://b0ue6f3wx72td" path="res://scenes/ui/debug_delivery_ui.tscn" id="21_fog77"]
 [ext_resource type="PackedScene" uid="uid://d00aqt7vsga0e" path="res://scenes/islands/customer_island_3.tscn" id="21_nntvn"]
 [ext_resource type="PackedScene" uid="uid://blyknc27juerl" path="res://scenes/characters/mystery_guy.tscn" id="22_fog77"]
 
@@ -165,8 +164,6 @@ random_chance = 0.1
 helper_chance = 0.8
 anti_chance = 0.1
 aim_at_player_chance = 0.1
-
-[node name="DebugDeliveryUI" parent="." unique_id=54873791 instance=ExtResource("21_fog77")]
 
 [node name="SpawnArea" type="MeshInstance3D" parent="." unique_id=1602098093]
 transform = Transform3D(-4.371138e-08, 0, 0.9999999, 0, 1, 0, -0.9999999, 0, -4.371138e-08, 3.6460485, 2.6342134, 62.053486)

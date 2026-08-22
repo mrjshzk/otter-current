@@ -23,3 +23,9 @@ Builder Otter: Finally.
 Builder Otter: Can't work on an empty stomach, you know.
 
 => END
+
+~ not_configured
+Builder Otter: That's not what I asked for.
+
+Builder Otter: Get your [shake]$#?%[/shake] together.
+=> END

@@ -114,7 +114,7 @@ func _fail_delivery() -> void:
 	delivery_failed.emit(snack, customer)
 
 func _next_time_limit() -> float:
-	if deliveries_completed < timed_after_deliveries:
+	if deliveries_completed < timed_after_deliveries: # FIXME
 		return 0.0
 	var elapsed := float(deliveries_completed - timed_after_deliveries)
 	return maxf(min_time_limit, first_time_limit - elapsed * time_limit_step_down)

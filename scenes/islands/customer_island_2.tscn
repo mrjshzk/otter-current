@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dlf5ix06qv2i4"]
 
 [ext_resource type="Script" uid="uid://ceinjr4ibqckn" path="res://scripts/islands/island.gd" id="1_6yw5k"]
-[ext_resource type="PackedScene" uid="uid://1if8rtfyptd5" path="res://assets/Island3.glb" id="2_4kqwu"]
+[ext_resource type="PackedScene" uid="uid://1if8rtfyptd5" path="res://assets/models/Island3.glb" id="2_4kqwu"]
 [ext_resource type="Resource" uid="uid://bsywugsv67i5y" path="res://resources/islands/rock_island.tres" id="2_qbfoh"]
-[ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/Dock.glb" id="4_ng1os"]
-[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/Cabin.glb" id="5_4kqwu"]
+[ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/models/Dock.glb" id="4_ng1os"]
+[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/models/Cabin.glb" id="5_4kqwu"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sk68b"]
 size = Vector3(0.47436523, 1.9110107, 2.7363281)

@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://ceinjr4ibqckn" path="res://scripts/islands/island.gd" id="1_6f5yg"]
 [ext_resource type="Resource" uid="uid://cs0djfwnsar87" path="res://resources/islands/plant_island.tres" id="2_7lwbi"]
-[ext_resource type="Texture2D" uid="uid://c5n0ciy4kbky" path="res://assets/Island2_T_Island1.png" id="6_7t18w"]
-[ext_resource type="Texture2D" uid="uid://lpk054kr0la1" path="res://assets/Island2_R_Island1.png" id="7_3j54m"]
-[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/Cabin.glb" id="9_13vf3"]
-[ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/Dock.glb" id="10_7lwbi"]
-[ext_resource type="PackedScene" uid="uid://b7sjbcauimbiw" path="res://assets/tree.glb" id="10_sb4iw"]
-[ext_resource type="PackedScene" uid="uid://eeaxlyy20cdj" path="res://assets/Plant1.glb" id="11_usmw3"]
-[ext_resource type="PackedScene" uid="uid://d05637b70na0v" path="res://assets/Plant3.glb" id="12_424ql"]
-[ext_resource type="PackedScene" uid="uid://dmnhr4fpdbnfo" path="res://assets/Plant2.glb" id="13_gguen"]
+[ext_resource type="Texture2D" uid="uid://c5n0ciy4kbky" path="res://assets/models/Island2_T_Island1.png" id="6_7t18w"]
+[ext_resource type="Texture2D" uid="uid://lpk054kr0la1" path="res://assets/models/Island2_R_Island1.png" id="7_3j54m"]
+[ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/models/Cabin.glb" id="9_13vf3"]
+[ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/models/Dock.glb" id="10_7lwbi"]
+[ext_resource type="PackedScene" uid="uid://b7sjbcauimbiw" path="res://assets/models/tree.glb" id="10_sb4iw"]
+[ext_resource type="PackedScene" uid="uid://eeaxlyy20cdj" path="res://assets/models/Plant1.glb" id="11_usmw3"]
+[ext_resource type="PackedScene" uid="uid://d05637b70na0v" path="res://assets/models/Plant3.glb" id="12_424ql"]
+[ext_resource type="PackedScene" uid="uid://dmnhr4fpdbnfo" path="res://assets/models/Plant2.glb" id="13_gguen"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rx42u"]
 resource_name = "M_Island1"

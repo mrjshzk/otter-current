@@ -12,10 +12,10 @@
 [ext_resource type="Resource" uid="uid://bxesj1gg1xggy" path="res://player/input/pause_action.tres" id="6_32hag"]
 [ext_resource type="Script" uid="uid://c6wq4m14fir13" path="res://player/camera_rig.gd" id="6_rig"]
 [ext_resource type="Script" uid="uid://c8o24q2h6crj" path="res://player/interaction_manager.gd" id="13_yllr7"]
-[ext_resource type="Texture2D" uid="uid://dcputo0fogspu" path="res://assets/ottertexture2.png" id="14_32hag"]
+[ext_resource type="Texture2D" uid="uid://dcputo0fogspu" path="res://assets/models/ottertexture2.png" id="14_32hag"]
 [ext_resource type="Resource" uid="uid://dqtqwbtwpsbyk" path="res://player/input/interact_action.tres" id="14_kb6p2"]
-[ext_resource type="Material" uid="uid://be66plm3fjskd" path="res://assets/M_Otter.tres" id="14_wodsf"]
-[ext_resource type="Material" uid="uid://ble3t52ouo13" path="res://assets/water_inside_pass.tres" id="15_32hag"]
+[ext_resource type="Material" uid="uid://be66plm3fjskd" path="res://assets/materials/M_Otter.tres" id="14_wodsf"]
+[ext_resource type="Material" uid="uid://ble3t52ouo13" path="res://assets/materials/water_inside_pass.tres" id="15_32hag"]
 [ext_resource type="Script" uid="uid://crkraxa0cqmnm" path="res://scripts/backpack/backpack.gd" id="15_wodsf"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sk68b"]

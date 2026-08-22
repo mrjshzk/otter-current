@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://bx83txbtv5meb" path="res://scenes/dialogue/boss.dialogue" id="2_r8uym"]
 [ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="3_j30ar"]
 [ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="4_j30ar"]
-[ext_resource type="Material" uid="uid://bh7tds5xnsaad" path="res://assets/M_boss.tres" id="7_qryem"]
+[ext_resource type="Material" uid="uid://bh7tds5xnsaad" path="res://assets/materials/M_boss.tres" id="7_qryem"]
 
 [sub_resource type="Resource" id="Resource_hxcvo"]
 script = ExtResource("4_j30ar")
