@@ -2,24 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://hxmc2x2aoslg"
-path.s3tc="res://.godot/imported/otter_ottertexture.png-39e9e45a1d24fccf4c4bbc9c8b32cd94.s3tc.ctex"
+uid="uid://s73iq7vdeqtt"
+path="res://.godot/imported/otter_ottertexture.png-39e9e45a1d24fccf4c4bbc9c8b32cd94.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
-}
-generator_parameters={
-"md5": "a42666804b2b6cbd0c9371b25d11308f"
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://assets/otter_ottertexture.png"
-dest_files=["res://.godot/imported/otter_ottertexture.png-39e9e45a1d24fccf4c4bbc9c8b32cd94.s3tc.ctex"]
+dest_files=["res://.godot/imported/otter_ottertexture.png-39e9e45a1d24fccf4c4bbc9c8b32cd94.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0
