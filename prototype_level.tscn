@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://dpfnrla4cemce" path="res://shaders/toon_water.gdshader" id="1_qkken"]
 [ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="1_qm13l"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="2_8sc3k"]
-[ext_resource type="Script" uid="uid://dw6q4rxavue13" path="res://scenes/current/wave_spawner.gd" id="3_spawn"]
+[ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="3_spawn"]
 [ext_resource type="Shader" uid="uid://bnj5mgymxc4h0" path="res://shaders/pixel_art.gdshader" id="6_i17kl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1kmq1"]

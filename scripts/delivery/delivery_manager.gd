@@ -108,8 +108,11 @@ func _next_time_limit() -> float:
 func get_npc_info_from_snack(snack: Snack) -> Dictionary:
 	if snack == null:
 		return {}
+	_islands = _islands.filter(func(i): return i != null)
+
 	for island in _islands:
 		var customer := island.customer()
+		Log.debug("%s -> %s" % [island, customer])
 		if customer != null and customer.snack == snack:
 			return {
 				"npc_name": customer.npc_name,

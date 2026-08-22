@@ -71,4 +71,6 @@ grow_vertical = 2
 mouse_filter = 2
 mouse_filter = 2
 
+[node name="Dialogue" type="CanvasLayer" parent="." unique_id=1709328465]
+
 [node name="PauseMenu" parent="." unique_id=1848523534 instance=ExtResource("4_pause")]

@@ -9,7 +9,7 @@ func _run() -> void:
 	var level: Node3D = (load("res://prototype_level.tscn") as PackedScene).instantiate()
 	level.get_node("WaveSpawner").initial_waves = 0
 	get_tree().root.add_child(level)
-	var spawner: WaveSpawner = level.get_node("WaveSpawner")
+	var spawner: TargetWaveManager = level.get_node("WaveSpawner")
 	spawner.spawn_interval = 999.0
 	var player: Player = level.get_node("Player")
 	var im: InteractionManager = player.get_node("InteractionManager")

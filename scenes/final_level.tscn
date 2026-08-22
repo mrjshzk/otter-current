@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://deeyrq8rmyje4" path="res://scenes/islands/customer_island_1.tscn" id="5_7l6pa"]
 [ext_resource type="PackedScene" uid="uid://dlf5ix06qv2i4" path="res://scenes/islands/customer_island_2.tscn" id="6_u2pc8"]
 [ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="7_vmrwc"]
-[ext_resource type="Script" uid="uid://dw6q4rxavue13" path="res://scenes/current/wave_spawner.gd" id="8_mei1o"]
+[ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="8_mei1o"]
 [ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/water_standart.tres" id="8_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="9_1ppc5"]
 [ext_resource type="PackedScene" uid="uid://c1jibmnue1og4" path="res://scenes/characters/boss.tscn" id="10_ji6ub"]
@@ -15,6 +15,7 @@
 [ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="16_vmkuj"]
 [ext_resource type="Resource" uid="uid://bh5lp483uftis" path="res://resources/snacks/plant_food.tres" id="17_nntvn"]
 [ext_resource type="Resource" uid="uid://cc78jlcbokmf" path="res://resources/snacks/mystery_food.tres" id="18_fog77"]
+[ext_resource type="PackedScene" uid="uid://dcf7b6qbj8tv4" path="res://scenes/arrow/guiding_arrow.tscn" id="19_64uwm"]
 [ext_resource type="PackedScene" uid="uid://b0ue6f3wx72td" path="res://scenes/ui/debug_delivery_ui.tscn" id="21_fog77"]
 [ext_resource type="PackedScene" uid="uid://d00aqt7vsga0e" path="res://scenes/islands/customer_island_3.tscn" id="21_nntvn"]
 [ext_resource type="PackedScene" uid="uid://blyknc27juerl" path="res://scenes/characters/mystery_guy.tscn" id="22_fog77"]
@@ -83,6 +84,14 @@ size = Vector2(1000, 1000)
 subdivide_width = 100
 subdivide_depth = 100
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rahx"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk68b"]
+material = SubResource("StandardMaterial3D_3rahx")
+size = Vector3(51.97204, 1, 69.24136)
+
 [node name="FinalLevel" type="Node" unique_id=1142203742]
 
 [node name="Environment" type="Node" parent="." unique_id=845857445]
@@ -110,30 +119,52 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
 mesh = SubResource("PlaneMesh_u2pc8")
 
 [node name="CustomerIsland1" parent="." unique_id=1787802090 instance=ExtResource("5_7l6pa")]
-transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9659258, -100.27801, 0, 96.096466)
+transform = Transform3D(-0.15307757, 0, 0.9882142, 0, 1, 0, -0.9882142, 0, -0.15307757, -57.410934, 0, 71.18052)
 
 [node name="Gardener" parent="CustomerIsland1" unique_id=1822852545 instance=ExtResource("10_vmkuj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.003639, 0.99951625, -0.44293213)
 
 [node name="CustomerIsland2" parent="." unique_id=817794434 instance=ExtResource("6_u2pc8")]
-transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, 114.53285, 1.1041832, 102.40259)
+transform = Transform3D(-1, 0, 4.6789646e-06, 0, 1, 0, -4.6789646e-06, 0, -1, 113.015625, 1.1041832, 65.96571)
 
 [node name="RockGuy" parent="CustomerIsland2" unique_id=1913945634 instance=ExtResource("11_q0j1x")]
 transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 3.0402222, -0.015613937, -1.0580292)
 
 [node name="CustomerIsland3" parent="." unique_id=2061434372 instance=ExtResource("21_nntvn")]
-transform = Transform3D(-0.99674475, 0, -0.08062177, 0, 1, 0, 0.08062177, 0, -0.99674475, 0.85253906, 0.3783331, 111.34027)
+transform = Transform3D(-0.99674475, 0, -0.08062177, 0, 1, 0, 0.08062177, 0, -0.99674475, 13.75667, 0.3783331, 113.136345)
 
 [node name="MysteryGuy" parent="CustomerIsland3" unique_id=1870361321 instance=ExtResource("22_fog77")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.179203, 0.982515, -0.68227386)
 
 [node name="Player" parent="." unique_id=741711365 instance=ExtResource("7_vmrwc")]
-transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 2.380376, -0.8390558, 17.202879)
+transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 14.675498, 2.6342134, 1.5040569)
 
-[node name="WaveSpawner" type="Node3D" parent="." unique_id=1400895078 node_paths=PackedStringArray("player")]
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Player" unique_id=892720343]
+remote_path = NodePath("../../SpawnArea")
+update_rotation = false
+update_scale = false
+
+[node name="WaveSpawner" type="Node3D" parent="." unique_id=1400895078 node_paths=PackedStringArray("player", "spawn_area")]
 script = ExtResource("8_mei1o")
 wave_scene = ExtResource("9_1ppc5")
 player = NodePath("../Player")
-metadata/_custom_type_script = "uid://dw6q4rxavue13"
+spawn_interval = 0.3
+delivery_spawn_interval = 0.5
+min_speed = 15.0
+max_speed = 22.0
+initial_waves = 2
+spawn_area = NodePath("../SpawnArea")
+spawn_edge_bias = 0.5
+random_chance = 0.1
+helper_chance = 0.8
+anti_chance = 0.1
+aim_at_player_chance = 0.1
 
 [node name="DebugDeliveryUI" parent="." unique_id=54873791 instance=ExtResource("21_fog77")]
+
+[node name="SpawnArea" type="MeshInstance3D" parent="." unique_id=1602098093]
+transform = Transform3D(0.031181514, 0, -0.9995137, 0, 1, 0, 0.9995137, 0, 0.031181514, 14.675498, 2.6342134, 1.5040569)
+mesh = SubResource("BoxMesh_sk68b")
+
+[node name="GuidingArrow" parent="." unique_id=1227134955 node_paths=PackedStringArray("player") instance=ExtResource("19_64uwm")]
+player = NodePath("../Player")

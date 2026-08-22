@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://yox8e5o3h0tn" path="res://scripts/level/core_loop.gd" id="16_lvl"]
 [ext_resource type="Texture2D" uid="uid://87s1iki6teu1" path="res://assets/textures/essentials/Normal map/default-normal.png" id="17_norm"]
 [ext_resource type="Texture2D" uid="uid://xjeot2bkyewn" path="res://assets/textures/essentials/Gradient/gradient-horizontal.png" id="18_grad"]
+[ext_resource type="PackedScene" uid="uid://dcf7b6qbj8tv4" path="res://scenes/arrow/guiding_arrow.tscn" id="19_arrow"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5i1ex"]
 shader = ExtResource("1_lq6u6")
@@ -218,6 +219,8 @@ shape = SubResource("ConcavePolygonShape3D_woebp")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
 script = ExtResource("13_arrow")
+
+[node name="GuidingArrow" parent="." instance=ExtResource("19_arrow")]
 
 [editable path="TestIsland"]
 [editable path="TestBossIsland"]

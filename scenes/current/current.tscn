@@ -131,7 +131,7 @@ cast_shadow = 0
 mesh = SubResource("ArrayMesh_5qefk")
 
 [node name="Peak" type="Marker3D" parent="Wave" unique_id=27419543]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5150881, 0)
 gizmo_extents = 0.75
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Wave" unique_id=145582267]

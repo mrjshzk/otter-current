@@ -9,7 +9,7 @@ func _run() -> void:
 	var level: Node3D = (load("res://prototype_level.tscn") as PackedScene).instantiate()
 	level.get_node("WaveSpawner").initial_waves = 0
 	get_tree().root.add_child(level)
-	var spawner: WaveSpawner = level.get_node("WaveSpawner")
+	var spawner: TargetWaveManager = level.get_node("WaveSpawner")
 	spawner.spawn_interval = 999.0
 	var player: Player = level.get_node("Player")
 	await get_tree().physics_frame
@@ -418,15 +418,18 @@ func _run() -> void:
 	await _wait(0.3)
 	_check(player.inside_wave_movement._active_state == player.riding_state, "riding wave toward platform")
 	var freed := false
+	var force_jumped := false
 	for i in int(2.0 * 60.0):
 		if not is_instance_valid(collision_wave):
 			freed = true
+		if player.air_movement._active_state == player.leap_state:
+			force_jumped = true
+		if freed and force_jumped:
 			break
 		await get_tree().physics_frame
 	_check(freed, "wave destroyed by platform collision")
+	_check(force_jumped, "rider force-jumped into leap")
 	await get_tree().physics_frame
-	_check(player.air_movement._active_state == player.leap_state, "rider force-jumped into leap")
-	await _wait(1.5)
 	_check(player.inside_wave_movement._active_state != player.riding_state, "rider not riding after collision")
 
 	# marginal ground (top between -0.3 and -0.2) used to ping-pong land/sea

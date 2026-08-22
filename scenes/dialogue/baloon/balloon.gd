@@ -52,6 +52,11 @@ var mutation_cooldown: Timer = Timer.new()
 @onready var progress: Polygon2D = %Progress
 
 func _ready() -> void:
+	var current_scene := get_tree().current_scene
+	if current_scene != null:
+		var dialogue_layer := current_scene.get_node_or_null("Dialogue") as CanvasLayer
+		if dialogue_layer != null and get_parent() != dialogue_layer:
+			reparent(dialogue_layer)
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
