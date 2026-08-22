@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://box237l4ee0bm"]
+
+[ext_resource type="PackedScene" uid="uid://b6k87v5wqsy80" path="res://assets/kenney_food/sub.glb" id="1_6yxd8"]
+
+[node name="SnackRockGuy" type="Node3D" unique_id=1601761995]
+
+[node name="sub2" parent="." unique_id=1145364461 instance=ExtResource("1_6yxd8")]

@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3 uid="uid://ta7wi2jcv62u"]
 
-[ext_resource type="Script" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
-[ext_resource type="PackedScene" path="res://scenes/vfx/splash_ring.tscn" id="2_ring"]
-[ext_resource type="Texture2D" path="res://assets/vfx/star.png" id="3_startex"]
+[ext_resource type="Script" uid="uid://cy2xljyxe2t3e" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
+[ext_resource type="PackedScene" uid="uid://bjbvla3ryml8d" path="res://scenes/vfx/splash_ring.tscn" id="2_ring"]
+[ext_resource type="Texture2D" uid="uid://cu5i4hggmkxkx" path="res://assets/vfx/star.png" id="3_startex"]
 
 [sub_resource type="Gradient" id="gradient_confetti"]
 offsets = PackedFloat32Array(0, 0.25, 0.5, 0.75, 1)
@@ -11,31 +11,29 @@ colors = PackedColorArray(0.95, 0.25, 0.25, 1, 0.95, 0.7, 0.2, 1, 0.3, 0.85, 0.3
 [sub_resource type="GradientTexture1D" id="gradtex_confetti"]
 gradient = SubResource("gradient_confetti")
 
+[sub_resource type="ParticleProcessMaterial" id="ppm_confetti"]
+emission_shape = 1
+emission_sphere_radius = 0.2
+spread = 180.0
+initial_velocity_min = 2.5
+initial_velocity_max = 6.0
+damping_min = 0.2
+damping_max = 0.6
+scale_min = 0.06
+scale_max = 0.12
+color_ramp = SubResource("gradtex_confetti")
+
 [sub_resource type="StandardMaterial3D" id="mat_confetti"]
 shading_mode = 0
 vertex_color_use_as_albedo = true
 
 [sub_resource type="BoxMesh" id="mesh_confetti"]
-size = Vector3(0.08, 0.08, 0.02)
 material = SubResource("mat_confetti")
-
-[sub_resource type="ParticleProcessMaterial" id="ppm_confetti"]
-lifetime = 1.8
-spread = 180.0
-initial_velocity_min = 2.5
-initial_velocity_max = 6.0
-gravity = Vector3(0, -9.8, 0)
-damping_min = 0.2
-damping_max = 0.6
-scale_min = 0.06
-scale_max = 0.12
-billboard_mode = 3
-color_ramp = SubResource("gradtex_confetti")
-emission_shape = 1
-emission_sphere_radius = 0.2
+size = Vector3(0.08, 0.08, 0.02)
 
 [sub_resource type="ParticleProcessMaterial" id="ppm_stars"]
-lifetime = 0.5
+emission_shape = 1
+emission_sphere_radius = 0.3
 spread = 180.0
 initial_velocity_min = 2.0
 initial_velocity_max = 4.0
@@ -44,44 +42,44 @@ damping_min = 0.5
 damping_max = 1.0
 scale_min = 0.04
 scale_max = 0.1
-billboard_mode = 3
-emission_shape = 1
-emission_sphere_radius = 0.3
 color = Color(1, 0.95, 0.7, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_stars"]
-shading_mode = 0
-texture_filter = 0
-blend_mode = 1
 transparency = 2
 alpha_scissor_threshold = 0.25
+alpha_antialiasing_mode = 0
+blend_mode = 1
+shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("3_startex")
+texture_filter = 0
 
 [sub_resource type="QuadMesh" id="quad_stars"]
 material = SubResource("mat_stars")
 
-[node name="Confetti" type="Node3D"]
+[node name="Confetti" type="Node3D" unique_id=451175745]
 script = ExtResource("1_layered")
 
-[node name="ConfettiPaper" type="GPUParticles3D" parent="."]
+[node name="ConfettiPaper" type="GPUParticles3D" parent="." unique_id=2028750233]
+emitting = false
 amount = 60
 lifetime = 1.8
+one_shot = true
 explosiveness = 1.0
 fixed_fps = 24
-one_shot = true
 visibility_aabb = AABB(-4, -3, -4, 8, 12, 8)
 process_material = SubResource("ppm_confetti")
 draw_pass_1 = SubResource("mesh_confetti")
 
-[node name="PopRing" parent="." instance=ExtResource("2_ring")]
+[node name="PopRing" parent="." unique_id=367238658 instance=ExtResource("2_ring")]
 
-[node name="StarBurst" type="GPUParticles3D" parent="."]
+[node name="StarBurst" type="GPUParticles3D" parent="." unique_id=1390182286]
+emitting = false
 amount = 16
 lifetime = 0.5
+one_shot = true
 explosiveness = 1.0
 fixed_fps = 24
-one_shot = true
 visibility_aabb = AABB(-2, -2, -2, 4, 4, 4)
 process_material = SubResource("ppm_stars")
 draw_pass_1 = SubResource("quad_stars")

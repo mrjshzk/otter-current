@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://s3rm3jx3fcgc"]
 
 [ext_resource type="Shader" uid="uid://udmyg4sth3qy" path="res://shaders/stylized_sky.gdshader" id="1_pe22g"]
+[ext_resource type="Script" uid="uid://dr1c4fi3a06ky" path="res://scenes/final_level.gd" id="1_qoix5"]
 [ext_resource type="PackedScene" uid="uid://boxmlgnfx006p" path="res://scenes/islands/main_island.tscn" id="2_fxkco"]
 [ext_resource type="PackedScene" uid="uid://deeyrq8rmyje4" path="res://scenes/islands/customer_island_1.tscn" id="5_7l6pa"]
 [ext_resource type="PackedScene" uid="uid://dlf5ix06qv2i4" path="res://scenes/islands/customer_island_2.tscn" id="6_u2pc8"]
@@ -11,10 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://c1jibmnue1og4" path="res://scenes/characters/boss.tscn" id="10_ji6ub"]
 [ext_resource type="PackedScene" uid="uid://bs4khywr7i3b7" path="res://scenes/characters/gardener.tscn" id="10_vmkuj"]
 [ext_resource type="PackedScene" uid="uid://dymp4x1pcan3t" path="res://scenes/characters/rock_guy.tscn" id="11_q0j1x"]
-[ext_resource type="Script" uid="uid://craydiqj83rk3" path="res://scripts/snacks/snack.gd" id="15_64uwm"]
-[ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="16_vmkuj"]
-[ext_resource type="Resource" uid="uid://bh5lp483uftis" path="res://resources/snacks/plant_food.tres" id="17_nntvn"]
-[ext_resource type="Resource" uid="uid://cc78jlcbokmf" path="res://resources/snacks/mystery_food.tres" id="18_fog77"]
+[ext_resource type="AudioStream" uid="uid://ctctgrfa0fkqo" path="res://assets/audio/levelmusic.ogg" id="17_76anu"]
+[ext_resource type="AudioStream" uid="uid://b66p7bevbab78" path="res://assets/audio/ocean_ambience.mp3" id="18_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dcf7b6qbj8tv4" path="res://scenes/arrow/guiding_arrow.tscn" id="19_64uwm"]
 [ext_resource type="PackedScene" uid="uid://b0ue6f3wx72td" path="res://scenes/ui/debug_delivery_ui.tscn" id="21_fog77"]
 [ext_resource type="PackedScene" uid="uid://d00aqt7vsga0e" path="res://scenes/islands/customer_island_3.tscn" id="21_nntvn"]
@@ -86,13 +85,14 @@ subdivide_depth = 100
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3rahx"]
 transparency = 1
-albedo_color = Color(1, 1, 1, 0)
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_sk68b"]
 material = SubResource("StandardMaterial3D_3rahx")
-size = Vector3(51.97204, 1, 69.24136)
+size = Vector3(54.1025, 1, 88.25008)
 
 [node name="FinalLevel" type="Node" unique_id=1142203742]
+script = ExtResource("1_qoix5")
 
 [node name="Environment" type="Node" parent="." unique_id=845857445]
 
@@ -107,42 +107,40 @@ environment = SubResource("Environment_jwyka")
 
 [node name="Boss" parent="MainIsland" unique_id=828823001 node_paths=PackedStringArray("pickup_spawn_point") instance=ExtResource("10_ji6ub")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.363836, 2.7190015, 2.6134918)
-snack_options = Array[ExtResource("15_64uwm")]([ExtResource("16_vmkuj"), ExtResource("17_nntvn"), ExtResource("18_fog77"), ExtResource("17_nntvn"), ExtResource("18_fog77"), ExtResource("16_vmkuj")])
 pickup_spawn_point = NodePath("../FoodSpawnPoint")
 npc_name = "Boss"
 
 [node name="FoodSpawnPoint" type="Marker3D" parent="MainIsland" unique_id=572957348]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.307535, 3.4090612, 1.1834347)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.26423, 3.4593747, 0.9950719)
 
 [node name="Water" type="MeshInstance3D" parent="." unique_id=518831876]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 mesh = SubResource("PlaneMesh_u2pc8")
 
 [node name="CustomerIsland1" parent="." unique_id=1787802090 instance=ExtResource("5_7l6pa")]
-transform = Transform3D(-0.15307757, 0, 0.9882142, 0, 1, 0, -0.9882142, 0, -0.15307757, -57.410934, 0, 71.18052)
+transform = Transform3D(-0.40363026, 0, 0.91492224, 0, 1, 0, -0.91492224, 0, -0.40363026, -57.044456, 0, 91.89618)
 
 [node name="Gardener" parent="CustomerIsland1" unique_id=1822852545 instance=ExtResource("10_vmkuj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.003639, 0.99951625, -0.44293213)
 
 [node name="CustomerIsland2" parent="." unique_id=817794434 instance=ExtResource("6_u2pc8")]
-transform = Transform3D(-1, 0, 4.6789646e-06, 0, 1, 0, -4.6789646e-06, 0, -1, 113.015625, 1.1041832, 65.96571)
+transform = Transform3D(4.722676e-06, 0, 1, 0, 1, 0, -1, 0, 4.722676e-06, 0.9221649, 1.1041832, 137.2778)
 
-[node name="RockGuy" parent="CustomerIsland2" unique_id=1913945634 instance=ExtResource("11_q0j1x")]
+[node name="RockGuy" parent="CustomerIsland2" unique_id=1913945634 node_paths=PackedStringArray("player") instance=ExtResource("11_q0j1x")]
 transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 3.0402222, -0.015613937, -1.0580292)
+player = NodePath("../../Player/LookAtPos")
 
 [node name="CustomerIsland3" parent="." unique_id=2061434372 instance=ExtResource("21_nntvn")]
-transform = Transform3D(-0.99674475, 0, -0.08062177, 0, 1, 0, 0.08062177, 0, -0.99674475, 13.75667, 0.3783331, 113.136345)
+transform = Transform3D(-0.64779675, 0, -0.7618131, 0, 1, 0, 0.7618131, 0, -0.64779675, 75.71653, 0.3783331, 72.5526)
 
 [node name="MysteryGuy" parent="CustomerIsland3" unique_id=1870361321 instance=ExtResource("22_fog77")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.179203, 0.982515, -0.68227386)
 
 [node name="Player" parent="." unique_id=741711365 instance=ExtResource("7_vmrwc")]
-transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 14.675498, 2.6342134, 1.5040569)
+transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 4.0838804, 1.5682749, 133.61407)
 
-[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Player" unique_id=892720343]
-remote_path = NodePath("../../SpawnArea")
-update_rotation = false
-update_scale = false
+[node name="LookAtPos" type="Marker3D" parent="Player" unique_id=356680678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8238001, 0)
 
 [node name="WaveSpawner" type="Node3D" parent="." unique_id=1400895078 node_paths=PackedStringArray("player", "spawn_area")]
 script = ExtResource("8_mei1o")
@@ -163,8 +161,20 @@ aim_at_player_chance = 0.1
 [node name="DebugDeliveryUI" parent="." unique_id=54873791 instance=ExtResource("21_fog77")]
 
 [node name="SpawnArea" type="MeshInstance3D" parent="." unique_id=1602098093]
-transform = Transform3D(0.031181514, 0, -0.9995137, 0, 1, 0, 0.9995137, 0, 0.031181514, 14.675498, 2.6342134, 1.5040569)
+transform = Transform3D(-4.371138e-08, 0, 0.9999999, 0, 1, 0, -0.9999999, 0, -4.371138e-08, 3.6460485, 2.6342134, 62.053486)
+visible = false
 mesh = SubResource("BoxMesh_sk68b")
 
-[node name="GuidingArrow" parent="." unique_id=1227134955 node_paths=PackedStringArray("player") instance=ExtResource("19_64uwm")]
-player = NodePath("../Player")
+[node name="GuidingArrow" parent="." unique_id=357170460 instance=ExtResource("19_64uwm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 39.075054, 0)
+pixel_size = 0.15
+
+[node name="LevelMusic" type="AudioStreamPlayer" parent="." unique_id=563000818]
+unique_name_in_owner = true
+stream = ExtResource("17_76anu")
+autoplay = true
+
+[node name="LevelAmbience" type="AudioStreamPlayer" parent="." unique_id=970590632]
+unique_name_in_owner = true
+stream = ExtResource("18_y6v6p")
+autoplay = true

@@ -24,6 +24,8 @@ enum WaveRole { RANDOM, INTERCEPT, HELPER, ANTI }
 @export var aim_at_player_chance: float = 0.6
 @export var delivery_speed_multiplier: float = 1.2
 @export var island_margin: float = 2.0
+@export var min_scale: float = 0.85
+@export var max_scale: float = 1.35
 
 var _timer := 0.0
 var _spawn_retries := 8
@@ -55,10 +57,11 @@ func _spawn_wave() -> void:
 	var spawn_pos := _pick_spawn_point(predicted, role, to_target)
 	var travel_dir := _pick_travel_direction(role, predicted, spawn_pos, to_target)
 	var wave := wave_scene.instantiate()
+	wave.position = spawn_pos
 	add_child(wave)
-	wave.global_position = spawn_pos
 	wave.wave_direction = travel_dir
 	wave.speed = speed
+	wave.scale = Vector3.ONE * randf_range(min_scale, max_scale)
 
 func _target_direction() -> Vector3:
 	if not (DeliveryManager.is_delivering() or DeliveryManager.is_returning()):
@@ -123,44 +126,43 @@ func _pick_spawn_point(predicted: Vector3, role: WaveRole, to_target: Vector3) -
 	var anti := role == WaveRole.ANTI
 	var use_box := spawn_area != null and spawn_area.mesh is BoxMesh
 	for i in _spawn_retries:
-		var pos: Vector3
-		if use_box:
-			pos = _sample_box_point()
-			if helper and (pos - predicted).dot(to_target) >= 0.0:
-				continue
-			if anti and (pos - predicted).dot(to_target) <= 0.0:
-				continue
-		elif helper or anti:
-			var dist := randf_range(spawn_distance_min, spawn_distance_max)
-			var perp := Vector3(-to_target.z, 0.0, to_target.x)
-			var side := -1.0 if helper else 1.0
-			pos = predicted + to_target * (side * dist) + perp * randf_range(-6.0, 6.0)
-		else:
-			var angle := randf_range(0.0, TAU)
-			pos = predicted + Vector3(cos(angle), 0.0, sin(angle)) * randf_range(spawn_distance_min, spawn_distance_max)
-		pos.y = spawn_height
+		var pos := _sample_spawn_point(predicted, helper, anti, use_box, to_target)
 		if _spawn_point_valid(pos, predicted):
 			return pos
-	for i in _spawn_retries:
-		var pos: Vector3
-		if use_box:
-			pos = _sample_box_point()
-			if helper and (pos - predicted).dot(to_target) >= 0.0:
-				continue
-			if anti and (pos - predicted).dot(to_target) <= 0.0:
-				continue
-		elif helper or anti:
-			var dist := randf_range(spawn_distance_min, spawn_distance_max)
-			var perp := Vector3(-to_target.z, 0.0, to_target.x)
-			var side := -1.0 if helper else 1.0
-			pos = predicted + to_target * (side * dist) + perp * randf_range(-6.0, 6.0)
-		else:
-			var angle := randf_range(0.0, TAU)
-			pos = predicted + Vector3(cos(angle), 0.0, sin(angle)) * randf_range(spawn_distance_min, spawn_distance_max)
-		pos.y = spawn_height
-		if _island_safe(pos, predicted):
+	for i in _spawn_retries * 4:
+		var pos := _sample_spawn_point(predicted, helper, anti, use_box, to_target)
+		if _spawn_point_island_safe(pos):
 			return pos
-	return predicted + Vector3(0.0, 0.0, -spawn_distance_min)
+	return _sample_spawn_point(predicted, helper, anti, use_box, to_target)
+
+func _sample_spawn_point(predicted: Vector3, helper: bool, anti: bool, use_box: bool, to_target: Vector3) -> Vector3:
+	for i in 8:
+		var pos := _base_sample(predicted, helper, anti, use_box, to_target)
+		if not use_box or not _wrong_side(pos, predicted, helper, anti, to_target):
+			return pos
+	return _base_sample(predicted, helper, anti, use_box, to_target)
+
+func _base_sample(predicted: Vector3, helper: bool, anti: bool, use_box: bool, to_target: Vector3) -> Vector3:
+	var pos: Vector3
+	if use_box:
+		pos = _sample_box_point()
+	elif helper or anti:
+		var dist := randf_range(spawn_distance_min, spawn_distance_max)
+		var perp := Vector3(-to_target.z, 0.0, to_target.x)
+		var side := -1.0 if helper else 1.0
+		pos = predicted + to_target * (side * dist) + perp * randf_range(-6.0, 6.0)
+	else:
+		var angle := randf_range(0.0, TAU)
+		pos = predicted + Vector3(cos(angle), 0.0, sin(angle)) * randf_range(spawn_distance_min, spawn_distance_max)
+	pos.y = spawn_height
+	return pos
+
+func _wrong_side(pos: Vector3, predicted: Vector3, helper: bool, anti: bool, to_target: Vector3) -> bool:
+	if helper and (pos - predicted).dot(to_target) >= 0.0:
+		return true
+	if anti and (pos - predicted).dot(to_target) <= 0.0:
+		return true
+	return false
 
 func _pick_travel_direction(role: WaveRole, predicted: Vector3, spawn_pos: Vector3, to_target: Vector3) -> Vector3:
 	match role:
@@ -186,6 +188,12 @@ func _island_safe(pos: Vector3, predicted: Vector3) -> bool:
 			return false
 	return _path_is_clear(pos, predicted)
 
+func _spawn_point_island_safe(pos: Vector3) -> bool:
+	for island in get_tree().get_nodes_in_group(Definitions.ISLANDS_GROUP):
+		if pos.distance_to(island.global_position) < island.collision_radius + island_margin:
+			return false
+	return true
+
 func _path_is_clear(from: Vector3, to: Vector3) -> bool:
 	for island in get_tree().get_nodes_in_group(Definitions.ISLANDS_GROUP):
 		if not _segment_is_clear(from, to, island.global_position, island.collision_radius + island_margin):
@@ -203,33 +211,50 @@ func _random_heading() -> Vector3:
 	var heading := randf_range(-PI, PI)
 	return Vector3(-sin(heading), 0.0, -cos(heading))
 
-func _biased_unit() -> float:
-	if randf() < spawn_edge_bias:
-		return randf() * 0.15 if randf() < 0.5 else 1.0 - randf() * 0.15
-	return randf()
-
 func _sample_box_point() -> Vector3:
 	var box := spawn_area.mesh as BoxMesh
 	if box == null:
 		return Vector3.ZERO
-	var center := spawn_area.global_position
-	var scale := spawn_area.global_transform.basis.get_scale()
-	var half := Vector2(box.size.x * absf(scale.x) * 0.5, box.size.z * absf(scale.z) * 0.5)
-	var u := _biased_unit()
-	var v := _biased_unit()
-	return Vector3(
-		center.x + (u * 2.0 - 1.0) * half.x,
-		spawn_height,
-		center.z + (v * 2.0 - 1.0) * half.y)
+	var _basis := spawn_area.global_transform.basis
+	var _scale := _basis.get_scale()
+	var half := Vector2(box.size.x * absf(_scale.x) * 0.5, box.size.z * absf(_scale.z) * 0.5)
+	var u: float
+	var v: float
+	if randf() < spawn_edge_bias:
+		var perimeter := 4.0 * (half.x + half.y)
+		var t := randf() * perimeter
+		if t < 2.0 * half.x:
+			u = t / (2.0 * half.x)
+			v = 0.0
+		elif t < 4.0 * half.x:
+			u = 2.0 - t / (2.0 * half.x)
+			v = 1.0
+		elif t < 4.0 * half.x + 2.0 * half.y:
+			u = 0.0
+			v = (t - 4.0 * half.x) / (2.0 * half.y)
+		else:
+			u = 1.0
+			v = 2.0 - (t - 4.0 * half.x) / (2.0 * half.y)
+	else:
+		u = randf()
+		v = randf()
+	var local := Vector3((u * 2.0 - 1.0) * half.x, 0.0, (v * 2.0 - 1.0) * half.y)
+	var world := spawn_area.global_transform * local
+	return Vector3(world.x, spawn_height, world.z)
 
-func _clamp_prediction(predicted: Vector3) -> Vector3:
+func _box_clamp(pos: Vector3) -> Vector3:
 	var box := spawn_area.mesh as BoxMesh if spawn_area != null else null
 	if box == null:
-		return predicted
-	var center := spawn_area.global_position
-	var scale := spawn_area.global_transform.basis.get_scale()
-	var half := Vector2(box.size.x * absf(scale.x) * 0.5, box.size.z * absf(scale.z) * 0.5)
-	var rel := Vector2(predicted.x - center.x, predicted.z - center.z)
-	rel.x = clampf(rel.x, -half.x, half.x)
-	rel.y = clampf(rel.y, -half.y, half.y)
-	return Vector3(center.x + rel.x, spawn_height, center.z + rel.y)
+		return pos
+	var _basis := spawn_area.global_transform.basis
+	var _scale := _basis.get_scale()
+	var half := Vector2(box.size.x * absf(_scale.x) * 0.5, box.size.z * absf(_scale.z) * 0.5)
+	var local := spawn_area.global_transform.affine_inverse() * pos
+	local.x = clampf(local.x, -half.x, half.x)
+	local.z = clampf(local.z, -half.y, half.y)
+	return spawn_area.global_transform * local
+
+func _clamp_prediction(predicted: Vector3) -> Vector3:
+	var clamped := _box_clamp(predicted)
+	clamped.y = spawn_height
+	return clamped

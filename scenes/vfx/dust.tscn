@@ -1,96 +1,49 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://do4bt1gayunh2"]
 
-[ext_resource type="Script" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
-[ext_resource type="Texture2D" path="res://assets/textures/particles/dirt_01.png" id="2_pufftex"]
-[ext_resource type="Texture2D" path="res://assets/textures/particles/dirt_03.png" id="3_motetex"]
+[ext_resource type="Script" uid="uid://cy2xljyxe2t3e" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
+[ext_resource type="Texture2D" uid="uid://bvmtsijdppaje" path="res://assets/textures/particles/dirt_01.png" id="2_pufftex"]
 
-[sub_resource type="Curve" id="Curve_grow"]
-_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0, Vector2(1, 1.1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="CurveTexture" id="CurveTexture_grow"]
-curve = SubResource("Curve_grow")
-
-[sub_resource type="ParticleProcessMaterial" id="ppm_puff"]
-emission_shape = 6
-emission_ring_axis = Vector3(0, 1, 0)
-emission_ring_height = 0.1
-emission_ring_radius = 0.3
-emission_ring_inner_radius = 0.0
-emission_ring_cone_angle = 180.0
-gravity = Vector3(0, 0, 0)
-initial_velocity_min = 0.8
-initial_velocity_max = 1.8
-damping_min = 3.0
-damping_max = 4.0
-scale_curve = SubResource("CurveTexture_grow")
-color = Color(0.82, 0.75, 0.62, 0.9)
-
-[sub_resource type="StandardMaterial3D" id="mat_puff"]
-shading_mode = 0
-texture_filter = 0
-transparency = 2
-alpha_scissor_threshold = 0.25
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_pufftex")
-
-[sub_resource type="QuadMesh" id="quad_puff"]
-orientation = 2
-material = SubResource("mat_puff")
-
-[sub_resource type="Curve" id="Curve_fade"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_p0hoo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.069970846, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -4.735439, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_fade"]
-curve = SubResource("Curve_fade")
+[sub_resource type="CurveTexture" id="CurveTexture_fq64m"]
+curve = SubResource("Curve_p0hoo")
 
-[sub_resource type="ParticleProcessMaterial" id="ppm_motes"]
-direction = Vector3(0, 1, 0)
-spread = 60.0
-initial_velocity_min = 0.4
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_gnu3e"]
+direction = Vector3(0, 0.2, 0.4)
+spread = 10.0
+flatness = 0.206
+initial_velocity_min = 1.0
 initial_velocity_max = 1.0
-gravity = Vector3(0, -0.3, 0)
-damping_min = 1.5
-damping_max = 2.5
-scale_min = 0.05
-scale_max = 0.16
-scale_curve = SubResource("CurveTexture_fade")
-billboard_mode = 3
-emission_shape = 1
-emission_sphere_radius = 0.1
-color = Color(0.8, 0.74, 0.62, 0.8)
+gravity = Vector3(0, 0, 0)
+alpha_curve = SubResource("CurveTexture_fq64m")
 
-[sub_resource type="StandardMaterial3D" id="mat_motes"]
-shading_mode = 0
-texture_filter = 0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmn6o"]
 transparency = 2
-alpha_scissor_threshold = 0.2
+alpha_scissor_threshold = 0.54
+alpha_antialiasing_mode = 0
+no_depth_test = true
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("3_motetex")
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("2_pufftex")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+proximity_fade_enabled = true
+proximity_fade_distance = 0.1
 
-[sub_resource type="QuadMesh" id="quad_motes"]
-material = SubResource("mat_motes")
+[sub_resource type="QuadMesh" id="QuadMesh_sk68b"]
+material = SubResource("StandardMaterial3D_hmn6o")
 
-[node name="Dust" type="Node3D"]
+[node name="Dust" type="Node3D" unique_id=370488537]
 script = ExtResource("1_layered")
 
-[node name="GroundPuff" type="GPUParticles3D" parent="."]
-amount = 10
-lifetime = 0.45
-explosiveness = 1.0
-fixed_fps = 24
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1893015986]
+emitting = false
+amount = 1
+lifetime = 3.0
 one_shot = true
-visibility_aabb = AABB(-2, -1, -2, 4, 2, 4)
-process_material = SubResource("ppm_puff")
-draw_pass_1 = SubResource("quad_puff")
-
-[node name="RisingMotes" type="GPUParticles3D" parent="."]
-amount = 12
-lifetime = 0.5
-explosiveness = 1.0
-fixed_fps = 24
-one_shot = true
-visibility_aabb = AABB(-1, -1, -1, 2, 3, 2)
-process_material = SubResource("ppm_motes")
-draw_pass_1 = SubResource("quad_motes")
+process_material = SubResource("ParticleProcessMaterial_gnu3e")
+draw_pass_1 = SubResource("QuadMesh_sk68b")

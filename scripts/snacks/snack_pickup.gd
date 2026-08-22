@@ -2,13 +2,10 @@ extends Area3D
 class_name SnackPickup
 
 const SPARKLE_VFX := preload("res://scenes/vfx/sparkle.tscn")
-const OUTLINE_SHADER := preload("res://shaders/outline.gdshader")
 
 @export var snack: Snack
 @export var prompt_label: Label3D = null
 @export var prompt_icon: Sprite3D = null
-
-var _outline_material: ShaderMaterial = null
 
 func _ready() -> void:
 	monitoring = false
@@ -24,8 +21,8 @@ func _ensure_prompt_nodes() -> void:
 	if prompt_label == null:
 		prompt_label = Label3D.new()
 		prompt_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-		prompt_label.position = Vector3(0.5, 1.4, 0.0)
-		prompt_label.pixel_size = 0.0045
+		prompt_label.position = Vector3(0.0, .8, 0.0)
+		prompt_label.pixel_size = 0.0025
 		prompt_label.font_size = 64
 		prompt_label.outline_size = 8
 		prompt_label.outline_modulate = Color(0, 0, 0, 1)
@@ -34,7 +31,7 @@ func _ensure_prompt_nodes() -> void:
 	if prompt_icon == null:
 		prompt_icon = Sprite3D.new()
 		prompt_icon.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-		prompt_icon.position = Vector3(0.0, 1.4, 0.0)
+		prompt_icon.position = Vector3(0.0, 1.0, 0.0)
 		prompt_icon.pixel_size = 0.0045
 		add_child(prompt_icon)
 		prompt_icon.visible = false
@@ -60,26 +57,11 @@ func set_prompt(text: String, icon: Texture2D) -> void:
 		prompt_icon.texture = icon
 		prompt_icon.visible = icon != null
 
-func set_prompt_visible(visible: bool) -> void:
+func set_prompt_visible(v: bool) -> void:
 	if prompt_label != null:
-		prompt_label.visible = visible
+		prompt_label.visible = v
 	if prompt_icon != null:
-		prompt_icon.visible = visible
-
-func set_highlighted(enabled: bool) -> void:
-	var mesh := _first_mesh_instance(self)
-	if mesh == null:
-		return
-	if enabled:
-		if mesh.material_override == null:
-			var base := mesh.get_active_material(0)
-			if base == null:
-				return
-			var mat: Material = base.duplicate() as Material
-			mat.next_pass = _get_outline_material()
-			mesh.material_override = mat
-	else:
-		mesh.material_override = null
+		prompt_icon.visible = v
 
 func _first_mesh_instance(node: Node) -> MeshInstance3D:
 	if node is MeshInstance3D:
@@ -89,12 +71,6 @@ func _first_mesh_instance(node: Node) -> MeshInstance3D:
 		if found != null:
 			return found
 	return null
-
-func _get_outline_material() -> ShaderMaterial:
-	if _outline_material == null:
-		_outline_material = ShaderMaterial.new()
-		_outline_material.shader = OUTLINE_SHADER
-	return _outline_material
 
 func _update_visual() -> void:
 	if snack == null:

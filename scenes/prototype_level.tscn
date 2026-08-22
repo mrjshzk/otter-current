@@ -1,0 +1,93 @@
+[gd_scene format=3 uid="uid://f34t5e6j30o3"]
+
+[ext_resource type="Shader" uid="uid://dpfnrla4cemce" path="res://shaders/toon_water.gdshader" id="1_jsvdy"]
+[ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="2_ysf26"]
+[ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="3_pet5k"]
+[ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="4_bfwj2"]
+[ext_resource type="Shader" uid="uid://bnj5mgymxc4h0" path="res://shaders/pixel_art.gdshader" id="5_fo4hb"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1kmq1"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_tq3vd"]
+sky_material = SubResource("ProceduralSkyMaterial_1kmq1")
+
+[sub_resource type="Environment" id="Environment_al8lf"]
+background_mode = 2
+sky = SubResource("Sky_tq3vd")
+glow_enabled = true
+fog_light_color = Color(1, 1, 1, 1)
+fog_density = 0.0645
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+render_priority = 0
+shader = ExtResource("1_jsvdy")
+shader_parameter/time_speed = 1.0
+shader_parameter/surface_speed = 1.0
+shader_parameter/spin = 0.0
+shader_parameter/brightness = 0.6
+shader_parameter/color_intensity = 0.0
+shader_parameter/horizontal_frequency = 2.0
+shader_parameter/vertical_frequency = 2.0
+shader_parameter/size = 3.0
+shader_parameter/banding_bias = 0.6
+shader_parameter/wave_height = 0.5
+shader_parameter/texture_height = 0.5
+shader_parameter/color1 = Color(0.59, 0.761, 1, 1)
+shader_parameter/color2 = Color(0.274, 0.474, 0.98, 1)
+shader_parameter/color3 = Color(0.059, 0.389, 0.85, 1)
+shader_parameter/color4 = Color(0, 0.267, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_sk68b"]
+material = SubResource("ShaderMaterial_water")
+size = Vector2(2000, 2000)
+
+[sub_resource type="BoxMesh" id="BoxMesh_sk68b"]
+size = Vector3(6.378662, 1, 6.826172)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qkken"]
+size = Vector3(6.378662, 1, 6.826172)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmn6o"]
+shader = ExtResource("5_fo4hb")
+shader_parameter/TARGET_RESOLUTION = Vector2(320, 180)
+shader_parameter/COLORS_PER_CHANNEL = 16.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_sk68b"]
+size = Vector2(1280, 720)
+
+[node name="PrototypeLevel" type="Node3D" unique_id=1708134055]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1864291039]
+environment = SubResource("Environment_al8lf")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1368849657]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=508079819]
+mesh = SubResource("PlaneMesh_sk68b")
+
+[node name="Player" parent="." unique_id=741711365 instance=ExtResource("2_ysf26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9902804, 0)
+
+[node name="WaveSpawner" type="Node3D" parent="." unique_id=2086774259]
+script = ExtResource("3_pet5k")
+wave_scene = ExtResource("4_bfwj2")
+player = NodePath("../Player")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." unique_id=207569860]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.8296447, 0.1796782, 5.1439915)
+mesh = SubResource("BoxMesh_sk68b")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2" unique_id=1316791180]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D" unique_id=1767274204]
+shape = SubResource("BoxShape3D_qkken")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=272485262]
+texture_filter = 1
+material = SubResource("ShaderMaterial_hmn6o")
+position = Vector2(640, 360)
+mesh = SubResource("QuadMesh_sk68b")

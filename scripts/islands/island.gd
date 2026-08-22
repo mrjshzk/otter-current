@@ -9,7 +9,7 @@ func _ready() -> void:
 	add_to_group(Definitions.ISLANDS_GROUP)
 
 func display_name() -> String:
-	return resource.island_name if resource != null else name
+	return resource.island_name
 
 func customer() -> CustomerNPC:
 	return resource.customer if resource != null else null

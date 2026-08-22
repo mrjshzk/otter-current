@@ -2,24 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dptvpwss5llaf" path="res://scripts/snacks/snack_pickup.gd" id="1_pu7uh"]
 [ext_resource type="Resource" uid="uid://dv6ghqt368r48" path="res://scenes/core_loop_prototype/test_snack.tres" id="2_pu7uh"]
-[ext_resource type="Texture2D" uid="uid://1lb3n0ut3wfu" path="res://assets/textures/particles/star_04.png" id="3_tan71"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tan71"]
-transparency = 2
-alpha_scissor_threshold = 0.155
-alpha_antialiasing_mode = 0
-albedo_texture = ExtResource("3_tan71")
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-emission_energy_multiplier = 2.7
-billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="QuadMesh" id="QuadMesh_tan71"]
-material = SubResource("StandardMaterial3D_tan71")
-size = Vector2(2, 2)
+[ext_resource type="Texture2D" uid="uid://ckga0kbdokdgd" path="res://assets/textures/input_prompts/keyboard_0.png" id="4_lwbnx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_sk68b"]
 
@@ -30,24 +13,20 @@ prompt_label = NodePath("PromptLabel")
 prompt_icon = NodePath("PromptIcon")
 metadata/_custom_type_script = "uid://dptvpwss5llaf"
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1056962574]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("QuadMesh_tan71")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1360365953]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 shape = SubResource("SphereShape3D_sk68b")
 
 [node name="PromptIcon" type="Sprite3D" parent="." unique_id=1495167700]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2083436, 0)
 pixel_size = 0.0045
 billboard = 1
+texture = ExtResource("4_lwbnx")
 
 [node name="PromptLabel" type="Label3D" parent="." unique_id=752315383]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.4, 0)
-visible = false
-pixel_size = 0.0045
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9260385, 0)
+pixel_size = 0.0025
 billboard = 1
+text = "CHUPAMOS"
 font_size = 64
 outline_size = 8

@@ -70,7 +70,9 @@ func _loop_stream(player: AudioStreamPlayer, stream: AudioStream, volume_db: flo
 		var wav := stream as AudioStreamWAV
 		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
 		wav.loop_begin = 0
+		@warning_ignore_start("integer_division")
 		wav.loop_end = wav.data.size() / 2
+		@warning_ignore_restore("integer_division")
 	player.stream = stream
 	player.volume_db = volume_db
 	player.play()

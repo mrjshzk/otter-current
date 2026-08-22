@@ -1,7 +1,7 @@
 // NOTE: Shader automatically converted from Godot Engine 4.7.1.stable's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix, depth_draw_never, cull_back, diffuse_burley, specular_schlick_ggx, shadows_disabled;
+render_mode blend_mix, cull_back, diffuse_burley, specular_schlick_ggx, shadows_disabled;
 
 #include "res://shaders/includes/wave_wobble.gdshaderinc"
 

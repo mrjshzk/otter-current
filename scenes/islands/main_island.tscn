@@ -4,9 +4,17 @@
 [ext_resource type="PackedScene" uid="uid://u83yj45nrris" path="res://assets/Island1.glb" id="2_vgq2i"]
 [ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/Dock.glb" id="5_ldet5"]
 [ext_resource type="PackedScene" uid="uid://ditqg4jefgxh5" path="res://assets/RestaurantCabin.glb" id="7_a7ktl"]
+[ext_resource type="PackedScene" uid="uid://dp6wpe87skl0h" path="res://assets/kenney_food/plate.glb" id="8_okprm"]
 [ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/Cabin.glb" id="9_lfk0g"]
 [ext_resource type="PackedScene" uid="uid://b7sjbcauimbiw" path="res://assets/tree.glb" id="10_db1p1"]
+[ext_resource type="PackedScene" uid="uid://e8ww4dh0wgya" path="res://assets/kenney_food/knife-block.glb" id="10_pld2g"]
+[ext_resource type="PackedScene" uid="uid://b5sbqese7jhkm" path="res://assets/kenney_food/shaker-pepper.glb" id="11_81mk4"]
 [ext_resource type="Script" uid="uid://c06r4onxd2avg" path="res://scripts/islands/island_resource.gd" id="11_home"]
+[ext_resource type="PackedScene" uid="uid://x8fqmtsd83nj" path="res://assets/kenney_food/shaker-salt.glb" id="12_uds3x"]
+[ext_resource type="PackedScene" uid="uid://s2gskdeuyudh" path="res://assets/kenney_food/pot.glb" id="13_vwan3"]
+[ext_resource type="PackedScene" uid="uid://cb35k0qu6o1lv" path="res://assets/kenney_food/pot-lid.glb" id="14_inwpa"]
+[ext_resource type="PackedScene" uid="uid://ixwuwck3nbic" path="res://assets/kenney_food/tajine.glb" id="15_w6mty"]
+[ext_resource type="PackedScene" uid="uid://ojw0n1yr2k6k" path="res://assets/kenney_food/tajine-lid.glb" id="16_8px8i"]
 
 [sub_resource type="Resource" id="Resource_home"]
 script = ExtResource("11_home")
@@ -67,3 +75,36 @@ box_projection = true
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 7.406925e-09, 0, -7.4360287e-09, 0.99999994, 3.235963, 1.3285247, 2.695877)
 size = Vector3(3.2990122, 2.5426636, 4.527069)
 box_projection = true
+
+[node name="plate2" parent="." unique_id=1513305763 instance=ExtResource("8_okprm")]
+transform = Transform3D(0.57497114, 0, 0.13231827, 0, 0.59, 0, -0.13231827, 0, 0.57497114, 23.278437, 3.4041393, 0.99417627)
+
+[node name="knife-block2" parent="." unique_id=431158401 instance=ExtResource("10_pld2g")]
+transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 23.30528, 3.4263597, -0.087318)
+
+[node name="shaker-pepper2" parent="." unique_id=1495351474 instance=ExtResource("11_81mk4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.348835, 3.4182527, 0.07459673)
+
+[node name="shaker-salt2" parent="." unique_id=2023838572 instance=ExtResource("12_uds3x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.20132, 3.4182618, 0.07592201)
+
+[node name="pot2" parent="." unique_id=452154808 instance=ExtResource("13_vwan3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.779245, 2.8190808, 0.56633866)
+
+[node name="pot-lid2" parent="pot2" unique_id=810270903 instance=ExtResource("14_inwpa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36024404, 0)
+
+[node name="pot3" parent="." unique_id=685870594 instance=ExtResource("13_vwan3")]
+transform = Transform3D(0.115915164, 0, -0.99325913, 0, 1, 0, 0.99325913, 0, 0.115915164, 26.797274, 2.8018973, 1.308933)
+
+[node name="pot-lid2" parent="pot3" unique_id=2033013154 instance=ExtResource("14_inwpa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.36024404, 0)
+
+[node name="pot4" parent="." unique_id=1685186853 instance=ExtResource("13_vwan3")]
+transform = Transform3D(0.8494031, 0, -0.52774453, 0, 1, 0, 0.52774453, 0, 0.8494031, 26.792852, 3.230996, 0.9350255)
+
+[node name="tajine2" parent="." unique_id=941213644 instance=ExtResource("15_w6mty")]
+transform = Transform3D(0.59, 0, 0, 0, 0.59, 0, 0, 0, 0.59, 23.304922, 3.3794608, 4.3043413)
+
+[node name="tajine-lid2" parent="tajine2" unique_id=571898296 instance=ExtResource("16_8px8i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1293273, 0)

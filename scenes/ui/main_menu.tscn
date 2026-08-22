@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" uid="uid://curui5x4fx8x0" path="res://scripts/ui/main_menu.gd" id="1_script"]
 [ext_resource type="PackedScene" uid="uid://bngjb6vpr6er4" path="res://scenes/game/game.tscn" id="2_game"]
-[ext_resource type="Shader" uid="uid://dihinwuidvvur" path="res://shaders/transition.gdshader" id="3_transition"]
 [ext_resource type="PackedScene" uid="uid://erfdxvuklw7j" path="res://scenes/ui/title_screen_background.tscn" id="3_uhagc"]
 [ext_resource type="Shader" uid="uid://c4otrcm63wlnr" path="res://shaders/animated_stripes.gdshader" id="4_uhagc"]
-[ext_resource type="Texture2D" uid="uid://2yp0lt62xeqx" path="res://ottereatslogo.png" id="4_x2yvf"]
+[ext_resource type="Texture2D" uid="uid://2yp0lt62xeqx" path="res://assets/ottereatslogo.png" id="4_x2yvf"]
 [ext_resource type="PackedScene" path="res://scenes/ui/settings_panel.tscn" id="5_settings"]
 [ext_resource type="Texture2D" uid="uid://mm121kewyns" path="res://assets/textures/buttonstart.png" id="6_wb0q5"]
 [ext_resource type="Texture2D" uid="uid://dw0xev5th7gxb" path="res://assets/textures/buttonstartclicked.png" id="7_8ekit"]
@@ -25,34 +24,6 @@ shader_parameter/flash_color = Color(1, 0.95, 0.7, 1)
 shader_parameter/wobble_amplitude = 0.008
 shader_parameter/wobble_frequency = 5.0
 shader_parameter/wobble_speed = 2.0
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_transition"]
-shader = ExtResource("3_transition")
-shader_parameter/use_sprite_alpha = true
-shader_parameter/use_transition_texture = false
-shader_parameter/transition_type = 2
-shader_parameter/position = Vector2(0, 0)
-shader_parameter/invert = false
-shader_parameter/grid_size = Vector2(1, 1)
-shader_parameter/rotation_angle = 0.0
-shader_parameter/global_x_mirror = false
-shader_parameter/global_y_mirror = false
-shader_parameter/local_x_mirror = false
-shader_parameter/local_y_mirror = false
-shader_parameter/stagger = Vector2(0, 0)
-shader_parameter/cumulative_stagger_flip = false
-shader_parameter/cumulative_stagger = Vector2(0, 0)
-shader_parameter/stagger_frequency = Vector2i(2, 2)
-shader_parameter/flip_frequency = Vector2i(1, 1)
-shader_parameter/basic_feather = 0.0
-shader_parameter/use_mask_size = false
-shader_parameter/mask_size = Vector2(100, 100)
-shader_parameter/edges = 6
-shader_parameter/shape_feather = 0.15
-shader_parameter/sectors = 1
-shader_parameter/clock_feather = 0.0
-shader_parameter/progress = 0.0
-shader_parameter/progress_bias = Vector2(0, 0)
 
 [node name="MainMenu" type="Control" unique_id=850569475]
 layout_mode = 3
@@ -145,7 +116,6 @@ layer = 2
 [node name="TransitionRect" type="ColorRect" parent="TransitionLayer" unique_id=1552438170]
 unique_name_in_owner = true
 visible = false
-material = SubResource("ShaderMaterial_transition")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -157,3 +127,8 @@ color = Color(0, 0, 0, 1)
 [node name="TitleTheme" type="AudioStreamPlayer" parent="." unique_id=290597357]
 unique_name_in_owner = true
 stream = ExtResource("14_n4uci")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1158054338]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
