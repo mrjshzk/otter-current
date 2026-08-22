@@ -39,6 +39,7 @@ theme_override_constants/margin_bottom = 25
 
 [node name="Progress" type="TextureProgressBar" parent="MarginContainer2" unique_id=190006]
 unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0.6392157)
 layout_mode = 2
 value = 86.0
 fill_mode = 4
@@ -81,7 +82,7 @@ render_target_update_mode = 4
 
 [node name="Rotator" type="Node3D" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld" unique_id=1032541944]
 unique_name_in_owner = true
-transform = Transform3D(-0.9948634, 0, -0.10122546, 0, 1, 0, 0.10122546, 0, -0.9948634, 0, -0.13932192, 0)
+transform = Transform3D(-0.9875196, 0, -0.15749544, 0, 1, 0, 0.15749544, 0, -0.9875196, 0, -0.13932192, 0)
 script = ExtResource("1_x13tk")
 
 [node name="wine-red2" parent="Control/MarginContainer/SubViewportContainer/SubViewport/FoodWorld/Rotator" unique_id=572333199 instance=ExtResource("4_jevby")]

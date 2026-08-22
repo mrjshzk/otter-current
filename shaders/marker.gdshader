@@ -14,6 +14,6 @@ void vertex() {
 }
 
 void fragment() {
-	ALBEDO = vec3(1.0,0.0,0.0);
+	ALBEDO = vec3(0.2, 1.0, 0.2);
 	ALPHA = (1.0 - texture(albedo_texture, UV).a) * COLOR.a; // invert
 }
