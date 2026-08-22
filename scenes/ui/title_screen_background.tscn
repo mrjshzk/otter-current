@@ -2,6 +2,9 @@
 
 [ext_resource type="Shader" uid="uid://udmyg4sth3qy" path="res://shaders/stylized_sky.gdshader" id="1_vwm3h"]
 [ext_resource type="PackedScene" uid="uid://boxmlgnfx006p" path="res://scenes/islands/main_island.tscn" id="2_eb62g"]
+[ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/water_standart.tres" id="3_l71q4"]
+[ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="4_7hyco"]
+[ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="5_8e7ma"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_eb62g"]
 shader = ExtResource("1_vwm3h")
@@ -40,13 +43,31 @@ sky_material = SubResource("ShaderMaterial_eb62g")
 [sub_resource type="Environment" id="Environment_l71q4"]
 background_mode = 2
 sky = SubResource("Sky_menu")
+ssao_enabled = true
+ssil_enabled = true
+fog_enabled = true
+fog_light_color = Color(0.50363797, 0.80043274, 1, 1)
+fog_density = 0.003
+fog_sky_affect = 0.424
+volumetric_fog_density = 0.01
+volumetric_fog_emission = Color(1, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ovsny"]
+material = ExtResource("3_l71q4")
+size = Vector2(1000, 1000)
+subdivide_width = 100
+subdivide_depth = 100
+
+[sub_resource type="BoxMesh" id="BoxMesh_l71q4"]
+size = Vector3(24.098206, 1, 16.429626)
 
 [node name="TitleScreenBackground" type="Node3D" unique_id=520023887]
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=881121444]
 transform = Transform3D(-0.89737046, 0, -0.44127786, 0, 1, 0, 0.44127786, 0, -0.89737046, 8.094556, 2.154363, 5.7346206)
 current = true
-fov = 50.0
+fov = 56.0
+far = 150.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=30912771]
 environment = SubResource("Environment_l71q4")
@@ -55,3 +76,26 @@ environment = SubResource("Environment_l71q4")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 
 [node name="MainIsland" parent="." unique_id=234321246 instance=ExtResource("2_eb62g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2792177, 0)
+
+[node name="Water" type="MeshInstance3D" parent="." unique_id=1666591161]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.2337317, 0)
+mesh = SubResource("PlaneMesh_ovsny")
+
+[node name="Spawn" type="MeshInstance3D" parent="." unique_id=1000487692]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.418442, -9.536743e-07, 29.286758)
+visible = false
+mesh = SubResource("BoxMesh_l71q4")
+
+[node name="TargetWaveManager" type="Node3D" parent="." unique_id=2073680321 node_paths=PackedStringArray("player", "spawn_area")]
+script = ExtResource("4_7hyco")
+wave_scene = ExtResource("5_8e7ma")
+player = NodePath("../Marker3D")
+spawn_interval = 1.5
+delivery_spawn_interval = 0.8
+initial_waves = 5
+spawn_area = NodePath("../Spawn")
+metadata/_custom_type_script = "uid://8n4ubq0rsopv"
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=2107920232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.575033, 1.3513174, -1.6894732)
