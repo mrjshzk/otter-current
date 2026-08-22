@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://8n4ubq0rsopv" path="res://scripts/waves/target_wave_manager.gd" id="8_mei1o"]
 [ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/materials/water_standart.tres" id="8_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="9_1ppc5"]
+[ext_resource type="Texture2D" uid="uid://c6g7s53xxv2kc" path="res://assets/avatarchef.png" id="9_wur77"]
+[ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="10_3dpx7"]
 [ext_resource type="PackedScene" uid="uid://c1jibmnue1og4" path="res://scenes/characters/boss.tscn" id="10_ji6ub"]
 [ext_resource type="PackedScene" uid="uid://bs4khywr7i3b7" path="res://scenes/characters/gardener.tscn" id="10_vmkuj"]
 [ext_resource type="PackedScene" uid="uid://dymp4x1pcan3t" path="res://scenes/characters/rock_guy.tscn" id="11_q0j1x"]
@@ -80,6 +82,12 @@ volumetric_fog_albedo = Color(2.117753e-06, 0.96306497, 0.9543446, 1)
 volumetric_fog_emission = Color(1.540184e-06, 0.67444813, 0.891812, 1)
 volumetric_fog_emission_energy = 0.5
 
+[sub_resource type="Resource" id="Resource_pjkwc"]
+script = ExtResource("10_3dpx7")
+npc_name = "Boss"
+avatar = ExtResource("9_wur77")
+metadata/_custom_type_script = "uid://d3uu1stmi2h5d"
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_u2pc8"]
 material = ExtResource("8_y6v6p")
 size = Vector2(1000, 1000)
@@ -114,6 +122,7 @@ snack_options = Array[ExtResource("5_fog77")]([ExtResource("6_wur77"), ExtResour
 pickup_spawn_point = NodePath("../FoodSpawnPoint")
 player = NodePath("../../Player/LookAtPos")
 npc_name = "Boss"
+customer = SubResource("Resource_pjkwc")
 
 [node name="FoodSpawnPoint" type="Marker3D" parent="MainIsland" unique_id=572957348]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.26423, 3.4593747, 0.9950719)

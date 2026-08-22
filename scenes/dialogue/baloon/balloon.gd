@@ -16,6 +16,8 @@ extends CanvasLayer
 
 @onready var voice: ProceduralVoice = $ProceduralVoice
 
+@onready var character_icon: TextureRect = %CharacterIcon
+
 var temporary_game_states: Array = []
 
 var is_waiting_for_input: bool = false
@@ -92,6 +94,10 @@ func _notification(what: int) -> void:
 			dialogue_label.skip_typing()
 
 func start(with_dialogue_resource: DialogueResource = null, cue: String = "", extra_game_states: Array = []) -> void:
+	for state in extra_game_states:
+		if state is NPC:
+			var npc = state as NPC
+			character_icon.texture = npc.customer.avatar
 	temporary_game_states = [self] + extra_game_states
 	is_waiting_for_input = false
 	if is_instance_valid(with_dialogue_resource):

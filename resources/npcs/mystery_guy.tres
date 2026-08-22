@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="CustomerNPC" format=3 uid="uid://l2woxdjlvg5m"]
 
-[ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="1_5c8ah"]
+[ext_resource type="Texture2D" uid="uid://d03hhqfdv6pht" path="res://assets/avatarmysterious.png" id="1_5c8ah"]
 [ext_resource type="Script" uid="uid://d3uu1stmi2h5d" path="res://scripts/delivery/customer_npc.gd" id="2_et14a"]
 [ext_resource type="Resource" uid="uid://cc78jlcbokmf" path="res://resources/snacks/mystery_food.tres" id="3_5c8ah"]
 
