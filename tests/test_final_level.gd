@@ -18,7 +18,7 @@ func _run() -> void:
 	_check(not info.is_empty(), "sardine sandwich has a customer")
 	if not info.is_empty():
 		_check(info["npc_name"] == "Builder Otter", "customer is Builder Otter (got '%s')" % info["npc_name"])
-		_check(info["island_name"] == "Customer Island 1", "customer island is Customer Island 1")
+		_check(info["island_name"] == "Rock Island", "customer island is Rock Island (got '%s')" % info["island_name"])
 
 	var builder: CustomerNPC = null
 	for island in DeliveryManager._islands:
@@ -31,10 +31,14 @@ func _run() -> void:
 		DeliveryManager.start_delivery(sandwich, builder)
 		_check(DeliveryManager.is_delivering(), "delivery starts")
 		_check(DeliveryManager.get_delivery_target_name() == "Builder Otter", "delivery target named")
-		_check(DeliveryManager.target_island.display_name() == "Customer Island 1", "delivery targets customer island")
+		_check(DeliveryManager.target_island.display_name() == "Rock Island", "delivery targets rock island")
 
 	var plant_food: Snack = load("res://resources/snacks/plant_food.tres")
-	_check(DeliveryManager.get_npc_info_from_snack(plant_food).is_empty(), "plant food has no customer yet (expected)")
+	var plant_info := DeliveryManager.get_npc_info_from_snack(plant_food)
+	_check(not plant_info.is_empty(), "plant food has a customer")
+	if not plant_info.is_empty():
+		_check(plant_info["npc_name"] == "Gardener", "plant food customer is Gardener (got '%s')" % plant_info["npc_name"])
+		_check(plant_info["island_name"] == "Plant Island", "plant food island is Plant Island (got '%s')" % plant_info["island_name"])
 
 	level.queue_free()
 	await get_tree().physics_frame

@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://bjoqppbw61xsc"
+path="res://.godot/imported/mysterious_guy.dialogue-3a9af7896a66a988b73d2389f35d6190.tres"
+
+[deps]
+
+source_file="res://scenes/dialogue/mysterious_guy.dialogue"
+dest_files=["res://.godot/imported/mysterious_guy.dialogue-3a9af7896a66a988b73d2389f35d6190.tres"]
+
+[params]
+
+defaults=true

@@ -4,8 +4,6 @@ const ARROW_HEIGHT := 5.0
 const ARROW_COLOR := Color(1.0, 0.85, 0.1)
 const LINE_WIDTH := 3.0
 
-## Debug marker above the current delivery target island (or the home island
-## while returning). Shows the island's collision radius too.
 func _process(_delta: float) -> void:
 	var island: Island = null
 	if DeliveryManager.is_delivering():

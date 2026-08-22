@@ -2,22 +2,14 @@ extends Node
 
 signal delivery_started(snack: Snack, customer: CustomerNPC, island: Island, time_limit: float)
 signal delivery_completed(snack: Snack)
-## Emitted right after delivery_completed, while the player still has to
-## return to the home island. The wave manager / UI can react to it.
 signal returning_home()
-## Emitted when a timed delivery expires. The order is cancelled and the
-## player must return to the boss for a new one.
 signal delivery_failed(snack: Snack, customer: CustomerNPC)
 
 enum DeliveryState { IDLE, DELIVERING, RETURNING }
 
-## Deliveries completed before time limits kick in.
 @export var timed_after_deliveries: int = 2
-## Time limit of the first timed delivery, in seconds.
 @export var first_time_limit: float = 45.0
-## Seconds shaved off the limit with every completed delivery after the threshold.
 @export var time_limit_step_down: float = 5.0
-## Hard floor for the time limit, in seconds.
 @export var min_time_limit: float = 20.0
 
 var state: DeliveryState = DeliveryState.IDLE
@@ -26,11 +18,8 @@ var target_customer: CustomerNPC = null
 var target_island: Island = null
 var home_island: Island = null
 
-## Total deliveries completed so far. Drives the difficulty curve.
 var deliveries_completed: int = 0
-## Time limit of the current delivery in seconds. 0.0 means untimed.
 var time_limit: float = 0.0
-## Seconds left on the current delivery's timer (only meaningful when timed).
 var time_remaining: float = 0.0
 
 var _islands: Array[Island] = []
@@ -110,16 +99,12 @@ func _fail_delivery() -> void:
 	state = DeliveryState.IDLE
 	delivery_failed.emit(snack, customer)
 
-## Time limit for the next delivery: untimed below the threshold, then a
-## shrinking limit that never drops below min_time_limit.
 func _next_time_limit() -> float:
 	if deliveries_completed < timed_after_deliveries:
 		return 0.0
 	var elapsed := float(deliveries_completed - timed_after_deliveries)
 	return maxf(min_time_limit, first_time_limit - elapsed * time_limit_step_down)
 
-## Look up which customer (and island) wants the given snack.
-## Returns an empty Dictionary when no customer wants it.
 func get_npc_info_from_snack(snack: Snack) -> Dictionary:
 	if snack == null:
 		return {}
@@ -136,11 +121,9 @@ func get_npc_info_from_snack(snack: Snack) -> Dictionary:
 		snack.snack_name if not snack.snack_name.is_empty() else snack.resource_path))
 	return {}
 
-## Name of the NPC the player must deliver to right now ("" when idle).
 func get_delivery_target_name() -> String:
 	return target_customer.npc_name if target_customer != null else ""
 
-## Data for the delivery-info UI: who/where to deliver, or whether to return home.
 func get_delivery_info() -> Dictionary:
 	return {
 		"state": state,
@@ -157,8 +140,6 @@ func get_delivery_info() -> Dictionary:
 		"deliveries_completed": deliveries_completed,
 	}
 
-## Where waves should lead the player: the customer's island while delivering,
-## the home island after the delivery is done.
 func target_position() -> Vector3:
 	if is_delivering() and is_instance_valid(target_island):
 		return target_island.global_position

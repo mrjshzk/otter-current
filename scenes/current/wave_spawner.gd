@@ -8,11 +8,9 @@ class_name WaveSpawner
 @export var spawn_distance_max: float = 40.0
 @export var min_speed: float = 7.0
 @export var max_speed: float = 13.0
-## Probability that a wave travels toward where the player is facing.
 @export var bias_strength: float = 0.75
 @export var bias_cone_degrees: float = 60.0
 @export var initial_waves: int = 3
-## The Y the waves are spawned at. Should match the sea surface.
 @export var spawn_height: float = 0.0
 
 var _timer := 0.0

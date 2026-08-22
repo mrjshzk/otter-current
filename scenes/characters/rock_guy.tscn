@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dhevukq8a5q1m" path="res://scripts/npc/npc.gd" id="1_pxfgw"]
 [ext_resource type="Resource" uid="uid://d06h0qjrevhks" path="res://resources/npcs/rock_guy.tres" id="2_08rfx"]
-[ext_resource type="Resource" uid="uid://h4v8byvurg0g" path="res://scenes/dialogue/npc.dialogue" id="3_3hwcr"]
+[ext_resource type="Resource" uid="uid://ckaxdxhwwsmu8" path="res://scenes/dialogue/rock_guy.dialogue" id="3_08rfx"]
 [ext_resource type="Texture2D" uid="uid://dgf50gi12h5l1" path="res://assets/textures/input_prompts/keyboard_e.png" id="4_rcxvw"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_sk68b"]
@@ -16,10 +16,13 @@ radius = 1.2314453
 script = ExtResource("1_pxfgw")
 npc_name = "Builder Otter"
 customer = ExtResource("2_08rfx")
-dialogue = ExtResource("3_3hwcr")
+dialogue = ExtResource("3_08rfx")
 highlight_mesh = NodePath("MeshInstance3D")
 prompt_label = NodePath("Label3D")
 prompt_icon = NodePath("Sprite3D")
+voice_pitch = 0.95
+voice_speed = 1.05
+voice_tone = 0.6
 metadata/_custom_type_script = "uid://dhevukq8a5q1m"
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1198292633]

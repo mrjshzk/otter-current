@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=18
+type="Resource"
+uid="uid://ckaxdxhwwsmu8"
+path="res://.godot/imported/rock_guy.dialogue-0cc5959fd1785f9e9ff3ee7c36057723.tres"
+
+[deps]
+
+source_file="res://scenes/dialogue/rock_guy.dialogue"
+dest_files=["res://.godot/imported/rock_guy.dialogue-0cc5959fd1785f9e9ff3ee7c36057723.tres"]
+
+[params]
+
+defaults=true

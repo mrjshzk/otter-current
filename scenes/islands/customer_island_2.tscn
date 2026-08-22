@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dtlai7v31rm5p" path="res://assets/Dock.glb" id="4_ng1os"]
 [ext_resource type="PackedScene" uid="uid://ca2s5qpfe8kwq" path="res://assets/Cabin.glb" id="5_4kqwu"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_sk68b"]
+size = Vector3(0.47436523, 1.9110107, 2.7363281)
+
 [node name="CustomerIsland2" type="Marker3D" unique_id=817794434]
 script = ExtResource("1_6yw5k")
 resource = ExtResource("2_qbfoh")
@@ -16,6 +19,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 0, 0)
 
 [node name="Dock2" parent="." unique_id=1221366168 instance=ExtResource("4_ng1os")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.155151, 0.074376106, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Dock2" unique_id=1423854174]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dock2/StaticBody3D" unique_id=1335083936]
+transform = Transform3D(0.5991976, -0.8006012, 0, 0.8006012, 0.5991976, 0, 0, 0, 1, 0.30569172, -0.8178289, 0)
+shape = SubResource("BoxShape3D_sk68b")
 
 [node name="Cabin2" parent="." unique_id=518410262 instance=ExtResource("5_4kqwu")]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -3.144256, 0, 1.374398e-07)

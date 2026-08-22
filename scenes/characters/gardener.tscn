@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dhevukq8a5q1m" path="res://scripts/npc/npc.gd" id="1_earrb"]
 [ext_resource type="Resource" uid="uid://sm473xuckwng" path="res://resources/npcs/gardener.tres" id="2_h755p"]
 [ext_resource type="Texture2D" uid="uid://dgf50gi12h5l1" path="res://assets/textures/input_prompts/keyboard_e.png" id="2_j1dhy"]
-[ext_resource type="Resource" uid="uid://h4v8byvurg0g" path="res://scenes/dialogue/npc.dialogue" id="3_b4iod"]
+[ext_resource type="Resource" uid="uid://ddi48ierxcbt8" path="res://scenes/dialogue/gardener.dialogue" id="3_h755p"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_sk68b"]
 
@@ -16,7 +16,7 @@ radius = 1.2314453
 script = ExtResource("1_earrb")
 npc_name = "Garden Otter"
 customer = ExtResource("2_h755p")
-dialogue = ExtResource("3_b4iod")
+dialogue = ExtResource("3_h755p")
 highlight_mesh = NodePath("MeshInstance3D")
 prompt_label = NodePath("Label3D")
 prompt_icon = NodePath("Sprite3D")

@@ -14,7 +14,6 @@ class_name CameraRig
 @export_group("FOV Kick")
 @export var base_fov: float = 60.0
 @export var max_fov: float = 80.0
-## Horizontal speed at which the FOV kick reaches its maximum.
 @export var fov_speed_full: float = 12.0
 @export var fov_lerp_speed: float = 6.0
 
@@ -38,7 +37,7 @@ func _ready() -> void:
 	# never let the arm collide with the player's own body
 	spring.add_excluded_object(player.get_rid())
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		_yaw -= event.relative.x * sensitivity
 		var pitch_direction := -1.0 if invert_y else 1.0

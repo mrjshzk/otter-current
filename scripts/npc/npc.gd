@@ -8,16 +8,22 @@ signal talked(player: Node, npc: NPC, cue: StringName)
 signal snack_received(player: Node, npc: NPC, snack: Snack)
 
 @export var npc_name: String = ""
-## Data resource describing this NPC as a delivery customer (name + snack).
 @export var customer: CustomerNPC = null
-## Used by the dialogue system at a later stage.
 @export var dialogue: DialogueResource = null
-## The mesh that gets an outline while the player can interact with this NPC.
 @export var highlight_mesh: MeshInstance3D = null
-## The label showing the interaction prompt text (hidden while no prompt).
 @export var prompt_label: Label3D = null
-## The sprite showing the interact key icon (hidden while no prompt).
 @export var prompt_icon: Sprite3D = null
+
+@export var voice_pitch: float = 1.0
+@export var voice_speed: float = 1.0
+@export var voice_tone: float = 0.5
+
+func get_voice_settings() -> Dictionary:
+	return {
+		"pitch": voice_pitch,
+		"speed": voice_speed,
+		"tone": voice_tone,
+	}
 
 var _outline_material: ShaderMaterial = null
 
@@ -57,16 +63,12 @@ func on_interact(player: Node) -> void:
 func _is_delivery_target() -> bool:
 	return DeliveryManager.is_delivering() and DeliveryManager.target_customer == customer
 
-## Text shown on the floating interaction prompt next to this NPC.
-## Depends on the player's backpack: delivering the right snack vs just talking.
 func get_interaction_prompt(player: Node) -> String:
 	var backpack := Backpack.from_player(player)
 	if backpack != null and backpack.has_snack() and customer != null and backpack.snack == customer.snack:
 		return "Deliver %s to %s" % [backpack.snack.snack_name, npc_name]
 	return "Talk to %s" % npc_name
 
-## Shows the interaction prompt with the given text and key icon on this
-## NPC's own Label3D/Sprite3D nodes.
 func set_prompt(text: String, icon: Texture2D) -> void:
 	if prompt_label != null:
 		prompt_label.text = text

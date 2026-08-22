@@ -11,7 +11,6 @@ const HOVER_SCALE := 1.08
 const HOVER_BRIGHTEN := 1.15
 const HOVER_TIME := 0.12
 
-## Scene loaded by Start. Leave unset to use the default game scene.
 ## Not wired in the scene file: main_menu -> game -> pause_menu -> main_menu
 ## would form a load-time dependency cycle, so it's loaded lazily instead.
 @export var start_scene: PackedScene

@@ -9,16 +9,11 @@ class_name TargetWaveManager
 @export var min_speed: float = 7.0
 @export var max_speed: float = 13.0
 @export var initial_waves: int = 3
-## The Y the waves are spawned at. Should match the sea surface.
 @export var spawn_height: float = 0.0
 
-## Chance a wave travels toward the player's target island.
 @export var toward_target_chance: float = 0.65
-## How wide the cone around the target direction is (full spread).
 @export var target_cone_degrees: float = 45.0
-## Spawn interval while a delivery is active (harder while carrying a snack).
 @export var delivery_spawn_interval: float = 4.0
-## Speed multiplier for waves while a delivery is active.
 @export var delivery_speed_multiplier: float = 1.2
 
 var _timer := 0.0

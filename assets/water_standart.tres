@@ -1,0 +1,19 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bl2p2klrqmb22"]
+
+[ext_resource type="Texture2D" uid="uid://droqjlisow4rq" path="res://assets/textures/light_masks/water_caustics_d.png" id="1_1m532"]
+[ext_resource type="Texture2D" uid="uid://b7q8tb457ghja" path="res://assets/textures/particles/fire_02.png" id="2_pub4d"]
+
+[resource]
+diffuse_mode = 3
+albedo_color = Color(9.62615e-08, 0.67605144, 0.7968904, 1)
+metallic_specular = 0.65
+metallic_texture = ExtResource("1_1m532")
+roughness_texture = ExtResource("2_pub4d")
+backlight = Color(1, 1, 1, 1)
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true
+texture_filter = 0
+proximity_fade_enabled = true
+proximity_fade_distance = 0.3
+stencil_mode = 3
+stencil_flags = 2

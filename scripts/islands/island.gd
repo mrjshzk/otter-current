@@ -1,9 +1,7 @@
 extends Marker3D
 class_name Island
 
-## Data resource describing this island (name, customer, home flag).
 @export var resource: IslandResource = null
-## Radius used by the wave manager to keep waves from passing through this island.
 @export var collision_radius: float = 4.5
 
 func _ready() -> void:

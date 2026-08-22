@@ -34,14 +34,10 @@ class_name Player
 @onready var camera_rig: CameraRig = %CameraRig
 
 @export_category("Water")
-## The Y position of the water surface. The player counts as being "in the water"
-## (on the ground) while at or below this height.
 @export var water_level_y: float = 0.0
-## How far below the water surface the player floats while swimming.
 @export var submerge_offset: float = 0.25
-## How fast the player bobs up/down toward the swim depth. Higher = more buoyancy snap.
 @export var buoyancy_lift_speed: float = 4.0
-@export var swim_speed: float = 2.5  # Deliberately slow
+@export var swim_speed: float = 2.5
 @export var acceleration: float = 11.0
 @export var deceleration: float = 8.0
 
@@ -49,73 +45,46 @@ class_name Player
 @export var gravity: float = 18.0
 @export var jump_velocity: float = 7.5
 @export var air_control: float = 1.5
-## Weak air control target speed (normal jumps).
 @export var air_control_max_speed: float = 4.0
-## Below this horizontal speed air control stays weak (normal jumps).
 @export var air_control_min_speed: float = 8.0
-## How fast the flight direction turns toward the move input at high speed.
 @export var air_steer: float = 5.0
-## Speed at which air steering reaches full strength.
 @export var air_steer_speed_threshold: float = 12.0
-## Aligned air input accelerates the player toward this speed.
 @export var air_boost_max_speed: float = 16.0
-## Rate of the high-speed aligned air boost.
 @export var air_boost_rate: float = 3.0
-## Horizontal speed bleed while airborne. Higher = less floaty.
 @export var air_drag: float = 0.05
 
 @export_category("Diving")
-## Allow diving from the water surface into a submerged state.
 @export var allow_underwater_dive: bool = true
 @export var dive_velocity: float = -9.0
 @export var underwater_dive_velocity: float = -3.5
-## The plunge speed carried into the water when diving off a wave (deeper dive).
 @export var wave_dive_velocity: float = -5.5
-## Upward acceleration applied while submerged (the water pushing you back up).
 @export var underwater_dive_buoyancy: float = 14.0
 @export var underwater_dive_max_speed: float = 5.0
 
 @export_category("Waves")
-## Speed multiplier applied to the wave's velocity when jumping off it.
 @export var jump_off_speed_multiplier: float = 1.5
-## Extra speed added along the move input when jumping off a wave.
 @export var jump_off_directional_boost: float = 3.0
-## Vertical velocity of the wave leap (small = shallow forward dive).
 @export var leap_velocity_y: float = 3.0
-## Horizontal speed retained per plain (non-dive) hop. Lower = momentum dies fast without the dive-jump combo.
 @export var hop_speed_retention: float = 0.6
-## Momentum kept when hopping with the dive+jump combo (crouch-jump).
 @export var dive_jump_speed_retention: float = 0.99
-## Extra speed added along the move input when landing a dive-jump hop (forward launch).
 @export var dive_jump_forward_boost: float = 2.5
-## Above this horizontal speed, diving in the water doesn't submerge: you keep gliding
-## and the next jump becomes a momentum-preserving hop (silent crouch-jump arm).
 @export var dive_glide_speed_threshold: float = 5.0
-## Hard cap on horizontal speed (leap boosts, glide and steering respect it).
 @export var max_speed: float = 20.0
 
 @export_category("Splash")
-## Horizontal damping right after splashing into water. Low = keeps momentum (bunnyhop).
 @export var splash_damping: float = 1.2
-## Horizontal damping while gliding at speed in the water (wave momentum carry).
 @export var glide_damping: float = 0.18
-## Speed bleed while moving fast in the water (no input-hold infinite gliding).
 @export var momentum_damping: float = 0.15
-## How far below the surface splash dives dip before bobbing back up.
 @export var splash_dip_depth: float = 0.6
 @export var jump_buffer_time: float = 0.15
-## How long a dive press stays buffered so it can chain with a landing jump (dive-jump combo).
 @export var dive_buffer_time: float = 0.15
 
 @export_category("Land")
 @export var walk_speed: float = 4.0
 @export var walk_acceleration: float = 12.0
 @export var footstep_interval: float = 0.35
-## How far the land-detection ray reaches downward from the player center.
 @export var land_check_distance: float = 1.2
-## Max water depth at the ground hit point that still counts as land (shallow shores).
 @export var shore_tolerance: float = 0.3
-## How high the body rests above the ground. The switch only fires when standing stays above water.
 @export var stand_height: float = 0.5
 ## Grace period after switching to land during which the automatic back-to-sea check is suppressed
 ## (lets gravity settle the body onto the shore before it rises above the water level).
@@ -127,11 +96,9 @@ class_name Player
 
 @export_category("Rotation")
 @export var rotation_speed: float = 16.0
-## How fast the body pitches for diving/falling.
 @export var pitch_speed: float = 8.0
 
 @export_category("Visual")
-## Vertical offset applied to the otter mesh while swimming so the body sits in the water.
 @export var mesh_offset_y: float = -0.4
 
 const SPLASH_VFX := preload("res://scenes/vfx/splash.tscn")
@@ -144,7 +111,6 @@ var _jump_buffer := 0.0
 var _dive_buffer := 0.0
 var _dive_jump_primed := false
 var _current_wave: OceanCurrent = null
-## The wave the player jumped off. It can't grab the player again until they leave its area.
 var _jumped_from_wave: OceanCurrent = null
 var _launch_velocity: Vector3 = Vector3.ZERO
 var _air_boost_active := false
@@ -156,6 +122,7 @@ var _land_settle_time := 0.0
 var _wave_enter_time_ms := 0
 var _wake: VFXDocked
 var _bubbles: VFXDocked
+var _ground_probe_shape: RID = RID()
 
 var in_sea := true
 
@@ -194,11 +161,9 @@ func _ready() -> void:
 	jump_action.just_triggered.connect(func(): _jump_buffer = jump_buffer_time)
 	dive_action.just_triggered.connect(func(): _dive_buffer = dive_buffer_time)
 
-	## lock movement/interact input while a dialogue is on screen
 	DialogueManager.dialogue_started.connect(_lock_controls)
 	DialogueManager.dialogue_ended.connect(_unlock_controls)
 
-	## a timed delivery expired: drop the snack and signal the failure
 	DeliveryManager.delivery_failed.connect(func(_snack: Snack, _customer: CustomerNPC) -> void:
 		var backpack := get_node_or_null("Backpack") as Backpack
 		if backpack != null:
@@ -206,14 +171,12 @@ func _ready() -> void:
 		AudioManager.play_ui(SfxLibrary.BUZZ, -6.0)
 	)
 	
-	## animations
 	for state: AtomicState in [idle_state, moving_state, submerged_state, landing_state]:
 		state.state_entered.connect(_play_swim)
 	riding_state.state_entered.connect(_play_surf)
 	for state: AtomicState in [rising_state, falling_state, leap_state, diving_state]:
 		state.state_entered.connect(_play_surfjump)
 	
-	## land movement
 	idle_land.state_entered.connect(idle_land_state_entered)
 	walk_land.state_entered.connect(walk_land_state_entered)
 	idle_land.state_physics_processing.connect(idle_land_phy_process)
@@ -225,7 +188,6 @@ func _ready() -> void:
 			Log.debug("state entered: ", state.name)
 		)
 
-	## docked VFX
 	_wake = VFXManager.dock(WAKE_VFX, self)
 	_wake.emitting = false
 	_wake.visible = false
@@ -247,7 +209,6 @@ func _lock_controls(_resource: DialogueResource = null) -> void:
 func _unlock_controls(_resource: DialogueResource = null) -> void:
 	if guide_context != null:
 		GUIDE.enable_mapping_context(guide_context)
-
 
 func _play_surf() -> void:
 	animation_player.play("otter_surf")
@@ -297,6 +258,11 @@ func _apply_land_gravity(delta: float) -> void:
 		in_sea = true
 		Log.info("switched to sea")
 		root_state_chart.send_event("to_in_sea")
+
+func _exit_tree() -> void:
+	if _ground_probe_shape.is_valid():
+		PhysicsServer3D.free_rid(_ground_probe_shape)
+		_ground_probe_shape = RID()
 
 func _physics_process(delta: float) -> void:
 	_jump_buffer = maxf(0.0, _jump_buffer - delta)
@@ -386,7 +352,6 @@ func _try_jump() -> void:
 		_jump_buffer = 0.0
 		root_state_chart.send_event("jump")
 
-## Landing hop: jump alone keeps a little momentum; a dive earlier in the flight (or dive+jump here) keeps most of it.
 func _try_dive_jump() -> void:
 	if _jump_buffer > 0.0:
 		_jump_buffer = 0.0
@@ -408,7 +373,6 @@ func _try_dive() -> void:
 func _horizontal_speed() -> float:
 	return Vector2(current_velocity.x, current_velocity.z).length()
 
-## Fast landings glide (keep momentum, bunnyhop), slow movement stops snappily.
 func _glide_damping() -> float:
 	return glide_damping if _horizontal_speed() > swim_speed * 1.5 else deceleration
 
@@ -475,17 +439,25 @@ func _ground_below_above_water() -> bool:
 ## collider and read its far face instead of the surface. From-inside hits
 ## are rejected for the same reason.
 func _ground_y_below() -> float:
-	var origin := global_position + Vector3.UP * 0.1
-	var query := PhysicsRayQueryParameters3D.create(
-		origin,
-		origin + Vector3.DOWN * land_check_distance,
-		1
-	)
-	query.exclude = [get_rid()]
-	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	if hit.is_empty() or hit.get("hit_from_inside", false):
+	if not _ground_probe_shape.is_valid():
+		_ground_probe_shape = PhysicsServer3D.sphere_shape_create()
+		PhysicsServer3D.shape_set_data(_ground_probe_shape, 0.3)
+	var params := PhysicsShapeQueryParameters3D.new()
+	params.collide_with_areas = false
+	params.collide_with_bodies = true
+	params.exclude = [get_rid()]
+	params.shape_rid = _ground_probe_shape
+	params.transform = Transform3D(Basis(), global_position + Vector3.UP * 0.15)
+	var hits := get_world_3d().direct_space_state.collide_shape(params, 16)
+	if hits.is_empty():
 		return -INF
-	return hit.position.y
+	# Contact points lie on the probed shape, not the surface: the lowest can
+	# be a penetration point well below the ground. The highest contact is
+	# the walkable surface.
+	var ground := -INF
+	for hit in hits:
+		ground = maxf(ground, hit.y)
+	return ground
 
 func _switch_to_land() -> void:
 	in_sea = false
@@ -502,7 +474,6 @@ func _check_splash() -> void:
 	if global_position.y <= water_level_y - splash_dip_depth and current_velocity.y < 0.0:
 		root_state_chart.send_event("splash")
 
-## Keeps the player bobbing at swim depth while in the water. Also levels the body.
 func _maintain_swim_depth(delta: float) -> void:
 	current_velocity.y = 0.0
 	var target_y := water_level_y - submerge_offset
@@ -654,8 +625,6 @@ func riding_state_phy_process(delta: float) -> void:
 		_current_wave = null
 		root_state_chart.send_event("jump_off")
 
-## The wave the player is riding is about to be destroyed (e.g. island collision).
-## Forces the player off with a jump before the wave is freed.
 func force_wave_jump_off(wave: OceanCurrent) -> void:
 	if not in_sea or _current_wave != wave or not is_instance_valid(wave):
 		return

@@ -1,0 +1,40 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://577pnaydl4c8"]
+
+[ext_resource type="Texture2D" uid="uid://droqjlisow4rq" path="res://assets/textures/light_masks/water_caustics_d.png" id="1_0ktrd"]
+[ext_resource type="Texture2D" uid="uid://b7q8tb457ghja" path="res://assets/textures/particles/fire_02.png" id="2_7rlbc"]
+[ext_resource type="Shader" uid="uid://cck3a3bx3co1p" path="res://shaders/new_shader.gdshader" id="2_sfxdj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ktrd"]
+render_priority = 0
+shader = ExtResource("2_sfxdj")
+shader_parameter/wobble_amplitude = 0.15
+shader_parameter/wobble_frequency = 0.9
+shader_parameter/wobble_speed = 1.2
+shader_parameter/wobble_direction = Vector2(0, -1)
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+
+[resource]
+next_pass = SubResource("ShaderMaterial_0ktrd")
+transparency = 1
+depth_draw_mode = 2
+albedo_color = Color(0, 0.6800001, 0.8, 1)
+metallic_specular = 0.65
+metallic_texture = ExtResource("1_0ktrd")
+roughness_texture = ExtResource("2_7rlbc")
+uv1_scale = Vector3(0.01, 0.01, 0.01)
+uv1_triplanar = true
+texture_filter = 0
+disable_receive_shadows = true
+proximity_fade_distance = 0.3
+stencil_flags = 1
+stencil_compare = 4

@@ -1,0 +1,26 @@
+~ greeting
+Builder Otter: sou o gajo das pedras
+Builder Otter: Tou a tocar me
+
+=> END
+
+~ awaiting_snack
+Builder Otter: Tou a espera da minha {{DeliveryManager.current_snack.snack_name}} a 50 horas
+
+Builder Otter: traz me essa merda
+
+=> END
+
+~ wrong_snack
+Builder Otter: nao pedi essa merda vai te foder
+
+Builder Otter: traz me o que pedi por favor!
+
+=> END
+
+~ snack_received
+Builder Otter: obrigado mano tava cheio de fome
+
+Builder Otter: vai te foder
+
+=> END

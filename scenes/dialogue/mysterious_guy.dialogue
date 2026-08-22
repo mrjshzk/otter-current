@@ -1,0 +1,25 @@
+~ greeting
+Mysterious Otter: sou bue misterioso
+
+=> END
+
+~ awaiting_snack
+Mysterious Otter: Tou a espera da minha {{DeliveryManager.current_snack.snack_name}} a 50 horas
+
+Mysterious Otter: traz me essa merda
+
+=> END
+
+~ wrong_snack
+Mysterious Otter: nao pedi essa merda vai te foder
+
+Mysterious Otter: traz me o que pedi por favor!
+
+=> END
+
+~ snack_received
+Mysterious Otter: obrigado mano tava cheio de fome
+
+Mysterious Otter: vai te foder
+
+=> END

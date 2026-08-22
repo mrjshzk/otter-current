@@ -1,7 +1,5 @@
 extends VBoxContainer
 class_name SettingsPanel
-## Shared settings UI (resolution, fullscreen, audio volumes), persisted to
-## user://settings.cfg. Used by both the main menu and the pause menu.
 
 signal back_requested
 
@@ -42,7 +40,6 @@ func _ready() -> void:
 			_on_volume_changed(VOLUME_BUSES[index], value)
 		)
 
-## Moves keyboard focus to the back button (used when the panel is shown).
 func focus_back() -> void:
 	back_button.grab_focus()
 

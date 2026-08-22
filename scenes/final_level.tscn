@@ -2,22 +2,20 @@
 
 [ext_resource type="Shader" uid="uid://udmyg4sth3qy" path="res://shaders/stylized_sky.gdshader" id="1_pe22g"]
 [ext_resource type="PackedScene" uid="uid://boxmlgnfx006p" path="res://scenes/islands/main_island.tscn" id="2_fxkco"]
-[ext_resource type="Shader" uid="uid://cljuh57ahwsjo" path="res://shaders/water_v2.gdshader" id="3_454dx"]
-[ext_resource type="Texture2D" uid="uid://1rot0ljue8ru" path="res://assets/textures/essentials/Noise/perlin-noise.png" id="4_7l6pa"]
 [ext_resource type="PackedScene" uid="uid://deeyrq8rmyje4" path="res://scenes/islands/customer_island_1.tscn" id="5_7l6pa"]
 [ext_resource type="PackedScene" uid="uid://dlf5ix06qv2i4" path="res://scenes/islands/customer_island_2.tscn" id="6_u2pc8"]
 [ext_resource type="PackedScene" uid="uid://b77tyela8iqeq" path="res://player/player.tscn" id="7_vmrwc"]
 [ext_resource type="Script" uid="uid://dw6q4rxavue13" path="res://scenes/current/wave_spawner.gd" id="8_mei1o"]
+[ext_resource type="Material" uid="uid://bl2p2klrqmb22" path="res://assets/water_standart.tres" id="8_y6v6p"]
 [ext_resource type="PackedScene" uid="uid://dte1rm5eorg3r" path="res://scenes/current/current.tscn" id="9_1ppc5"]
 [ext_resource type="PackedScene" uid="uid://c1jibmnue1og4" path="res://scenes/characters/boss.tscn" id="10_ji6ub"]
 [ext_resource type="PackedScene" uid="uid://bs4khywr7i3b7" path="res://scenes/characters/gardener.tscn" id="10_vmkuj"]
 [ext_resource type="PackedScene" uid="uid://dymp4x1pcan3t" path="res://scenes/characters/rock_guy.tscn" id="11_q0j1x"]
-[ext_resource type="Texture2D" uid="uid://87s1iki6teu1" path="res://assets/textures/essentials/Normal map/default-normal.png" id="12_norm"]
-[ext_resource type="Texture2D" uid="uid://xjeot2bkyewn" path="res://assets/textures/essentials/Gradient/gradient-horizontal.png" id="13_grad"]
 [ext_resource type="Script" uid="uid://craydiqj83rk3" path="res://scripts/snacks/snack.gd" id="15_64uwm"]
 [ext_resource type="Resource" uid="uid://ck3iqeto8h77d" path="res://resources/snacks/sardine_sandwich.tres" id="16_vmkuj"]
 [ext_resource type="Resource" uid="uid://bh5lp483uftis" path="res://resources/snacks/plant_food.tres" id="17_nntvn"]
 [ext_resource type="Resource" uid="uid://cc78jlcbokmf" path="res://resources/snacks/mystery_food.tres" id="18_fog77"]
+[ext_resource type="PackedScene" uid="uid://b0ue6f3wx72td" path="res://scenes/ui/debug_delivery_ui.tscn" id="21_fog77"]
 [ext_resource type="PackedScene" uid="uid://d00aqt7vsga0e" path="res://scenes/islands/customer_island_3.tscn" id="21_nntvn"]
 [ext_resource type="PackedScene" uid="uid://blyknc27juerl" path="res://scenes/characters/mystery_guy.tscn" id="22_fog77"]
 
@@ -65,6 +63,9 @@ tonemap_exposure = 1.2
 tonemap_white = 1.25
 ssao_enabled = true
 ssil_enabled = true
+glow_enabled = true
+glow_normalized = true
+glow_blend_mode = 2
 fog_enabled = true
 fog_mode = 1
 fog_light_color = Color(0, 0.6745098, 0.8901961, 1)
@@ -76,57 +77,8 @@ volumetric_fog_albedo = Color(2.117753e-06, 0.96306497, 0.9543446, 1)
 volumetric_fog_emission = Color(1.540184e-06, 0.67444813, 0.891812, 1)
 volumetric_fog_emission_energy = 0.5
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_hmn6o"]
-render_priority = 0
-shader = ExtResource("3_454dx")
-shader_parameter/deep_color = Color(0.02, 0.18, 0.32, 1)
-shader_parameter/horizon_color = Color(0.09, 0.55, 0.68, 1)
-shader_parameter/horizon_distance = 120.0
-shader_parameter/horizon_softness = 0.4
-shader_parameter/fresnel_radius = 2.0
-shader_parameter/fresnel_color = Color(0.15, 0.5, 0.65, 1)
-shader_parameter/roughness = 0.25
-shader_parameter/specular = 0.35
-shader_parameter/wave_amplitude = 0.15
-shader_parameter/wave_frequency = 0.15
-shader_parameter/wave_speed = 0.8
-shader_parameter/wave_direction = Vector2(1, 0.35)
-shader_parameter/detail_amplitude = 0.04
-shader_parameter/detail_scale = 0.15
-shader_parameter/detail_speed = 0.2
-shader_parameter/displacement_texture = ExtResource("4_7l6pa")
-shader_parameter/edge_thickness = 0.3
-shader_parameter/edge_speed = 0.35
-shader_parameter/edge_strength = 1.0
-shader_parameter/edge_noise_scale = Vector2(0.4, 0.4)
-shader_parameter/edge_noise = ExtResource("4_7l6pa")
-shader_parameter/edge_ramp = ExtResource("13_grad")
-shader_parameter/influence_size = 1.0
-shader_parameter/player_wave_frequenzy = 10.0
-shader_parameter/player_wave_speed = 5.0
-shader_parameter/player_white_strength = 0.9
-shader_parameter/caustic_scale = 0.8
-shader_parameter/caustic_speed = 0.5
-shader_parameter/caustic_strength = 0.25
-shader_parameter/caustic_threshold = 0.55
-shader_parameter/caustic_texture = ExtResource("4_7l6pa")
-shader_parameter/normal_map_strength = 1.0
-shader_parameter/scroll_speed = 0.3
-shader_parameter/scroll_offset = Vector2(0.1, -0.3)
-shader_parameter/scale_offset = 0.5
-shader_parameter/normal_map_scale = Vector2(0.1, 0.1)
-shader_parameter/normal_map = ExtResource("12_norm")
-shader_parameter/foam_texture = ExtResource("4_7l6pa")
-shader_parameter/foam_strength = 0.6
-shader_parameter/foam_speed = 0.3
-shader_parameter/foam_offset = Vector2(0.2, 0.35)
-shader_parameter/foam_scale = 0.8
-shader_parameter/foam_threshold = 0.65
-shader_parameter/foam_softness = 0.2
-shader_parameter/foam_color = Color(0.85, 0.96, 1, 1)
-
 [sub_resource type="PlaneMesh" id="PlaneMesh_u2pc8"]
-material = SubResource("ShaderMaterial_hmn6o")
+material = ExtResource("8_y6v6p")
 size = Vector2(1000, 1000)
 subdivide_width = 100
 subdivide_depth = 100
@@ -143,19 +95,18 @@ shadow_enabled = true
 environment = SubResource("Environment_jwyka")
 
 [node name="MainIsland" parent="." unique_id=234321246 instance=ExtResource("2_fxkco")]
-metadata/_edit_lock_ = true
 
 [node name="Boss" parent="MainIsland" unique_id=828823001 node_paths=PackedStringArray("pickup_spawn_point") instance=ExtResource("10_ji6ub")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.455803, 1.8016952, 2.122117)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.363836, 2.7190015, 2.6134918)
 snack_options = Array[ExtResource("15_64uwm")]([ExtResource("16_vmkuj"), ExtResource("17_nntvn"), ExtResource("18_fog77"), ExtResource("17_nntvn"), ExtResource("18_fog77"), ExtResource("16_vmkuj")])
 pickup_spawn_point = NodePath("../FoodSpawnPoint")
 npc_name = "Boss"
 
 [node name="FoodSpawnPoint" type="Marker3D" parent="MainIsland" unique_id=572957348]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.368748, 2.3974423, 0.5368794)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.307535, 3.4090612, 1.1834347)
 
 [node name="Water" type="MeshInstance3D" parent="." unique_id=518831876]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.2613175, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.17, 0)
 mesh = SubResource("PlaneMesh_u2pc8")
 
 [node name="CustomerIsland1" parent="." unique_id=1787802090 instance=ExtResource("5_7l6pa")]
@@ -165,22 +116,24 @@ transform = Transform3D(-0.9659258, 0, 0.25881913, 0, 1, 0, -0.25881913, 0, -0.9
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.003639, 0.99951625, -0.44293213)
 
 [node name="CustomerIsland2" parent="." unique_id=817794434 instance=ExtResource("6_u2pc8")]
-transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, 114.53285, 0, 102.40259)
+transform = Transform3D(-0.7071068, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, -0.7071068, 114.53285, 1.1041832, 102.40259)
 
 [node name="RockGuy" parent="CustomerIsland2" unique_id=1913945634 instance=ExtResource("11_q0j1x")]
 transform = Transform3D(-0.7071068, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, -0.7071068, 3.0402222, -0.015613937, -1.0580292)
 
 [node name="CustomerIsland3" parent="." unique_id=2061434372 instance=ExtResource("21_nntvn")]
-transform = Transform3D(-0.99674475, 0, -0.08062177, 0, 1, 0, 0.08062177, 0, -0.99674475, 0.85253906, 0.093818665, 111.34027)
+transform = Transform3D(-0.99674475, 0, -0.08062177, 0, 1, 0, 0.08062177, 0, -0.99674475, 0.85253906, 0.3783331, 111.34027)
 
 [node name="MysteryGuy" parent="CustomerIsland3" unique_id=1870361321 instance=ExtResource("22_fog77")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.179203, 0.982515, -0.68227386)
 
 [node name="Player" parent="." unique_id=741711365 instance=ExtResource("7_vmrwc")]
-transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 13.0859165, 1.6017808, 4.4175963)
+transform = Transform3D(-0.68471426, 0, -0.72881156, 0, 1, 0, 0.72881156, 0, -0.68471426, 2.380376, -0.8390558, 17.202879)
 
 [node name="WaveSpawner" type="Node3D" parent="." unique_id=1400895078 node_paths=PackedStringArray("player")]
 script = ExtResource("8_mei1o")
 wave_scene = ExtResource("9_1ppc5")
 player = NodePath("../Player")
 metadata/_custom_type_script = "uid://dw6q4rxavue13"
+
+[node name="DebugDeliveryUI" parent="." unique_id=54873791 instance=ExtResource("21_fog77")]

@@ -1,11 +1,9 @@
 extends NPC
 class_name BossNPC
 
-## Fired the first time the player talks to the boss. The level uses it to start the music.
 signal first_dialogue_started(player: Node)
 
 @export var snack_options: Array[Snack] = []
-## Where a new snack pickup appears for the player to take.
 @export var pickup_spawn_point: Node3D = null
 
 var has_met := false

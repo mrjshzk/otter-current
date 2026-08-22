@@ -14,16 +14,19 @@ island_name = "Boss Island"
 is_home = true
 metadata/_custom_type_script = "uid://c06r4onxd2avg"
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_a7ktl"]
+size = Vector3(0.47436523, 1.9110107, 2.7363281)
+
 [node name="MainIsland" type="Marker3D" unique_id=234321246]
 script = ExtResource("1_72ygs")
 resource = SubResource("Resource_home")
 metadata/_custom_type_script = "uid://ceinjr4ibqckn"
 
 [node name="Island12" parent="." unique_id=1079324182 instance=ExtResource("2_vgq2i")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6126626, 9.313226e-10)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.051198006, 2.628132, 0.01878357)
 
 [node name="Cabin3" parent="." unique_id=1986491711 instance=ExtResource("9_lfk0g")]
-transform = Transform3D(0.6641408, 0.012956984, 0.7474953, -4.656613e-10, 0.9998498, -0.017331263, -0.7476077, 0.011510397, 0.66404116, -3.137, 1.751, -1.837)
+transform = Transform3D(0.6641408, 0.012956984, 0.7474953, -4.656613e-10, 0.9998498, -0.017331263, -0.7476077, 0.011510397, 0.66404116, -3.188198, 2.7664695, -1.8182164)
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="Cabin3" unique_id=1875641657]
 transform = Transform3D(1, 3.2316893e-07, 1.7881393e-07, -3.222376e-07, 1, -3.3108518e-07, 2.9802322e-08, 3.2875687e-07, 0.99999994, -0.002685666, 1.6235285, -0.0031175613)
@@ -32,22 +35,28 @@ box_projection = true
 enable_shadows = true
 
 [node name="tree" parent="." unique_id=1144721423 instance=ExtResource("10_db1p1")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9792414, 8.759269, -34.01426)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0304394, 9.774738, -33.995476)
 
 [node name="tree2" parent="." unique_id=170777391 instance=ExtResource("10_db1p1")]
-transform = Transform3D(-0.5460765, 0, -0.8377353, 0, 1, 0, 0.8377353, 0, -0.5460765, -25.99599, 7.120125, -2.5821285)
+transform = Transform3D(-0.5460765, 0, -0.8377353, 0, 1, 0, 0.8377353, 0, -0.5460765, -26.047188, 8.135594, -2.563345)
 
 [node name="tree3" parent="." unique_id=414875443 instance=ExtResource("10_db1p1")]
-transform = Transform3D(-0.9617858, 0, 0.27380294, 0, 1, 0, -0.27380294, 0, -0.9617858, 17.3397, 1.9537134, -15.355883)
+transform = Transform3D(-0.9617858, 0, 0.27380294, 0, 1, 0, -0.27380294, 0, -0.9617858, 17.288502, 2.969183, -15.337099)
 
 [node name="tree4" parent="." unique_id=1992022035 instance=ExtResource("10_db1p1")]
-transform = Transform3D(-0.3562749, 0, 0.9343811, 0, 1, 0, -0.9343811, 0, -0.3562749, 34.21484, 1.9883571, 15.513434)
+transform = Transform3D(-0.3562749, 0, 0.9343811, 0, 1, 0, -0.9343811, 0, -0.3562749, 34.163643, 3.0038266, 15.532218)
 
 [node name="Dock2" parent="." unique_id=1221366168 instance=ExtResource("5_ldet5")]
-transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 11, 0, 14)
+transform = Transform3D(-0.50000006, 0, -0.8660254, 0, 1, 0, 0.8660254, 0, -0.50000006, 10.948802, 1.0154696, 14.018784)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Dock2" unique_id=1088185765]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Dock2/StaticBody3D" unique_id=1933926571]
+transform = Transform3D(0.5991976, -0.8006012, 0, 0.8006012, 0.5991976, 0, 0, 0, 1, 0.30569172, -0.8178289, 0)
+shape = SubResource("BoxShape3D_a7ktl")
 
 [node name="RestaurantCabin2" parent="." unique_id=1384080155 instance=ExtResource("7_a7ktl")]
-transform = Transform3D(0.015059224, 0.00015213167, -0.99988663, -0.0101017095, 0.999949, 1.4551915e-11, 0.9998356, 0.010100564, 0.015059993, 24.686602, 1.6989162, 3.5290442)
+transform = Transform3D(0.015059224, 0.00015213167, -0.99988663, -0.0101017095, 0.999949, 1.4551915e-11, 0.9998356, 0.010100564, 0.015059993, 24.635403, 2.7143857, 3.5478277)
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="RestaurantCabin2" unique_id=1483326255]
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 6.5774657e-09, 0, -6.6211214e-09, 0.99999994, 0.009293318, 1.7457653, -0.9927883)

@@ -5,9 +5,7 @@ const SPARKLE_VFX := preload("res://scenes/vfx/sparkle.tscn")
 const OUTLINE_SHADER := preload("res://shaders/outline.gdshader")
 
 @export var snack: Snack
-## The label showing the interaction prompt text (hidden while no prompt).
 @export var prompt_label: Label3D = null
-## The sprite showing the interact key icon (hidden while no prompt).
 @export var prompt_icon: Sprite3D = null
 
 var _outline_material: ShaderMaterial = null
@@ -51,12 +49,9 @@ func on_interact(player: Node) -> void:
 		AudioManager.play_ui(SfxLibrary.CHIME, -4.0)
 		queue_free()
 
-## Text shown on the floating interaction prompt next to this pickup.
 func get_interaction_prompt(_player: Node) -> String:
 	return "Pick up %s" % snack.snack_name if snack != null else ""
 
-## Shows the interaction prompt with the given text and key icon on this
-## pickup's own Label3D/Sprite3D nodes.
 func set_prompt(text: String, icon: Texture2D) -> void:
 	if prompt_label != null:
 		prompt_label.text = text
@@ -71,7 +66,6 @@ func set_prompt_visible(visible: bool) -> void:
 	if prompt_icon != null:
 		prompt_icon.visible = visible
 
-## Adds/removes a next_pass outline on the pickup's visual mesh.
 func set_highlighted(enabled: bool) -> void:
 	var mesh := _first_mesh_instance(self)
 	if mesh == null:
@@ -116,7 +110,6 @@ func _update_visual() -> void:
 	visual.name = "SnackVisual"
 	add_child(visual)
 
-## Creates a pickup in the world. Used by the boss to place the snack at the shop.
 static func spawn(s: Snack, parent: Node, at: Vector3) -> SnackPickup:
 	var pickup := SnackPickup.new()
 	pickup.snack = s

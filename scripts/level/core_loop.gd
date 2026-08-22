@@ -1,5 +1,4 @@
 extends Node3D
-## Root script of the core loop prototype level.
 
 @onready var boss: BossNPC = $TestBossIsland/TestNpc
 

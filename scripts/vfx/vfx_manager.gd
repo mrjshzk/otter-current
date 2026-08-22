@@ -7,7 +7,6 @@ func _ready() -> void:
 	_holder.name = "VFXHolder"
 	add_child(_holder)
 
-## Spawns a one-shot or looping VFX prefab at a world position.
 func spawn(prefab: PackedScene, at: Vector3, parent: Node = null) -> Node3D:
 	if prefab == null:
 		return null
@@ -16,7 +15,6 @@ func spawn(prefab: PackedScene, at: Vector3, parent: Node = null) -> Node3D:
 	instance.global_position = at
 	return instance
 
-## Spawns a persistent emitter (wake, bubbles) as a child of `parent`.
 func dock(prefab: PackedScene, parent: Node) -> Node3D:
 	if prefab == null:
 		return null

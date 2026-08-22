@@ -84,7 +84,7 @@ dive={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://scenes/dialogue/npc.dialogue", "res://scenes/dialogue/boss.dialogue")
+locale/translations_pot_files=PackedStringArray("res://scenes/dialogue/npc.dialogue", "res://scenes/dialogue/boss.dialogue", "res://scenes/dialogue/rock_guy.dialogue", "res://scenes/dialogue/gardener.dialogue", "res://scenes/dialogue/mysterious_guy.dialogue")
 
 [layer_names]
 

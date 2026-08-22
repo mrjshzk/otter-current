@@ -35,7 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
+mouse_filter = 2
 stretch = true
 
 [node name="WorldViewport" type="SubViewport" parent="WorldViewportContainer" unique_id=1301600796]
@@ -56,6 +56,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+mouse_filter = 2
 
 [node name="CRT" type="CanvasLayer" parent="." unique_id=597966592]
 
@@ -66,5 +68,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
+mouse_filter = 2
 
 [node name="PauseMenu" parent="." unique_id=1848523534 instance=ExtResource("4_pause")]

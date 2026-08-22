@@ -1,29 +1,25 @@
 [gd_scene format=4 uid="uid://dte1rm5eorg3r"]
 
 [ext_resource type="Script" uid="uid://xmhkn036cg3o" path="res://scenes/current/current.gd" id="1_rbjix"]
-[ext_resource type="Shader" uid="uid://dld6iah5h4f8a" path="res://shaders/wave_shape.gdshader" id="2_dg0tx"]
-[ext_resource type="Texture2D" uid="uid://1rot0ljue8ru" path="res://assets/textures/essentials/Noise/perlin-noise.png" id="3_noise"]
-[ext_resource type="Shader" uid="uid://cjo1ha7pqhvm2" path="res://shaders/foam_top.gdshader" id="4_foam"]
+[ext_resource type="Shader" uid="uid://cca6glv3sodon" path="res://shaders/wave_final.gdshader" id="2_owl7n"]
+[ext_resource type="Texture2D" uid="uid://droqjlisow4rq" path="res://assets/textures/light_masks/water_caustics_d.png" id="2_qhbq3"]
+[ext_resource type="Shader" uid="uid://dt2cnltj7mq82" path="res://shaders/dissolve.gdshader" id="4_owl7n"]
+[ext_resource type="Shader" uid="uid://dhtnrj37bk70u" path="res://shaders/wave_foam.gdshader" id="5_qhbq3"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7414u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qhbq3"]
 render_priority = 0
-shader = ExtResource("2_dg0tx")
-shader_parameter/noise_texture = ExtResource("3_noise")
-shader_parameter/scroll_speed = 0.4
-shader_parameter/scroll_offset = Vector2(0, 1)
-shader_parameter/detail_scale = 1.0
-shader_parameter/displacement_amplitude = 0.05
-shader_parameter/deep_color = Color(0.02, 0.18, 0.32, 1)
-shader_parameter/mid_color = Color(0.05, 0.42, 0.55, 1)
-shader_parameter/roughness = 0.25
-shader_parameter/specular = 0.35
-shader_parameter/fresnel_radius = 2.0
-shader_parameter/fresnel_color = Color(0.15, 0.5, 0.65, 1)
-shader_parameter/horizon_color = Color(0.09, 0.55, 0.68, 1)
-shader_parameter/horizon_distance = 120.0
-shader_parameter/horizon_softness = 0.4
-shader_parameter/bottom_fade_height = 0.35
-shader_parameter/bottom_fade_softness = 0.25
+shader = ExtResource("2_owl7n")
+shader_parameter/wobble_amplitude = 0.15
+shader_parameter/wobble_frequency = 0.9
+shader_parameter/wobble_speed = 1.2
+shader_parameter/wobble_direction = Vector2(0, -1)
+shader_parameter/albedo = Color(0, 0.6784314, 0.8, 1)
+shader_parameter/albedo_texture_size = Vector2i(0, 0)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_owl7n"]
 _surfaces = [{
@@ -48,7 +44,7 @@ _surfaces = [{
 "index_count": 1212,
 "index_data": PackedByteArray("3wDgAI0AjADgAN8AjgCMAN8AAAABAAIAlgAEAAAAlgAFAAQAAwAFAJYA4QDiAOMA4gAjAOMA4wAjAOQA4wDkAOUA5QDhAOMA5QDkAOYA5QDmAJcAlwDmAJgA4gAnACMA5wAnAOIA5wAmACcA4gDoAOcAKAAmACkAJgAqACkA6QDoAOIA6gDoAOkA6QDiAOEA6gDpAOsA6wDpAOEA6wAcAOoA7ADrAOEA7ADhAO0A7QDhAOUA7ADtAJoAlwDtAOUAmgDtAO4A7gDtAJcAJACaAO4A7gCXACQAGwCaACQAJACXAJkAlwCYAJkAmQCYACUA7wDwABsA8ADvABoA8ACbABsAGgCbAPAAGgDxAJsA8QDyAJsA8QDzAPIA8QAZAPMA8wD0APIAGQD0APMA8gD0APUA9AAcAPUA9AD2ABwAHwD2APQAHgD2AB8A9gAdABwAHAAdAPcAHQAgAPcA9wAgAPgAIAD5APgA+QD6APgA+AD6APsA+wD6ACEA+gAiACEAGQCcABcAFgAXAJwAnAAZAPwAGACcAPwAnQBXAFYAngCdAFYA/QCdAJ4A/QBJAJ0ASQD+AP8AAAH9AJ4A/QABAUkAAAEBAf0AAAGeAAIBngChAAIBAgGhAAMBnwAAAQIBAQEAAZ8AAgEDAQQBnwACAQQBBAEDAQUBBgEEAQUBoAAEAQYBBwGgAAYBpQAEAaAApQCfAAQBCAGgAAcBpQBTAJ8AogAIAQcBCQGlAKAACQGgAAgBUwClAKYApgClAAkBUwAKAZ8ACgFTAKYAnwAKAacAAQGfAKcACgELAacACwEBAacADAEJAQgBCQEMAaYADAEIAQ0BDQEIAaIApgAMATgAowAMAQ0BDAGjADgAowBUADgAowANAQ4BDgENAaIApACjAA4BDgGiAA8BpAAOAVUAVQAOAQ8BqACmADgAqAA4ADcANwA1AKgAqAA1ADYAqACpAKYAqQAKAaYACgGpAAsBEAGpAKgAEAGoABEBqAA0ABEBqQAQAawArAAQAREBNACqABEBqgA0AKsAEgGqAKsAqgASAREBEgETAREBsQATARIBrwCxABIBsQCvADkArgARARMBrgATAbEAEQGuAKwAFAGuALEAFQEUAbEAsQDKABUBFQHKAMsAFAEVAcsAygDIAMsAygDJAMgAyAAWAcsAFgEUAcsAyQAXAcgAFgHIABcBFwHJAMYAxgDJADsAFgEXARgBFAEWARgBGQEXAcYAGAEXARkBGAHMABQBzAAYARkBzQCuABQBzADNABQBrgDNAKwAzgDNAMwAzgDPAM0AzQDPAKwAzwDOADoAGQHGABoBxgBIABoBGwHMABkBGQEaARsBHAHMABsB0gDMABwB0QDSABwBOgDSANEAHQEcARsB0QAcAR0BGwEaAR4BGwEeAR0BGgFIAMUAGgHFAB4BSADEAMUAHwHRAB0BHQEeAccAHQHHAB8BHgHFACABxQDEAL8AIAHFAL8AIQEeASABxwAeASEBIQEgASIBIAG/ACIBwwC/AMQAwwDEACMBxABHACMBRQDDACMBvwDDAEUAvwBFACQBJAEiAb8AJAFFAEYAIgEkAUYAvQAiAUYAJQEiAb0AIQEiASUBJQG9ALwAvAC9AL4AwAAhASUBwAAlAbwAPgC8AL4AwADHACEBQgC8AD4AQQC8AEIAwAC8AEEAPQDHAMAAQwDAAEEAHwHHAD0ARABDAEEAJgFDAEQAJgFEAMEAJwFDACYBwQAnASYBPwAnAcEAwgBDACcBwgAfAT0APwDTACcB0wDCACcB1ADTAD8AKAEfAcIAKAHCANMAKQEfASgBKQHRAB8BKgHRACkBKAEqASkBOgDRACoB0wDQACgB0AAqASgBPADTANQA1gDTADwAQAA8ANQAKwE6ACoBKwEqAdAAzwA6ACsB0AA8ANUAPABAANUALAHQANUAsAArAdAA0AAsAbAALQHPACsBKwGwAC0BzwAtAawArQAsAdUArQCwACwBrQAtAbAA1QBAAK0ALQEuAawALQGtAC4BLgGpAKwArQCpAC4BqQCtAAsBrQBAAC8BCwGtAC8BCwEvATABAQELATABLwFAADEBLwExATABMAExAQEBMQFAAEoASgBLAEwAMQEyAQEBMgFJAAEBSQAyATMBMQEzATIBNAFJADMBMQFKADUBSgBNADUBMwExAbIANAEzAbIANQGzADEBswCyADEBNQFNADYBNQE2AbMATQBPADYBNgFPAFEAUQBPAFIAtAA2AVEAswA2AbQAswA3AbIANwGzALQANwE0AbIANwG0ADgBNAE3ATgBtABOADgBNAE4AbUAOAFOADkBOAE5AbUAtQA5AVAAUgBYAFkAUgBZADoBUgA6AVoAWgA6AVsAOwFaAFsAOwFbADwBOwE8AV0AXQA8AVwAPQE+AT8BPQFAAT4BQAFnAD4BPQE/AUEBQQE/AWgAaQBBAWgAQgFBAWkAQAFhAGcAQgFDAUEBQwE9AUEBZgBhAEABRAFDAUIBawBEAUIBawBFAUQBRgFFAWsARQFHAUQBRAFHAUMBRwFIAUMBQwFIAT0BSAFAAT0BSAFmAEABSQFIAUcBSQFqAEgBSgFhAGYAZgBLAUoBSwHYAEoBSwFlANgASgFiAGEATAFiAEoBYQBiAGMAYgBkAGMAbABlAE0BTQFlAE4BTwFNAU4BTwFOAW0AUAFPAW0AUAFtAFEBUgFQAVEBUgFRAVMBVAFSAVMB2QBSAVQBVQHZAFQBVQFUAVYBVQFWAW4AbgBWAW8AcABvAHEAtgC3ALgAuQC6AIcAhQC5AIcAuwC6ALkAuwCGALoABgAHAAgABwAJAAgACQAKAFcBCgALAFcBVwELAAwAWAEHAA4AWQFYAQ4AWQENAFgBDwBZAQ4AWgEPABEAWgERABIAEABaARIAWwEUAFwBEwBbAVwBEwBcARUALQBdAV4BKwAtAF8B1wArAF8BLADXAF8B1wBgASsAKwBgAWEBYAEuAGEBYAFiAS4AYgEvAC4AMAAvAGIBYgEjADAAMAAxAC8AMgAxADMAXgBfAGAAkgCRAGMBZAGRAJIAZAGQAJEAjwBkAZIA2gBzAHQA2gB0AHIAcgB0AHUAdgB3AHgAeQB3AHYA2wB7AHwAfAB6ANsAlQBlAWYBZQGUAGYBkwBlAZUAZQGTAJQAfQB+AH8AfwB+AIAAgQB+AH0AggCDAIQA3ADdAN4AiACJAIoAiwCJAIgA"),
 "lods": [0.32427356, PackedByteArray("AAABAAIAlgAEAAAAlgAFAAQAAwAFAJYAlwAmACMAJgAnACMAIwCYAJcAKAAmACkAJgAqACkAmQCYACUAlwCYAJkAJACXAJkAmgCXACQAGwCaACQAHAAmAJcAmgAcAJcAGgCbABsAGgAZAJsAmwAZABwAGQAdABwAHgAdAB8AHQAgABwAHAAgACEAIAAiACEAnAAZABgAGQCcABcAFgAXAJwAnQBXAFYAngCdAFYASQCdAJ4AnwBJAJ4AnwCeAKAAngChAKAAogCgAKEAowCgAKIAVQCjAKIApACjAFUAowClAKAApQCfAKAApQBTAJ8ApQCjAKYAUwClAKYAUwCnAJ8ApwBTAKYApwBJAJ8ApgCjADgAowBUADgAqACmADgAqAA4ADcANwA1AKgAqAA1ADYAqACpAKYAqQCnAKYAqgCpAKgAqAA0AKoAqgA0AKsAqQCqAKwAqQCtAKcAqgCuAKwArwCuAKoAsACpAKwArQCpALAAsQCuAK8AsQCvADkApwCtALIAsgBJAKcArQBAALIAsgBAAEoASgBLAEwAsgBKALMAswBJALIASgBNALMASQCzALQAswBNALQASQC0ALUATQBPALQAtABOALUAtQBOAFAAtABPAFEAUQBPAFIAUgBYAFkAUgBZAFoAWgBZAFsAWgBbAFwAWgBcAF0AtgC3ALgAuQC6AIcAhQC5AIcAuwC6ALkAuwCGALoABgAHAAgABwAJAAgACgALAAkACQALAAwADQAHAA4ADwANAA4AEAAPABEAEAARABIAEwAUABUAvAC9AL4APgC8AL4AQgC8AD4AQQC8AEIAvAC/AL0AvQC/AEYAwAC8AEEAwAC/ALwAQwDAAEEARABDAEEAQwBEAMEAwQDCAEMAvwBFAEYAPwDCAMEAvwDDAEUARQDDAEcAwwDEAEcAwwC/AMQAxQDEAL8AwADFAL8ASADEAMUAxgBIAMUAxwDFAMAAxgDFAMcAPQDHAMAAwgDHAD0AyADGAMcAyADHAMIAxgDJADsAyADJAMYAygDJAMgAygDIAMsAsQDKAMsAzADLAMgAywDMALEAwgDMAMgAzACuALEAzQCuAMwArgDNAKwAzgDNAMwAzQDPAKwAzgDPAM0AzwCwAKwAzwDOADoAzwA6ALAAsAA6ANAA0QDMAMIA0QDSAMwAOgDSANEA0wDRAMIAOgDRANMA0AA6ANMAPwDTAMIA1ADTAD8AsADQANUArQCwANUA1QBAAK0A0AA8ANUAPABAANUAQAA8ANQAPADTANQA1gDTADwA1wAjADAAMAAvANcAMAAxAC8A1wAvAC4AMgAxADMAKwDXAC4A1wArACwAKwAtACwAXgBfAGAAYQBiAGMAYgBkAGMA2ABiAGEA2ABhAGYAZgBlANgAYQBnAGgAYQBoAGkAaQBqAGEAawBqAGkAbABlAG0A2QBsAG0AbwDZAG0A2QBvAG4AcABvAHEA2gBzAHQA2gB0AHIAcgB0AHUAdgB3AHgAeQB3AHYA2wB7AHwAfAB6ANsAfQB+AH8AfwB+AIAAgQB+AH0AggCDAIQA3ADdAN4AiACJAIoAiwCJAIgAjACNAI4AjwCQAJEAjwCRAJIAkwCUAJUA"), 2.7748458, PackedByteArray("AAABAAIAAwAEAAAAAwAFAAQABgAHAAgABwAJAAgACgALAAkACQALAAwADQAHAA4ADwANAA4AEAAPABEAEAARABIAEwAUABUAFgAXABgAGQAYABcAGgAZABsAGwAZABwAGQAdABwAHgAdAB8AHQAgABwAHAAgACEAIAAiACEAGwAcACMAGwAjACQAJAAjACUAHAAmACMAJgAnACMAKAAmACkAJgAqACkAIwArACwAKwAtACwAKwAjAC4AIwAvAC4AMAAvACMAMAAxAC8AMgAxADMANAA1ADYANwA1ADQANAA4ADcAOAA5ADoAOgA5ADsAOgA8ADgAPQA6ADsAPAA6AD0AOwA+AD0APwA8AD0AQAA8AD8APQA+AEEAQQA+AEIAQwBEAD8ARABDAEEAPgBFAEYARQA+AEcASABHAD4APABAAEkASQBAAEoASgBLAEwASgBNAEkASQBNAE4ATQBPAE4ASQBOAFAAUQBPAFIAUwA8AEkAOAA8AFMAUwBUADgAVABTAFUAUwBWAFUAUwBJAFYASQBXAFYAUgBYAFkAUgBZAFoAWgBZAFsAWgBbAFwAWgBcAF0AXgBfAGAAYQBiAGMAYgBkAGMAZQBiAGEAZQBhAGYAYQBnAGgAYQBoAGkAaQBqAGEAawBqAGkAbABlAG0AbgBsAG0AbwBuAG0AcABvAHEAcgBzAHQAcgB0AHUAdgB3AHgAeQB3AHYAegB7AHwAfQB+AH8AfwB+AIAAgQB+AH0AggCDAIQAhQCGAIcAiACJAIoAiwCJAIgAjACNAI4AjwCQAJEAjwCRAJIAkwCUAJUA")],
-"material": SubResource("ShaderMaterial_7414u"),
+"material": SubResource("ShaderMaterial_qhbq3"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 359,
@@ -57,16 +53,13 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_owl7n")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_foam"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aty0o"]
 render_priority = 0
-shader = ExtResource("4_foam")
-shader_parameter/streak_texture = ExtResource("3_noise")
-shader_parameter/scroll_speed = 1.2
-shader_parameter/scroll_direction = Vector2(0, -1)
-shader_parameter/streak_scale = 1.0
-shader_parameter/streak_stretch = 8.0
-shader_parameter/streak_strength = 0.6
-shader_parameter/foam_brightness = 1.0
+shader = ExtResource("5_qhbq3")
+shader_parameter/wobble_amplitude = 0.15
+shader_parameter/wobble_frequency = 0.9
+shader_parameter/wobble_speed = 1.2
+shader_parameter/wobble_direction = Vector2(0, -1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_qhbq3"]
 _surfaces = [{
@@ -91,7 +84,7 @@ _surfaces = [{
 "index_count": 180,
 "index_data": PackedByteArray("EgAiAAoACAASAAoAEwAiABIAEwAJACIAFAAVABYABAAUABYAEAAUAAQAFwAUABAAFwAjABQAIwAkACUAIwAlABQAJQABABQAJgAUAAEAFAAmABgAFAAYABUAGAAmACcAKAAnAAIAGAAnACgAAwAYACgAEQApAAEAKgApABEAKgARACsABgAqACsAEQAHACsABwAsAC0ALgAYAAMAAwAZAC4ADwAZAAMAGQAAAC4ALgAAABgAAAAvABgALwAVABgAFQAvAAUAMAAvAAAALwAwAAUAMAALAAUAGwAwAAAADAALADAADAAwABsADAAxAAsACwAxADIAMQAaADIAMQAMABoAGgANADIAMwAMABsANAAMADMANQAzABsANQA0ADMAHAAMADQANQAcADQAHQAMABwAHQAcADYAHgAdADYADgA1ABsADgAbADcANwAbAA8ANwA4AA4AOAA3AA8AOQAgAB8AHwAgACEA"),
 "lods": [0.4340894, PackedByteArray("EgAJAAoAEwAJABIACAASAAoAFAAVABYABAAUABYAEAAUAAQAFwAUABAAFwABABQAFAAYABUAFAABABgAGAABAAIAGAACAAMABgABABEAEQAHAAYAAwAZABgADwAZAAMAGQAAABgAAAAVABgADAAVAAAAFQAMAAUADAALAAUACwAMAA0ADAAaAA0AGwAMAAAADgAbAA8ADgAcABsAHAAMABsAHQAMABwAHgAdABwAHwAgACEA"), 1.0218127, PackedByteArray("CwAMAA0ADAALAAUADAAFAAAABAAAAAUADgAMAA8ADwAMAAAAAwAPAAAAAAACAAMAAAABAAIABAABAAAAEAABAAQABgABABEAEQAHAAYACAAJAAoA"), 1.532719, PackedByteArray("AAABAAIAAAACAAMABAABAAAABAAAAAUABgABAAcACAAJAAoA")],
-"material": SubResource("ShaderMaterial_foam"),
+"material": SubResource("ShaderMaterial_aty0o"),
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
 "vertex_count": 58,
@@ -99,6 +92,23 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_qhbq3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_owl7n"]
+render_priority = 0
+shader = ExtResource("4_owl7n")
+shader_parameter/t = 0.5
+shader_parameter/albedo_and_emissive_color = Color(1, 1, 1, 1)
+shader_parameter/noise_tex = ExtResource("2_qhbq3")
+shader_parameter/noise_scale = 3.0
+shader_parameter/scroll_direction = Vector2(0, 1)
+shader_parameter/scroll_speed = 0.4
+
+[sub_resource type="TorusMesh" id="TorusMesh_y6v6p"]
+lightmap_size_hint = Vector2i(64, 20)
+material = SubResource("ShaderMaterial_owl7n")
+add_uv2 = true
+inner_radius = 0.81
+outer_radius = 1.985
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_dg0tx"]
 radius = 2.908
@@ -111,29 +121,33 @@ script = ExtResource("1_rbjix")
 _peak_position_node = NodePath("Wave/Peak")
 
 [node name="Wave" type="MeshInstance3D" parent="." unique_id=374874253]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.073, -0.52836204, 0.316)
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.073, -0.45, 0.316)
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_dg0tx")
 
 [node name="FoamTopPart" type="MeshInstance3D" parent="Wave" unique_id=769781760]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.06421736, 1.0733579, -1.077884)
+transform = Transform3D(1.405, 0, 0, 0, 1.405, 0, 0, 0, 1.405, 0.015777886, 0.9316472, -1.0845108)
 cast_shadow = 0
 mesh = SubResource("ArrayMesh_5qefk")
 
 [node name="Peak" type="Marker3D" parent="Wave" unique_id=27419543]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4565697, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
 gizmo_extents = 0.75
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wave" unique_id=145582267]
+transform = Transform3D(-0.2370652, 0, -0.9714937, 0, 1, 0, 0.9714937, 0, -0.2370652, -0.054748513, -0.45, 0.066284165)
+mesh = SubResource("TorusMesh_y6v6p")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=162173013]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.07597172, 0.4418844)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0.4418844)
 shape = SubResource("SphereShape3D_dg0tx")
 
 [node name="CollisionChecker" type="Area3D" parent="." unique_id=1471722043]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3381821, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionChecker" unique_id=1428010232]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09768677, 1.2660522, -3.3322754)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09768677, -0.45, -3.3322754)
 shape = SubResource("BoxShape3D_d8ebe")

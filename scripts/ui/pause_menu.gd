@@ -1,7 +1,5 @@
 extends CanvasLayer
 class_name PauseMenu
-## Pause overlay for the game wrapper. Lives in the main viewport (outside the
-## world SubViewport), toggled by the GUIDE pause action (ESC by default).
 
 @export var pause_action: GUIDEAction
 @export var guide_context: GUIDEMappingContext

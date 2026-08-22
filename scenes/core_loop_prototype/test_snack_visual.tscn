@@ -1,15 +1,26 @@
 [gd_scene format=3 uid="uid://b1umx2wf8fba8"]
 
-[ext_resource type="Texture2D" uid="uid://bmvk4q6bo5ypr" path="res://icon.svg" id="1_tan71"]
+[ext_resource type="Texture2D" uid="uid://1lb3n0ut3wfu" path="res://assets/textures/particles/star_04.png" id="1_nihmb"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmn6o"]
-albedo_texture = ExtResource("1_tan71")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwbnx"]
+transparency = 2
+alpha_scissor_threshold = 0.155
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_nihmb")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 2.7
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
-[sub_resource type="SphereMesh" id="SphereMesh_sk68b"]
-material = SubResource("StandardMaterial3D_hmn6o")
+[sub_resource type="QuadMesh" id="QuadMesh_t6n7q"]
+material = SubResource("StandardMaterial3D_lwbnx")
+size = Vector2(2, 2)
 
-[node name="TestSnackVisual" type="Node3D"]
+[node name="TestSnackVisual" type="Node3D" unique_id=1709409761]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1251693026]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("SphereMesh_sk68b")
+mesh = SubResource("QuadMesh_t6n7q")

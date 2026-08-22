@@ -45,8 +45,6 @@ func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group(Definitions.PLAYER_GROUP) and body.has_method("on_wave_exited"):
 		body.on_wave_exited(self)
 
-## The collision checker detected a solid body (island/terrain) in the wave's
-## path: force the player off if they are riding, then destroy the wave.
 func _on_collision_checker_body_entered(body: Node3D) -> void:
 	if body.is_in_group(Definitions.PLAYER_GROUP):
 		return

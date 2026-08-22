@@ -1,8 +1,5 @@
 extends CanvasLayer
 class_name DebugDeliveryUI
-## Debug overlay for the DeliveryManager: shows the live delivery state
-## (target island, customer, snack, countdown). Instance it into any level
-## scene while debugging; it reads DeliveryManager.get_delivery_info().
 
 @onready var state_label: Label = %StateLabel
 @onready var target_island_label: Label = %TargetIslandLabel
