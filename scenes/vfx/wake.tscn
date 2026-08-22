@@ -1,87 +1,58 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene format=3 uid="uid://b48axtyvhe00t"]
 
-[ext_resource type="Script" path="res://scripts/vfx/vfx_docked.gd" id="1_docked"]
-[ext_resource type="Texture2D" path="res://assets/textures/particles/circle_03.png" id="2_foamtex"]
-[ext_resource type="Texture2D" path="res://assets/textures/particles/smoke_10.png" id="3_misttex"]
+[ext_resource type="Script" uid="uid://ukqdjyao7kjp" path="res://scripts/vfx/vfx_docked.gd" id="1_docked"]
+[ext_resource type="Texture2D" uid="uid://byg2plchs3f8r" path="res://assets/textures/particles/star_07.png" id="2_kj2pr"]
 
-[sub_resource type="Curve" id="Curve_fade"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.8, 0.9), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+[sub_resource type="Gradient" id="Gradient_kj2pr"]
+offsets = PackedFloat32Array(0, 0.340694, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wcjwe"]
+gradient = SubResource("Gradient_kj2pr")
+
+[sub_resource type="Curve" id="Curve_q3aoo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.31195337, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -2.3700926, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CurveTexture" id="CurveTexture_fade"]
-curve = SubResource("Curve_fade")
+[sub_resource type="CurveTexture" id="CurveTexture_wcjwe"]
+curve = SubResource("Curve_q3aoo")
 
-[sub_resource type="ParticleProcessMaterial" id="ppm_foam"]
-lifetime = 1.2
-spread = 180.0
-initial_velocity_min = 0.5
-initial_velocity_max = 1.5
-gravity = Vector3(0, 0.4, 0)
-damping_min = 2.0
-damping_max = 3.0
-scale_min = 0.15
-scale_max = 0.4
-scale_curve = SubResource("CurveTexture_fade")
-billboard_mode = 3
-emission_shape = 1
-emission_sphere_radius = 0.5
-color = Color(0.96, 0.98, 1, 0.85)
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5abcs"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 2.0
+emission_ring_radius = 0.26
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0, 1)
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -12, 0)
+scale_curve = SubResource("CurveTexture_wcjwe")
+color_ramp = SubResource("GradientTexture1D_wcjwe")
 
-[sub_resource type="StandardMaterial3D" id="mat_foam"]
-shading_mode = 0
-texture_filter = 0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hmn6o"]
 transparency = 2
-alpha_scissor_threshold = 0.25
+alpha_scissor_threshold = 0.57
+alpha_antialiasing_mode = 0
 vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("2_foamtex")
-
-[sub_resource type="QuadMesh" id="quad_foam"]
-material = SubResource("mat_foam")
-
-[sub_resource type="ParticleProcessMaterial" id="ppm_mist"]
-lifetime = 1.6
-spread = 180.0
-initial_velocity_min = 0.2
-initial_velocity_max = 0.6
-gravity = Vector3(0, 0.3, 0)
-damping_min = 1.5
-damping_max = 2.5
-scale_min = 0.35
-scale_max = 0.7
-scale_curve = SubResource("CurveTexture_fade")
+vertex_color_is_srgb = true
+albedo_color = Color(0.8117926, 1.3747699, 1.5638878, 1)
+albedo_texture = ExtResource("2_kj2pr")
 billboard_mode = 3
-emission_shape = 1
-emission_sphere_radius = 0.6
-color = Color(0.95, 0.97, 1, 0.35)
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
 
-[sub_resource type="StandardMaterial3D" id="mat_mist"]
-shading_mode = 0
-texture_filter = 0
-transparency = 2
-alpha_scissor_threshold = 0.12
-vertex_color_use_as_albedo = true
-albedo_texture = ExtResource("3_misttex")
+[sub_resource type="QuadMesh" id="QuadMesh_673k7"]
+material = SubResource("StandardMaterial3D_hmn6o")
 
-[sub_resource type="QuadMesh" id="quad_mist"]
-material = SubResource("mat_mist")
-
-[node name="Wake" type="Node3D"]
+[node name="Wake" type="Node3D" unique_id=2146819135]
 script = ExtResource("1_docked")
 
-[node name="Foam" type="GPUParticles3D" parent="."]
-amount = 32
-lifetime = 1.2
-local_coords = false
+[node name="GPUParticles3D" type="GPUParticles3D" parent="." unique_id=1860222558]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4.001069)
+amount = 100
 fixed_fps = 24
-visibility_aabb = AABB(-4, -1, -4, 8, 4, 8)
-process_material = SubResource("ppm_foam")
-draw_pass_1 = SubResource("quad_foam")
-
-[node name="Mist" type="GPUParticles3D" parent="."]
-amount = 10
-lifetime = 1.6
-local_coords = false
-fixed_fps = 24
-visibility_aabb = AABB(-4, -1, -4, 8, 4, 8)
-process_material = SubResource("ppm_mist")
-draw_pass_1 = SubResource("quad_mist")
+process_material = SubResource("ParticleProcessMaterial_5abcs")
+draw_pass_1 = SubResource("QuadMesh_673k7")

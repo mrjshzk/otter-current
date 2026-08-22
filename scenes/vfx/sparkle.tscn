@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene format=3 uid="uid://b81sw745mwcri"]
 
-[ext_resource type="Script" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
-[ext_resource type="Texture2D" path="res://assets/vfx/star.png" id="2_bursttex"]
-[ext_resource type="Texture2D" path="res://assets/textures/particles/star_01.png" id="3_flashtex"]
-[ext_resource type="Texture2D" path="res://assets/textures/particles/star_02.png" id="4_risetex"]
+[ext_resource type="Script" uid="uid://cy2xljyxe2t3e" path="res://scripts/vfx/vfx_layered.gd" id="1_layered"]
+[ext_resource type="Texture2D" uid="uid://cu5i4hggmkxkx" path="res://assets/vfx/star.png" id="2_bursttex"]
+[ext_resource type="Texture2D" uid="uid://dfnp387uhm0b5" path="res://assets/textures/particles/star_01.png" id="3_flashtex"]
+[ext_resource type="Texture2D" uid="uid://brpyn3o4y2csg" path="res://assets/textures/particles/star_02.png" id="4_risetex"]
 
 [sub_resource type="ParticleProcessMaterial" id="ppm_burst"]
-lifetime = 0.55
+emission_shape = 1
+emission_sphere_radius = 0.1
 spread = 180.0
 initial_velocity_min = 2.0
 initial_velocity_max = 5.0
@@ -15,19 +16,17 @@ damping_min = 0.8
 damping_max = 1.5
 scale_min = 0.04
 scale_max = 0.12
-billboard_mode = 3
-emission_shape = 1
-emission_sphere_radius = 0.1
 color = Color(1, 0.85, 0.4, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_burst"]
-shading_mode = 0
-texture_filter = 0
-blend_mode = 1
 transparency = 2
 alpha_scissor_threshold = 0.25
+alpha_antialiasing_mode = 0
+blend_mode = 1
+shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("2_bursttex")
+texture_filter = 0
 
 [sub_resource type="QuadMesh" id="quad_burst"]
 material = SubResource("mat_burst")
@@ -43,19 +42,18 @@ curve = SubResource("Curve_flash")
 emission_shape = 1
 emission_sphere_radius = 0.05
 gravity = Vector3(0, 0, 0)
-initial_velocity_min = 0.0
-initial_velocity_max = 0.0
 scale_curve = SubResource("CurveTexture_flash")
 color = Color(1, 1, 0.9, 1)
 
 [sub_resource type="StandardMaterial3D" id="mat_flash"]
-shading_mode = 0
-texture_filter = 0
-blend_mode = 1
 transparency = 2
 alpha_scissor_threshold = 0.25
+alpha_antialiasing_mode = 0
+blend_mode = 1
+shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("3_flashtex")
+texture_filter = 0
 
 [sub_resource type="QuadMesh" id="quad_flash"]
 material = SubResource("mat_flash")
@@ -68,6 +66,8 @@ point_count = 3
 curve = SubResource("Curve_fade")
 
 [sub_resource type="ParticleProcessMaterial" id="ppm_rise"]
+emission_shape = 1
+emission_sphere_radius = 0.1
 direction = Vector3(0, 1, 0)
 spread = 25.0
 initial_velocity_min = 0.6
@@ -78,52 +78,52 @@ damping_max = 1.5
 scale_min = 0.03
 scale_max = 0.07
 scale_curve = SubResource("CurveTexture_fade")
-billboard_mode = 3
-emission_shape = 1
-emission_sphere_radius = 0.1
 color = Color(1, 0.9, 0.5, 0.85)
 
 [sub_resource type="StandardMaterial3D" id="mat_rise"]
-shading_mode = 0
-texture_filter = 0
-blend_mode = 1
 transparency = 2
 alpha_scissor_threshold = 0.2
+alpha_antialiasing_mode = 0
+blend_mode = 1
+shading_mode = 0
 vertex_color_use_as_albedo = true
 albedo_texture = ExtResource("4_risetex")
+texture_filter = 0
 
 [sub_resource type="QuadMesh" id="quad_rise"]
 material = SubResource("mat_rise")
 
-[node name="Sparkle" type="Node3D"]
+[node name="Sparkle" type="Node3D" unique_id=817674509]
 script = ExtResource("1_layered")
 
-[node name="BurstStars" type="GPUParticles3D" parent="."]
+[node name="BurstStars" type="GPUParticles3D" parent="." unique_id=246084665]
+emitting = false
 amount = 20
 lifetime = 0.55
+one_shot = true
 explosiveness = 1.0
 fixed_fps = 24
-one_shot = true
 visibility_aabb = AABB(-2, -2, -2, 4, 4, 4)
 process_material = SubResource("ppm_burst")
 draw_pass_1 = SubResource("quad_burst")
 
-[node name="CoreFlash" type="GPUParticles3D" parent="."]
+[node name="CoreFlash" type="GPUParticles3D" parent="." unique_id=160328306]
+emitting = false
 amount = 3
 lifetime = 0.2
+one_shot = true
 explosiveness = 1.0
 fixed_fps = 24
-one_shot = true
 visibility_aabb = AABB(-1, -1, -1, 2, 2, 2)
 process_material = SubResource("ppm_flash")
 draw_pass_1 = SubResource("quad_flash")
 
-[node name="RisingSparks" type="GPUParticles3D" parent="."]
-amount = 8
+[node name="RisingSparks" type="GPUParticles3D" parent="." unique_id=1098190370]
+emitting = false
 lifetime = 0.8
+one_shot = true
 explosiveness = 1.0
 fixed_fps = 24
-one_shot = true
 visibility_aabb = AABB(-1, -1, -1, 2, 3, 2)
 process_material = SubResource("ppm_rise")
 draw_pass_1 = SubResource("quad_rise")

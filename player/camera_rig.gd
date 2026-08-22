@@ -37,7 +37,7 @@ func _ready() -> void:
 	# never let the arm collide with the player's own body
 	spring.add_excluded_object(player.get_rid())
 
-func _input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		_yaw -= event.relative.x * sensitivity
 		var pitch_direction := -1.0 if invert_y else 1.0

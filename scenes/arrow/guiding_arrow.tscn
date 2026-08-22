@@ -1,10 +1,16 @@
 [gd_scene format=3 uid="uid://dcf7b6qbj8tv4"]
 
-[ext_resource type="PackedScene" uid="uid://bxicl27bb2ks7" path="res://assets/arrow.glb" id="1_c8duh"]
 [ext_resource type="Script" uid="uid://c52of2hlou6fv" path="res://scenes/arrow/guiding_arrow.gd" id="1_y8xfk"]
+[ext_resource type="Texture2D" uid="uid://slgex7hu6xmq" path="res://assets/textures/input_prompts/keyboard_arrow_up.png" id="2_tex"]
 
 [node name="GuidingArrow" type="Node3D" unique_id=2025679995]
 script = ExtResource("1_y8xfk")
 
-[node name="arrow" parent="." unique_id=1100002479 instance=ExtResource("1_c8duh")]
-transform = Transform3D(-2.1855694e-08, 0, 0.5, 0, 0.5, 0, -0.5, 0, -2.1855694e-08, 0, 0, 0)
+[node name="Marker" type="Sprite3D" parent="." unique_id=1854555271]
+flip_v = true
+modulate = Color(1, 0, 0, 1)
+billboard = 1
+double_sided = false
+fixed_size = true
+texture_filter = 0
+texture = ExtResource("2_tex")

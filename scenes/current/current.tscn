@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://droqjlisow4rq" path="res://assets/textures/light_masks/water_caustics_d.png" id="2_qhbq3"]
 [ext_resource type="Shader" uid="uid://dt2cnltj7mq82" path="res://shaders/dissolve.gdshader" id="4_owl7n"]
 [ext_resource type="Shader" uid="uid://dhtnrj37bk70u" path="res://shaders/wave_foam.gdshader" id="5_qhbq3"]
+[ext_resource type="Texture2D" uid="uid://ee0xffe7ibvk" path="res://assets/textures/light_masks/circle_rings_b_noise.png" id="6_ji2bb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qhbq3"]
 render_priority = 0
@@ -13,7 +14,7 @@ shader_parameter/wobble_amplitude = 0.15
 shader_parameter/wobble_frequency = 0.9
 shader_parameter/wobble_speed = 1.2
 shader_parameter/wobble_direction = Vector2(0, -1)
-shader_parameter/albedo = Color(0, 0.6784314, 0.8, 1)
+shader_parameter/albedo = Color(4.3317677e-06, 0.6898134, 0.8110383, 1)
 shader_parameter/albedo_texture_size = Vector2i(0, 0)
 shader_parameter/point_size = 0.0
 shader_parameter/roughness = 0.0
@@ -104,7 +105,7 @@ shader_parameter/scroll_direction = Vector2(0, 1)
 shader_parameter/scroll_speed = 0.4
 
 [sub_resource type="TorusMesh" id="TorusMesh_y6v6p"]
-lightmap_size_hint = Vector2i(64, 20)
+lightmap_size_hint = Vector2i(33, 9)
 material = SubResource("ShaderMaterial_owl7n")
 add_uv2 = true
 inner_radius = 0.81
@@ -114,7 +115,53 @@ outer_radius = 1.985
 radius = 2.908
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d8ebe"]
-size = Vector3(4.350769, 3.5321045, 1.6645508)
+size = Vector3(4.350769, 5.4022293, 2.100708)
+
+[sub_resource type="Gradient" id="Gradient_ji2bb"]
+offsets = PackedFloat32Array(0, 0.46687698, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ji2bb"]
+gradient = SubResource("Gradient_ji2bb")
+
+[sub_resource type="Curve" id="Curve_ji2bb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.23906703, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_ji2bb"]
+curve = SubResource("Curve_ji2bb")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hmn6o"]
+emission_shape_scale = Vector3(2, 1, 2)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+direction = Vector3(0, 0.1, 1)
+spread = 15.0
+initial_velocity_min = 10.0
+initial_velocity_max = 15.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_ji2bb")
+color = Color(2.6034334, 2.6034334, 2.6034334, 1)
+color_ramp = SubResource("GradientTexture1D_ji2bb")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aty0o"]
+transparency = 2
+alpha_scissor_threshold = 0.245
+alpha_antialiasing_mode = 0
+vertex_color_use_as_albedo = true
+vertex_color_is_srgb = true
+albedo_texture = ExtResource("6_ji2bb")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_ji2bb"]
+material = SubResource("StandardMaterial3D_aty0o")
 
 [node name="Current" type="Area3D" unique_id=1736336799 node_paths=PackedStringArray("_peak_position_node")]
 script = ExtResource("1_rbjix")
@@ -134,7 +181,7 @@ mesh = SubResource("ArrayMesh_5qefk")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5150881, 0)
 gizmo_extents = 0.75
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Wave" unique_id=145582267]
+[node name="Bottom" type="MeshInstance3D" parent="Wave" unique_id=145582267]
 transform = Transform3D(-0.2370652, 0, -0.9714937, 0, 1, 0, 0.9714937, 0, -0.2370652, -0.054748513, -0.45, 0.066284165)
 mesh = SubResource("TorusMesh_y6v6p")
 
@@ -149,5 +196,12 @@ monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CollisionChecker" unique_id=1428010232]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09768677, -0.45, -3.3322754)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09768677, 0.6598974, -4.3768373)
 shape = SubResource("BoxShape3D_d8ebe")
+
+[node name="Trail" type="GPUParticles3D" parent="." unique_id=607342299]
+unique_name_in_owner = true
+cast_shadow = 0
+amount = 80
+process_material = SubResource("ParticleProcessMaterial_hmn6o")
+draw_pass_1 = SubResource("QuadMesh_ji2bb")

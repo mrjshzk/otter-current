@@ -100,9 +100,9 @@ func _set_target_prompt(target, text: String, icon: Texture2D) -> void:
 	if target != null and is_instance_valid(target) and target.has_method("set_prompt"):
 		target.set_prompt(text, icon)
 
-func _set_target_prompt_visible(target, visible: bool) -> void:
+func _set_target_prompt_visible(target, v: bool) -> void:
 	if target != null and is_instance_valid(target) and target.has_method("set_prompt_visible"):
-		target.set_prompt_visible(visible)
+		target.set_prompt_visible(v)
 
 ## The parameter is untyped on purpose: freed instances must reach the
 ## is_instance_valid guard instead of failing the typed call boundary.

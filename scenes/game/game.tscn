@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bngjb6vpr6er4"]
 
+[ext_resource type="Script" uid="uid://co211unw5pv7n" path="res://scenes/game/game.gd" id="1_lfrn8"]
 [ext_resource type="PackedScene" uid="uid://s3rm3jx3fcgc" path="res://scenes/final_level.tscn" id="1_sul5r"]
 [ext_resource type="Shader" uid="uid://bnj5mgymxc4h0" path="res://shaders/pixel_art.gdshader" id="2_7h61r"]
 [ext_resource type="Shader" uid="uid://c1mrxv5nxxs4w" path="res://shaders/crt.gdshader" id="3_0sr1o"]
@@ -27,6 +28,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_lfrn8")
 
 [node name="WorldViewportContainer" type="SubViewportContainer" parent="." unique_id=1931650294]
 layout_mode = 1
@@ -35,17 +37,29 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 stretch = true
 
 [node name="WorldViewport" type="SubViewport" parent="WorldViewportContainer" unique_id=1301600796]
 handle_input_locally = false
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
 size = Vector2i(1280, 720)
 render_target_update_mode = 4
 
 [node name="FinalLevel" parent="WorldViewportContainer/WorldViewport" unique_id=1142203742 instance=ExtResource("1_sul5r")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1709333646]
+
+[node name="Fader" type="ColorRect" parent="UI" unique_id=103881304]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
 
 [node name="Pixel" type="CanvasLayer" parent="." unique_id=1300138579]
 
@@ -57,7 +71,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-mouse_filter = 2
 
 [node name="CRT" type="CanvasLayer" parent="." unique_id=597966592]
 
@@ -68,7 +81,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 mouse_filter = 2
 
 [node name="Dialogue" type="CanvasLayer" parent="." unique_id=1709328465]

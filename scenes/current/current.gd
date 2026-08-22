@@ -8,20 +8,28 @@ class_name OceanCurrent
 		_face_direction()
 @export var speed: float = 10.0
 @export var lifetime: float = 60.0
-@export var sink_depth: float = -3.0
+@export var sink_depth: float = -5
 @export var sink_duration: float = 0.6
+@export var spawn_rise_height: float = -5.0
+@export var spawn_rise_duration: float = 1.2
 
 @onready var _wave_visual: Node3D = $Wave
 @onready var collision_checker: Area3D = %CollisionChecker
+@onready var trail: GPUParticles3D = %Trail
 
 var _lifetime_left: float
 var _sinking := false
+var _spawn_tween: Tween = null
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	collision_checker.body_entered.connect(_on_collision_checker_body_entered)
 	_lifetime_left = lifetime
+	global_position.y = spawn_rise_height
+	_spawn_tween = create_tween()
+	_spawn_tween.tween_property(self, "global_position:y", 0.0, spawn_rise_duration) \
+		.set_trans(Tween.TRANS_SPRING).set_ease(Tween.EASE_OUT)
 
 func _face_direction() -> void:
 	if _wave_visual == null or wave_direction.is_zero_approx():
@@ -42,10 +50,24 @@ func _die() -> void:
 		return
 	_sinking = true
 	collision_checker.set_deferred("monitoring", false)
+	if _spawn_tween != null and _spawn_tween.is_valid():
+		_spawn_tween.kill()
 	var tween := create_tween()
 	tween.tween_property(self, "global_position:y", sink_depth, sink_duration) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
-	tween.tween_callback(queue_free)
+	tween.tween_callback(_free_after_trail)
+
+func _free_after_trail() -> void:
+	var timer := get_tree().create_timer(2.0)
+	timer.timeout.connect(_free_if_valid)
+	if trail != null:
+		trail.emitting = false
+		await trail.finished
+	_free_if_valid()
+
+func _free_if_valid() -> void:
+	if is_instance_valid(self) and not is_queued_for_deletion():
+		queue_free()
 
 func get_velocity() -> Vector3:
 	return wave_direction.normalized() * speed

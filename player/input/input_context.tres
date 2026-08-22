@@ -13,6 +13,8 @@
 [ext_resource type="Resource" uid="uid://c4lq68ofho35u" path="res://player/input/jump_action.tres" id="10_h3je8"]
 [ext_resource type="Resource" uid="uid://dqtqwbtwpsbyk" path="res://player/input/interact_action.tres" id="11_5pdra"]
 [ext_resource type="Resource" uid="uid://bxesj1gg1xggy" path="res://player/input/pause_action.tres" id="12_3rahx"]
+[ext_resource type="Resource" uid="uid://bll684w7ny5mv" path="res://player/input/mouse_action.tres" id="13_2ey6u"]
+[ext_resource type="Script" uid="uid://dh0hf08e0yit5" path="res://addons/guide/inputs/guide_input_mouse_axis_2d.gd" id="14_w32qq"]
 
 [sub_resource type="Resource" id="Resource_5r7oh"]
 script = ExtResource("4_5pdra")
@@ -119,7 +121,19 @@ script = ExtResource("2_j41nj")
 action = ExtResource("12_3rahx")
 input_mappings = Array[ExtResource("1_3prxr")]([SubResource("Resource_h3je8")])
 
+[sub_resource type="Resource" id="Resource_6sqc1"]
+script = ExtResource("14_w32qq")
+
+[sub_resource type="Resource" id="Resource_rdy25"]
+script = ExtResource("1_3prxr")
+input = SubResource("Resource_6sqc1")
+
+[sub_resource type="Resource" id="Resource_fq4up"]
+script = ExtResource("2_j41nj")
+action = ExtResource("13_2ey6u")
+input_mappings = Array[ExtResource("1_3prxr")]([SubResource("Resource_rdy25")])
+
 [resource]
 script = ExtResource("2_3prxr")
-mappings = Array[ExtResource("2_j41nj")]([SubResource("Resource_lvikl"), SubResource("Resource_b3rg6"), SubResource("Resource_afpcs"), SubResource("Resource_w32qq"), SubResource("Resource_fdxtx")])
+mappings = Array[ExtResource("2_j41nj")]([SubResource("Resource_lvikl"), SubResource("Resource_b3rg6"), SubResource("Resource_afpcs"), SubResource("Resource_w32qq"), SubResource("Resource_fdxtx"), SubResource("Resource_fq4up")])
 metadata/_custom_type_script = "uid://dsa1dnifd6w32"

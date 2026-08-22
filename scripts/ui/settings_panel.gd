@@ -81,10 +81,10 @@ func _on_volume_changed(bus: StringName, db: float) -> void:
 	_set_volume(bus, db)
 	_save_settings()
 
-func _apply_resolution(size: Vector2i) -> void:
-	if size.x <= 0 or size.y <= 0:
+func _apply_resolution(_size: Vector2i) -> void:
+	if _size.x <= 0 or _size.y <= 0:
 		return
-	DisplayServer.window_set_size(size)
+	DisplayServer.window_set_size(_size)
 
 func _apply_fullscreen(enabled: bool) -> void:
 	get_window().mode = Window.MODE_FULLSCREEN if enabled else Window.MODE_WINDOWED
@@ -102,9 +102,9 @@ func _save_settings() -> void:
 		config.set_value(parts[0], parts[1], _settings[key])
 	config.save(SETTINGS_PATH)
 
-func _resolution_index(size: Vector2i) -> int:
+func _resolution_index(_size: Vector2i) -> int:
 	for i in RESOLUTIONS.size():
-		if RESOLUTIONS[i] == size:
+		if RESOLUTIONS[i] == _size:
 			return i
 	return 0
 

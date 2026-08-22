@@ -1,7 +1,7 @@
 extends Control
 class_name MainMenu
 
-const TRANSITION_DURATION := 0.5
+const TRANSITION_DURATION := 1.0
 ## Progress at which the transition overlay is fully transparent. Must be
 ## larger than the farthest screen point (r/d ~ 1.25 for the shape type),
 ## otherwise black wedges pop in at the start.
@@ -29,7 +29,7 @@ var _button_tweens: Dictionary = {}
 func _ready() -> void:
 	title_theme.volume_linear = 0
 	title_theme.bus = &"Music"
-	transition_rect.visible = false
+	transition_rect.show()
 	
 	start_button.pressed.connect(_on_start_pressed)
 	settings_button.pressed.connect(_open_settings)
@@ -43,13 +43,9 @@ func _ready() -> void:
 	
 	title_theme.play()
 	var t = create_tween()
-	t.finished.connect(
-		func():
-			var t2 = create_tween()
-			t2.tween_property(title_theme, "volume_linear", 1, 1.0)
-	)
-	t.tween_property(_transition_material, 'shader_parameter/progress', 3.36, 1.0)
-	
+	t.tween_property(transition_rect, "self_modulate", Color.TRANSPARENT, 3.5)
+	t.parallel().tween_property(title_theme, "volume_linear", 1, 2.0)
+
 
 func _on_button_hover(button: TextureButton, hovered: bool) -> void:
 	var previous: Tween = _button_tweens[button]
@@ -73,13 +69,10 @@ func _on_start_pressed() -> void:
 	start_button.disabled = true
 	settings_button.disabled = true
 	quit_button.disabled = true
-	transition_rect.visible = true
-	if _transition_material == null:
-		get_tree().change_scene_to_packed(scene)
-		return
-	_transition_material.set_shader_parameter("progress", TRANSITION_START)
 	var tween := create_tween()
-	tween.tween_method(_set_transition_progress, TRANSITION_START, 0.0, TRANSITION_DURATION)
+	AudioManager.play_ui(load("res://assets/audio/startgamejingle.wav"))
+	tween.tween_property(transition_rect, "self_modulate", Color(1,1,1,1), 2.0)
+	tween.parallel().tween_property(title_theme, "volume_linear", 0, 1.5)
 	await tween.finished
 	get_tree().change_scene_to_packed(scene)
 
@@ -87,11 +80,11 @@ func _set_transition_progress(value: float) -> void:
 	_transition_material.set_shader_parameter("progress", value)
 
 func _open_settings() -> void:
-	menu_buttons.visible = false
+	menu_buttons.get_parent().visible = false
 	settings_panel.visible = true
 	settings_panel.focus_back()
 
 func _close_settings() -> void:
 	settings_panel.visible = false
-	menu_buttons.visible = true
+	menu_buttons.get_parent().visible = true
 	settings_button.grab_focus()

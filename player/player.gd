@@ -76,6 +76,7 @@ class_name Player
 @export var glide_damping: float = 0.18
 @export var momentum_damping: float = 0.15
 @export var splash_dip_depth: float = 0.6
+@export var big_splash_speed_threshold: float = 7.0
 @export var jump_buffer_time: float = 0.15
 @export var dive_buffer_time: float = 0.15
 
@@ -102,6 +103,7 @@ class_name Player
 @export var mesh_offset_y: float = -0.4
 
 const SPLASH_VFX := preload("res://scenes/vfx/splash.tscn")
+const BIG_SPLASH_VFX := preload("res://scenes/vfx/big_splash.tscn")
 const WAKE_VFX := preload("res://scenes/vfx/wake.tscn")
 const BUBBLES_VFX := preload("res://scenes/vfx/bubbles.tscn")
 const DUST_VFX := preload("res://scenes/vfx/dust.tscn")
@@ -116,6 +118,7 @@ var _launch_velocity: Vector3 = Vector3.ZERO
 var _air_boost_active := false
 var _submerged_vy := 0.0
 var _was_in_sea := true
+var _was_below_surface := true
 var _was_submerged := false
 var _land_step_timer := 0.0
 var _land_settle_time := 0.0
@@ -150,10 +153,14 @@ func _ready() -> void:
 	submerged_state.state_entered.connect(_on_submerged_entered)
 	diving_state.state_entered.connect(func():
 		_dive_jump_primed = true
-		AudioManager.play_sfx(SfxLibrary.DIVE, global_position, -2.0, 1.0, 0.1)
+		#AudioManager.play_sfx(SfxLibrary.DIVE, global_position, -2.0, 1.0, 0.1)
 		camera_rig.add_shake(0.25)
 	)
 	water_movement.state_entered.connect(func():
+		if current_velocity.length_squared() > 35:
+			AudioManager.play_sfx(SfxLibrary.BIG_SPLASH, global_position, -2.0, 1.0, 0.1)
+		else:
+			AudioManager.play_sfx(SfxLibrary.SMALL_SPLASH, global_position, -2.0, 1.0, 0.1)
 		_jumped_from_wave = null
 		_dive_jump_primed = false
 	)
@@ -275,6 +282,7 @@ func _physics_process(delta: float) -> void:
 	current_velocity = velocity
 	RenderingServer.global_shader_parameter_set("player_position", self.global_position)
 	_update_water_effects()
+	_check_water_impact()
 	_check_auto_land_switch()
 
 func on_wave_entered(wave: OceanCurrent) -> void:
@@ -298,12 +306,10 @@ func on_wave_exited(wave: OceanCurrent) -> void:
 		_current_wave = null
 		_wake.emitting = false
 		_wake.visible = false
-		_play_splash(global_position, SfxLibrary.SPLASH, 0.1)
 		root_state_chart.send_event("wave_exited")
 
 func _update_water_effects() -> void:
 	if in_sea and not _was_in_sea:
-		_play_splash(global_position, SfxLibrary.SPLASH, 0.3)
 		%OtterSkeleton.position.y = mesh_offset_y
 	elif not in_sea and _was_in_sea:
 		%OtterSkeleton.position.y = 0.0
@@ -318,9 +324,21 @@ func _update_water_effects() -> void:
 		_bubbles.visible = false
 	_was_submerged = submerged
 
+func _is_big_splash() -> bool:
+	return current_velocity.length() > big_splash_speed_threshold
+
+func _splash_sfx() -> AudioStream:
+	return SfxLibrary.BIG_SPLASH if _is_big_splash() else SfxLibrary.SMALL_SPLASH
+
+func _splash_shake() -> float:
+	return 0.3 if _is_big_splash() else 0.1
+
 func _play_splash(at: Vector3, sfx: AudioStream, shake: float) -> void:
 	var splash_pos := Vector3(at.x, water_level_y, at.z)
-	VFXManager.spawn(SPLASH_VFX, splash_pos)
+	if current_velocity.length_squared() > 35:
+		VFXManager.spawn(BIG_SPLASH_VFX, splash_pos)
+	else:
+		VFXManager.spawn(SPLASH_VFX, splash_pos)
 	AudioManager.play_sfx(sfx, splash_pos, -2.0, 1.0, 0.15)
 	camera_rig.add_shake(shake)
 
@@ -470,6 +488,12 @@ func _switch_to_land() -> void:
 	Log.info("switched to land")
 	root_state_chart.send_event("to_in_land")
 
+func _check_water_impact() -> void:
+	var below := global_position.y <= water_level_y
+	if below and not _was_below_surface and current_velocity.y < -0.1:
+		_play_splash(global_position, _splash_sfx(), _splash_shake())
+	_was_below_surface = below
+
 func _check_splash() -> void:
 	if global_position.y <= water_level_y - splash_dip_depth and current_velocity.y < 0.0:
 		root_state_chart.send_event("splash")
@@ -492,9 +516,9 @@ func _apply_air_control(delta: float) -> void:
 	var horizontal := Vector3(current_velocity.x, 0.0, current_velocity.z)
 	var speed := horizontal.length()
 	if speed < air_control_min_speed:
-		var speed_along := horizontal.dot(dir)
-		if speed_along < air_control_max_speed:
-			var add := dir * (air_control_max_speed - speed_along) * air_control * delta
+		var speed_alone_copy := horizontal.dot(dir)
+		if speed_alone_copy < air_control_max_speed:
+			var add := dir * (air_control_max_speed - speed_alone_copy) * air_control * delta
 			current_velocity.x += add.x
 			current_velocity.z += add.z
 			_face_direction(dir, delta)
